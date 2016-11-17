@@ -1,9 +1,8 @@
 <?php
-if (!isset($_GET['branch'])) {
-    header("Location: http://localhost/webpage/");
-}
-
 include("header.php");
+if (!isset($_GET['branch'])) {
+    header("Location: " . SITE_URL);
+}
 include("sidemenu.php");
 $branch = '';
 $sub_branch = '0';
