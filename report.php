@@ -174,8 +174,28 @@ function isChecked($value) {
                                         <th>PN</th>
                                         <th>HWS</th>
                                         <th>SKU</th>
-                                        <th>Start Time</th>
-                                        <th>Station ID</th>
+                                        <th>PRODUCT</th>
+                                        <th>CONSOLE</th>
+                                        <th>STATIONID</th>
+                                        <th>COMPUTERNAME</th>
+                                        <th>TBVERSION</th>
+                                        <th>DIAGVERSION</th>
+                                        <th>OSVERSION</th>
+                                        <th>USERID</th>
+                                        <th>OPMODE</th>
+                                        <th>MODULE</th>
+                                        <th>STARTTIME</th>
+                                        <th>ENDTIME</th>
+                                        <th>TOTALTESTTIME</th>
+                                        <th>REV</th>
+                                        <th>OVERALLSTATUS</th>
+<!--                                        <th>TESTREPORT</th>
+                                        <th>RUNNINGLOG</th>
+                                        <th>TRACELOG</th>
+                                        <th>TIMEZONE</th>-->
+                                        <th>TTF</th>
+                                        <th>CREATED</th>
+                                        <th>MODIFIED</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -185,8 +205,28 @@ function isChecked($value) {
                                             <td><?php echo $row['PN'] ?></td>
                                             <td><?php echo $row['HWS'] ?></td>
                                             <td><?php echo $row['SKU'] ?></td>
-                                            <td><?php echo $row['STARTTIME'] ?></td>
+                                            <td><?php echo $row['PRODUCT'] ?></td>
+                                            <td><?php echo $row['CONSOLE'] ?></td>
                                             <td><?php echo $row['STATIONID'] ?></td>
+                                            <td><?php echo $row['COMPUTER_NAME'] ?></td>
+                                            <td><?php echo $row['TBVERSION'] ?></td>
+                                            <td><?php echo $row['DIAGVERSION'] ?></td>
+                                            <td><?php echo $row['OSVERSION'] ?></td>
+                                            <td><?php echo $row['USERID'] ?></td>
+                                            <td><?php echo $row['OPMODE'] ?></td>
+                                            <td><?php echo $row['MODULE'] ?></td>
+                                            <td><?php echo $row['STARTTIME'] ?></td>
+                                            <td><?php echo $row['ENDTIME'] ?></td>
+                                            <td><?php echo $row['TOTALTESTTIME'] ?></td>
+                                            <td><?php echo $row['REV'] ?></td>
+                                            <td><?php echo $row['OVERALLSTATUS'] ?></td>
+<!--                                            <td><?php echo $row['TESTREPORT'] ?></td>
+                                            <td><?php echo $row['RUNNINGLOG'] ?></td>
+                                            <td><?php echo $row['TRACELOG'] ?></td>
+                                            <td><?php echo $row['TIMEZONE'] ?></td>-->
+                                            <td><?php echo $row['TTF'] ?></td>
+                                            <td><?php echo $row['CREATED_ON'] ?></td>
+                                            <td><?php echo $row['LAST_MODIFIED_ON'] ?></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
