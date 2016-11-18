@@ -34,13 +34,13 @@
     });
     
     $("#conversion-plus").DataTable({
-        "scrollY": 380,
+        "scrollY": 360,
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">frtip'
     });
     $("#conversion-minus").DataTable({
-        "scrollY": 380,
+        "scrollY": 360,
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">frtip'
