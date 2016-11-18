@@ -81,7 +81,7 @@ UNION
                                 <div class="col-xs-12">                                    
                                     <div class="form-group">
                                         <label>Current SKU</label>
-                                        <input type="text" class="form-control" name="current-sku" value="<?php echo $current_sku; ?>" maxlength="50">
+                                        <input type="text" class="form-control" name="current-sku" value="<?php echo $current_sku; ?>" maxlength="50" required>
                                     </div>                                    
                                 </div>
                                 <div class="col-xs-12">                                                                       
@@ -100,7 +100,7 @@ UNION
                                 <div class="col-xs-12">                                    
                                     <div class="form-group">
                                         <label>New SKU</label>
-                                        <input type="text" class="form-control" name="new-sku" value="<?php echo $new_sku; ?>" maxlength="50">
+                                        <input type="text" class="form-control" name="new-sku" value="<?php echo $new_sku; ?>" maxlength="50" required>
                                     </div>                                    
                                 </div>
                                 <div class="col-xs-12">                                    
