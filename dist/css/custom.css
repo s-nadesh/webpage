@@ -23,6 +23,29 @@
     background-color: #1e90ff;
 }
 
+/* Custom class by developers */
 .heading {
     float: left;
+}
+
+#report_form .form-group {
+  margin-bottom: 5px;
+}
+
+.select_pns {
+    height: 130px; 
+    overflow-y: scroll
+}
+
+.box {
+  margin-bottom: 8px;
+}
+
+.box-header {
+  padding: 5px;
+}
+
+.form-control {
+  height: 25px;
+  padding: 3px 5px;
 }

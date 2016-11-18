@@ -78,14 +78,19 @@ function isChecked($value) {
                         <!-- /.box-header -->
                         <!-- form start -->
                         <div class="box-body">
-                            <div class="form-group">
-                                <label for="StartDate">Start Date</label>
-
-                                <input type="text" id="datepicker-start" class="form-control pull-right" name="start_date" value="<?php echo $form_start_date ?>">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <label for="StartDate">Start Date</label>
+                                    <input type="text" id="datepicker-start" class="form-control pull-right" name="start_date" value="<?php echo $form_start_date ?>">
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="EndDate">End Date</label>
+                                    <input type="text" id="datepicker-end" class="form-control pull-right" name="end_date" value="<?php echo $form_end_date ?>">
+                                </div>
                             </div>
+
                             <div class="form-group">
-                                <label for="EndDate">End Date</label>
-                                <input type="text" id="datepicker-end" class="form-control pull-right" name="end_date" value="<?php echo $form_end_date ?>">
+
                             </div>                        
                         </div>
                     </div>
@@ -96,7 +101,7 @@ function isChecked($value) {
                         <div class="box-header with-border">
                             <h3 class="box-title">Select PN's</h3>
                         </div>
-                        <div class="box-body" style="height: 200px; overflow-y: scroll">
+                        <div class="box-body select_pns">
                             <?php if ($results) { ?>
                                 <?php while ($row = mysql_fetch_array($results)) { ?>
                                     <div class="form-group">
@@ -142,8 +147,6 @@ function isChecked($value) {
                                     ALL
                                 </label>
                             </div>  
-                        </div>
-                        <div class="box-body"> 
                             <div class="col-xs-6">
                                 <button class="btn btn-block btn-success" type="submit" name="submit">Get Data</button>
                             </div>
@@ -158,14 +161,6 @@ function isChecked($value) {
 
             <?php if (isset($table_results)) { ?>
                 <div class="col-xs-9">
-                    <h3 class="box-title">
-                        <?php
-                        echo $branch . ' - ';
-                        if ($sub_branch) {
-                            echo '<small>' . $sub_branch . '</small>';
-                        }
-                        ?>
-                    </h3>
                     <div class="box box-primary">
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -207,3 +202,10 @@ function isChecked($value) {
 </div>
 <!-- /.content-wrapper -->
 <?php include("footer.php"); ?>
+<?php if (isset($table_results)) { ?>
+    <script>
+        $(function () {
+            $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');
+        });
+    </script>
+<?php } ?>

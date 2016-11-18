@@ -27,12 +27,12 @@
     
     //DataTable
     $("#report_table").DataTable({
-        "scrollY": 400,
+        "scrollY": 380,
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">frtip'
     });
-    $("div.heading").html('<b>Custom tool bar! Text/images etc.</b>');
+    
   });
   var expanded = false;
     function showCheckboxes() {
