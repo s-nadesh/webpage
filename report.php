@@ -148,7 +148,7 @@ function isChecked($value) {
                                 <button class="btn btn-block btn-success" type="submit" name="submit">Get Data</button>
                             </div>
                             <div class="col-xs-6">
-                                <button class="btn btn-block btn-warning" type="button" onclick="window.location.href=window.location.href">Reset</button>
+                                <button class="btn btn-block btn-warning" type="button" onclick="window.location.href = window.location.href">Reset</button>
                             </div>
                         </div>
                     </div>
@@ -157,21 +157,19 @@ function isChecked($value) {
             </div>
 
             <?php if (isset($table_results)) { ?>
-                <div class="col-xs-9">          
+                <div class="col-xs-9">
+                    <h3 class="box-title">
+                        <?php
+                        echo $branch . ' - ';
+                        if ($sub_branch) {
+                            echo '<small>' . $sub_branch . '</small>';
+                        }
+                        ?>
+                    </h3>
                     <div class="box box-primary">
-                        <div class="box-header">
-                            <h3 class="box-title">
-                                <?php
-                                echo $branch . ' - ';
-                                if ($sub_branch) {
-                                    echo '<small>' . $sub_branch . '</small>';
-                                }
-                                ?>
-                            </h3>
-                        </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="report_table" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>SN</th>
