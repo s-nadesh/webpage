@@ -1,4 +1,8 @@
-<?php include("config.php");?>
+<?php 
+include("config.php");
+include_once("include/dbcon.php");
+$dbconnect = new dbconnect();
+?>
 <!DOCTYPE html>
 <html>
 <head>

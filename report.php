@@ -4,10 +4,10 @@ if (!isset($_GET['branch'])) {
     header("Location: " . SITE_URL);
 }
 include("sidemenu.php");
+
 $branch = '';
 $sub_branch = '0';
 if (isset($_GET['branch'])) {
-
     $branch = $_GET['branch'];
 }
 
@@ -15,8 +15,9 @@ if (isset($_GET['sub_branch'])) {
     $sub_branch = $_GET['sub_branch'];
 }
 
-$query = "SELECT PN FROM V_DISTINCT_PN WHERE prod = '" . $branch . "' ORDER BY PN ASC"; // Get PN's values
-$results = mysql_query($query, $conn);
+$dbconnect->sql = "SELECT PN FROM V_DISTINCT_PN WHERE prod = '" . $branch . "' ORDER BY PN ASC";
+$dbconnect->selecttb();
+$results = $dbconnect->res;
 ?>
 
 <?php
@@ -46,7 +47,9 @@ if (isset($_POST['submit'])) {
         $query .= " AND STATIONID IN ('$station')";
     }
 
-    $table_results = mysql_query($query, $conn);
+    $dbconnect->sql = $query;
+    $dbconnect->selecttb();
+    $table_results = $dbconnect->res;
 
     $form_start_date = date("m/d/Y", strtotime($_POST['start_date']));
     $form_end_date = date("m/d/Y", strtotime($_POST['end_date']));
