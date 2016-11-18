@@ -22,48 +22,6 @@ if (isset($_POST['convert-btn'])) {
     $dbconnect->sql = $new_sku_query;
     $dbconnect->selecttb();
     $new_sku_results = ($dbconnect->res) ? mysql_fetch_array($dbconnect->res) : '0';
-
-
-
-    //Plus
-    $plus_query = "(SELECT A.CHILD_PN,'0',A.CHILD_DESC,'A','PLUS' FROM BOMX A WHERE A.PARENT_PN LIKE  '" . $current_sku . "'  AND A.CHILD_PN NOT IN (SELECT CHILD_PN FROM BOMX WHERE PARENT_PN LIKE '" . $new_sku . "')) 
-    UNION(
-      SELECT  C.LEV200,'1',C.LEV200_DESC, 'A','P' FROM BOMX A, LEV101 B, LEV150 C WHERE A.PARENT_PN LIKE '" . $current_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150=C.LEV150 AND B. LEV150 LIKE '150%' AND C.LEV200  NOT IN 
-          (SELECT C.LEV200 FROM BOMX A, LEV101 B, LEV150 C WHERE A.PARENT_PN LIKE '" . $new_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150=C.LEV150 AND C.LEV200)
-      ) 
-    UNION 
-      (	SELECT B.LEV150,B.QUANTITY,B.LEV150_DESC, 'B','P' FROM BOMX A, LEV101 B WHERE A.PARENT_PN LIKE '" . $current_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150 NOT IN 
-            (SELECT B.LEV150 FROM BOMX A, LEV101 B WHERE A.PARENT_PN LIKE '" . $new_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150)
-       )";
-    $dbconnect->sql = $plus_query;
-    $dbconnect->selecttb();
-    $plus_results = ($dbconnect->res) ? $dbconnect->res : '';
-
-
-    //Minus
-    $minus_query = "(
-SELECT A.CHILD_PN,'0',A.CHILD_DESC,'A','P' FROM BOMX A WHERE A.PARENT_PN LIKE  '" . $new_sku . "'  AND A.CHILD_PN  NOT IN 
-	(
-	SELECT CHILD_PN FROM BOMX WHERE PARENT_PN LIKE '" . $current_sku . "'
-	)
-)
- UNION
-(
-	SELECT  C.LEV200,'1',C.LEV200_DESC, 'A','P' FROM BOMX A, LEV101 B, LEV150 C WHERE A.PARENT_PN LIKE '" . $new_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150=C.LEV150 AND B. LEV150 LIKE '150%' AND C.LEV200 NOT IN 
-	(
-		SELECT C.LEV200 FROM BOMX A, LEV101 B, LEV150 C WHERE A.PARENT_PN LIKE '" . $current_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150=C.LEV150 AND C.LEV200
-	)
-) 
-UNION 
-(
-	SELECT B.LEV150,B.QUANTITY,B.LEV150_DESC, 'B','P' FROM BOMX A, LEV101 B WHERE A.PARENT_PN LIKE '" . $new_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150 NOT IN 
-	(
-		SELECT B.LEV150 FROM BOMX A, LEV101 B WHERE A.PARENT_PN LIKE '" . $current_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150
-	)
-)";
-    $dbconnect->sql = $minus_query;
-    $dbconnect->selecttb();
-    $minus_results = ($dbconnect->res) ? $dbconnect->res : '';
 }
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -118,6 +76,26 @@ UNION
                 </div>
             </form>
             <div class="clearfix"></div>
+            <?php
+            if (isset($_POST['convert-btn'])) {
+                $current_sku = $_POST['current-sku'];
+                $new_sku = $_POST['new-sku'];
+
+                //Plus
+                $plus_query = "(SELECT A.CHILD_PN,'0',A.CHILD_DESC,'A','PLUS' FROM BOMX A WHERE A.PARENT_PN LIKE  '" . $current_sku . "'  AND A.CHILD_PN NOT IN (SELECT CHILD_PN FROM BOMX WHERE PARENT_PN LIKE '" . $new_sku . "')) 
+                UNION(
+                  SELECT  C.LEV200,'1',C.LEV200_DESC, 'A','P' FROM BOMX A, LEV101 B, LEV150 C WHERE A.PARENT_PN LIKE '" . $current_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150=C.LEV150 AND B. LEV150 LIKE '150%' AND C.LEV200  NOT IN 
+                      (SELECT C.LEV200 FROM BOMX A, LEV101 B, LEV150 C WHERE A.PARENT_PN LIKE '" . $new_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150=C.LEV150 AND C.LEV200)
+                  ) 
+                UNION 
+                  (	SELECT B.LEV150,B.QUANTITY,B.LEV150_DESC, 'B','P' FROM BOMX A, LEV101 B WHERE A.PARENT_PN LIKE '" . $current_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150 NOT IN 
+                        (SELECT B.LEV150 FROM BOMX A, LEV101 B WHERE A.PARENT_PN LIKE '" . $new_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150)
+                   )";
+                $dbconnect->sql = $plus_query;
+                $dbconnect->selecttb();
+                $plus_results = ($dbconnect->res) ? $dbconnect->res : '';
+            }
+            ?>
             <?php if ($plus_results) { ?>
                 <div class="col-xs-6">
                     <div class="box box-primary">                                            
@@ -151,6 +129,37 @@ UNION
                     <!-- /.box -->
                 </div>
             <?php } ?>
+            <?php
+            if (isset($_POST['convert-btn'])) {
+                $current_sku = $_POST['current-sku'];
+                $new_sku = $_POST['new-sku'];
+
+                //Minus
+                $minus_query = "(
+            SELECT A.CHILD_PN,'0',A.CHILD_DESC,'A','P' FROM BOMX A WHERE A.PARENT_PN LIKE  '" . $new_sku . "'  AND A.CHILD_PN  NOT IN 
+                    (
+                    SELECT CHILD_PN FROM BOMX WHERE PARENT_PN LIKE '" . $current_sku . "'
+                    )
+            )
+             UNION
+            (
+                    SELECT  C.LEV200,'1',C.LEV200_DESC, 'A','P' FROM BOMX A, LEV101 B, LEV150 C WHERE A.PARENT_PN LIKE '" . $new_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150=C.LEV150 AND B. LEV150 LIKE '150%' AND C.LEV200 NOT IN 
+                    (
+                            SELECT C.LEV200 FROM BOMX A, LEV101 B, LEV150 C WHERE A.PARENT_PN LIKE '" . $current_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150=C.LEV150 AND C.LEV200
+                    )
+            ) 
+            UNION 
+            (
+                    SELECT B.LEV150,B.QUANTITY,B.LEV150_DESC, 'B','P' FROM BOMX A, LEV101 B WHERE A.PARENT_PN LIKE '" . $new_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150 NOT IN 
+                    (
+                            SELECT B.LEV150 FROM BOMX A, LEV101 B WHERE A.PARENT_PN LIKE '" . $current_sku . "' AND B.LEV101 = A.CHILD_PN AND B.LEV150
+                    )
+            )";
+                $dbconnect->sql = $minus_query;
+                $dbconnect->selecttb();
+                $minus_results = ($dbconnect->res) ? $dbconnect->res : '';
+            }
+            ?>
             <?php if ($minus_results) { ?>
                 <div class="col-xs-6">
                     <div class="box box-primary">                        
