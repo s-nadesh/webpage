@@ -1,5 +1,6 @@
-<?php include("header.php"); ?>
-<?php include("sidemenu.php"); ?>
+<?php 
+include("header.php");
+include("sidemenu.php"); ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->

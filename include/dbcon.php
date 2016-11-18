@@ -15,6 +15,7 @@ class dbconnect {
     public $nrow;
     public $ires;
     public $iid;
+    public $count;
 
     function __construct() {
         $this->dbcon = mysql_connect($this->host, $this->user, $this->pass);
@@ -45,6 +46,11 @@ class dbconnect {
 
     function deletetb() {
         mysql_query($this->sql);
+    }
+    
+    function countresult() {
+        $result = mysql_query($this->sql);
+        $this->count = mysql_num_rows($result);
     }
 
 }

@@ -1,5 +1,12 @@
 <?php 
+// Start the session
+session_start();
 include("config.php");
+
+if(!isset($_SESSION["username"])){
+    header("Location: " . LOGIN_URL);
+}
+
 include_once("include/dbcon.php");
 $dbconnect = new dbconnect();
 ?>
@@ -65,6 +72,39 @@ $dbconnect = new dbconnect();
         <span class="sr-only">Toggle navigation</span>
       </a>
       
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- Messages: style can be found in dropdown.less-->          
+                    
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <span class="hidden-xs"><?php echo $_SESSION["username"];?></span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                <p>
+                  <?php echo $_SESSION["username"];?>                  
+                </p>
+              </li>              
+              <!-- Menu Footer-->
+              <li class="user-footer">
+<!--                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>-->
+                <div class="pull-right">
+                  <a href="logout.php" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>          
+        </ul>
+      </div>
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
