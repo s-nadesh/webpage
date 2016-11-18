@@ -33,6 +33,19 @@
         "dom": '<"heading">frtip'
     });
     
+    $("#conversion-plus").DataTable({
+        "scrollY": 380,
+        "scrollX": true,
+        "bPaginate": false,
+        "dom": '<"heading">frtip'
+    });
+    $("#conversion-minus").DataTable({
+        "scrollY": 380,
+        "scrollX": true,
+        "bPaginate": false,
+        "dom": '<"heading">frtip'
+    });
+    
   });
   var expanded = false;
     function showCheckboxes() {

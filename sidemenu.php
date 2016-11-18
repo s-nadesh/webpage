@@ -1,4 +1,3 @@
-<?php //  include("config.php");   ?>
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -20,7 +19,7 @@
             ?>
 
             <?php
-            $dbconnect->sql = "SELECT DISTINCT(TYPE),ID FROM A_REPORT WHERE DISABLE = 0 ORDER BY ID;";
+            $dbconnect->sql = "SELECT DISTINCT(TYPE),ID,LAYOUT FROM A_REPORT WHERE DISABLE = 0 ORDER BY ID;";
             $dbconnect->selecttb();
             $fl_result = $dbconnect->res;
 
@@ -63,14 +62,14 @@
                         }
                         $root_menus[1] = $branch;
                     }
-
+                    $root_menus[2] = $row1['LAYOUT'];
                     $all_menus[$row1['ID']] = $root_menus;
                 }
             }
             ?>
             <?php
 //        foreach($all_menus as $root_menu){
-//                echo $root_menu[0].'<br>';        
+//                echo $root_menu[0].'--- Layout---'.$root_menu[2].'<br>';        
 //            if($root_menu[1]!='NO'){
 //                foreach($root_menu[1] as $branch_menu){
 //                    echo '----'.$branch_menu[0].'<br>';
@@ -113,7 +112,7 @@
                                                 <i class="fa fa-angle-right pull-right"></i>
                                             </span></a>
                                     <?php } else { ?>
-                                        <a href="report.php?<?php echo 'branch=' . $branch_menu[0]; ?>"><i class="fa fa-circle-o"></i> 
+                                    <a href="<?php echo $root_menu[2].'.php?'.'branch=' . $branch_menu[0]; ?>"><i class="fa fa-circle-o"></i> 
                                             <span><?php echo $branch_menu[0]; ?> </span>                            
                                         </a>
                                     <?php } ?>
@@ -122,7 +121,7 @@
                                         <ul class="treeview-menu">
                                             <?php foreach ($branch_menu[1] as $sub_branch) { ?>
 
-                                                <li><a href="report.php?<?php echo 'branch=' . $branch_menu[0] . '&sub_branch=' . $sub_branch; ?>"><i class="fa fa-circle-o"></i>  <?php echo $sub_branch; ?></a></li>
+                                                <li><a href="<?php echo $root_menu[2].'.php?'.'branch=' . $branch_menu[0] . '&sub_branch=' . $sub_branch; ?>"><i class="fa fa-circle-o"></i>  <?php echo $sub_branch; ?></a></li>
 
                                             <?php } ?>
                                         </ul>
