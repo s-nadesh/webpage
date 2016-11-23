@@ -89,15 +89,15 @@ class myclass {
         $previous_week = strtotime("-1 week +1 day");
         $start_lweek = strtotime("last sunday midnight", $previous_week);
         $end_lweek = strtotime("next saturday", $start_lweek);
-        $this->from = date("d/m/Y", $start_lweek);
-        $this->to = date("d/m/Y", $end_lweek);
+        $this->from = date("Y-m-d", $start_lweek);
+        $this->to = date("Y-m-d", $end_lweek);
     }
 
     function getCurrentWeek() {
         $today = strtotime("today");
         $start_cweek = strtotime("last sunday midnight", $today);
-        $this->from = date("d/m/Y", $start_cweek);
-        $this->to = date("d/m/Y");
+        $this->from = date("Y-m-d", $start_cweek);
+        $this->to = date("Y-m-d");
     }
 
 }
