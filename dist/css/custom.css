@@ -29,7 +29,7 @@
 }
 
 #report_form .form-group {
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 
 .select_pns {
@@ -48,4 +48,19 @@
 .form-control {
   height: 25px;
   padding: 3px 5px;
+}
+.select_pns label {
+  margin-bottom: 0 !important;
+}
+label.error {
+  color: red;
+}
+.dashboard-view{
+    list-style: nonel
+}
+.dashboard-view li{
+    display: inline;    
+}
+.dashboard-view li:first-child{
+    padding-right: 10px;
 }
