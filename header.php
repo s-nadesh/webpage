@@ -8,7 +8,9 @@ if(!isset($_SESSION["username"])){
 }
 
 include_once("include/dbcon.php");
+include_once("include/myclass.php");
 $dbconnect = new dbconnect();
+$myclass = new myclass();
 ?>
 <!DOCTYPE html>
 <html>
@@ -91,12 +93,20 @@ $dbconnect = new dbconnect();
                 <p>
                   <?php echo $_SESSION["username"];?>                  
                 </p>
-              </li>              
+              </li>       
+              <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-6 text-center">
+                      <a href="edit-profile.php">Profile</a>
+                  </div>
+                  <div class="col-xs-6 text-center">
+                    <a href="changepassword.php">Change Password</a>
+                  </div>                  
+                </div>
+                <!-- /.row -->
+              </li>
               <!-- Menu Footer-->
-              <li class="user-footer">
-<!--                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>-->
+              <li class="user-footer">               
                 <div class="pull-right">
                   <a href="logout.php" class="btn btn-default btn-flat">Sign out</a>
                 </div>

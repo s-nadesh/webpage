@@ -31,7 +31,7 @@ if (isset($_POST['convert-btn'])) {
     <section class="content">
         <div class="row">
             <form role="form" id="conversion_tool" lpformnum="12" action="" method="post">
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="box  box-primary">                        
                         <!-- form start -->
                         <div class="box-body">
@@ -50,7 +50,7 @@ if (isset($_POST['convert-btn'])) {
                     </div>
                     <!-- /.box-body -->                  
                 </div>    
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="box  box-primary">                        
                         <!-- form start -->
                         <div class="box-body">
@@ -69,7 +69,7 @@ if (isset($_POST['convert-btn'])) {
                     </div>
                     <!-- /.box-body -->
                 </div>            
-                <div class="col-xs-4 col-xs-offset-4">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
                     <div class="box-body">
                         <button class="btn btn-block btn-warning" type="submit" name="convert-btn">CONVERT</button>
                     </div>
@@ -97,7 +97,7 @@ if (isset($_POST['convert-btn'])) {
             }
             ?>
             <?php if ($plus_results) { ?>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="box box-primary">                                            
                         <div class="box-body">
                             <div class="heading"><b>Plus</b></div>
@@ -161,7 +161,7 @@ if (isset($_POST['convert-btn'])) {
             }
             ?>
             <?php if ($minus_results) { ?>
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="box box-primary">                        
                         <!-- /.box-header -->
                         <div class="box-body">

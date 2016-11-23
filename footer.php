@@ -48,6 +48,7 @@
 <script src="dist/js/demo.js"></script>
 
 <!-- Custom JS -->
+<script src="dist/js/jquery.validate.min.js"></script>
 <script src="dist/js/custom.js"></script>
 </body>
 </html>

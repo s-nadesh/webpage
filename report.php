@@ -72,7 +72,7 @@ function isChecked($value) {
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-xs-3">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
                 <form role="form" id="report_form" lpformnum="12" action="" method="post">
                     <div class="box  box-primary">
                         <div class="box-header with-border">
@@ -111,7 +111,7 @@ function isChecked($value) {
                                         <label>
                                             <input type="checkbox" class="minimal" name="pn[]" value="<?php echo $row['PN']; ?>" <?php echo isChecked($row['PN']) ?>>
                                             <?php echo $row['PN']; ?>
-                                        </label><br>
+                                        </label>
                                     </div> 
                                 <?php } ?>
                             <?php } ?>
@@ -128,28 +128,29 @@ function isChecked($value) {
                         <div class="box-body">
                             <div class="form-group">
                                 <label>
-                                    <input type="checkbox" class="minimal" name="stations[]" value="SWDL" <?php echo isChecked('SWDL') ?>>
+                                    <input type="checkbox" class="all minimal"  name="stations[]" value="ALL" <?php echo isChecked('ALL') ?>>
+                                    ALL
+                                </label>
+                            </div>  
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" class="check minimal" name="stations[]" value="SWDL" <?php echo isChecked('SWDL') ?>>
                                     SWDL
                                 </label>
                             </div> 
                             <div class="form-group">
                                 <label>
-                                    <input type="checkbox" class="minimal" name="stations[]" value="LICCONF" <?php echo isChecked('LICCONF') ?>>
+                                    <input type="checkbox" class="check minimal" name="stations[]" value="LICCONF" <?php echo isChecked('LICCONF') ?>>
                                     LICCONF
                                 </label>
                             </div>                      
                             <div class="form-group">
                                 <label>
-                                    <input type="checkbox" class="minimal" name="stations[]" value="CTO" <?php echo isChecked('CTO') ?>>
+                                    <input type="checkbox" class="check minimal" name="stations[]" value="CTO" <?php echo isChecked('CTO') ?>>
                                     CTO
                                 </label>
                             </div>  
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" class="minimal" name="stations[]" value="ALL" <?php echo isChecked('ALL') ?>>
-                                    ALL
-                                </label>
-                            </div>  
+                            
                             <div class="col-xs-6">
                                 <button class="btn btn-block btn-success" type="submit" name="submit">Get Data</button>
                             </div>
@@ -163,7 +164,7 @@ function isChecked($value) {
             </div>
 
             <?php if (isset($table_results)) { ?>
-                <div class="col-xs-9">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
                     <div class="box box-primary">
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -248,7 +249,8 @@ function isChecked($value) {
 <?php if (isset($table_results)) { ?>
     <script>
         $(function () {
-            $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');
+            $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');           
         });
     </script>
 <?php } ?>
+
