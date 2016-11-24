@@ -6,6 +6,18 @@ if($_SESSION["role"]=='user'){
 }
 $id = $_GET['id'];
 $final_status = '2';
+$message = '';
+
+
+        
+if(isset($_GET['pwd'])){    
+   $res = $myclass->resetPassword($id);
+   if($res){
+       $message = 'Reset password successfully...';
+   }else{
+       $message = 'Reset password unsuccessful...';
+   }
+}
 
 
 if (isset($_POST['submit-form'])) {
@@ -50,7 +62,8 @@ if (isset($_POST['submit-form'])) {
         $dbconnect->sql = $user_detail_query;
         $dbconnect->updatetb();
         
-        $final_status = 1;        
+        $final_status = 1;       
+        $message = 'Updated successfully...';
     } else {
         $final_status = 0;
     }
@@ -87,7 +100,7 @@ if (isset($_POST['submit-form'])) {
 <?php if ($final_status == '1') { ?>
                                 <div class="alert alert-success alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    Updated successfully...
+                                    <?php echo $message;?>
                                 </div>
 <?php } elseif ($final_status == '0') { ?>
                                 <div class="alert alert-danger alert-dismissible">
@@ -109,8 +122,11 @@ if (isset($_POST['submit-form'])) {
                                     <input type="text" class="form-control" id="user_name" name="user_name" value="<?php echo ($row['USERNAME']!='')?$row['USERNAME']:'';?>" placeholder="Enter User Name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="Password">Password*: </label>
-                                    <input type="text" class="form-control" id="password" name="password" value="<?php echo ($row['ORG_PASSWORD']!='')? $row['ORG_PASSWORD']:'';?>" placeholder="Enter Password">
+                                    <label for="Password">Password*: </label><br>
+                                    <?php echo ($row['ORG_PASSWORD']!='')? $row['ORG_PASSWORD']:'';?> 
+                                    <a href="<?php echo "edit-user.php?id=".$id."&pwd=reset"?>" onclick="return confirm('Are you sure ?')">
+                                        <i class="fa fa-fw fa-repeat"></i> Reset password
+                                      </a>         
                                 </div>
 <!--                                <div class="form-group">
                                     <label for="Password">Confirm Password*:</label>

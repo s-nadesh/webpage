@@ -37,7 +37,7 @@ class myclass {
             $this->getCurrentWeek();
         }
 
-        $query = "SELECT * as total  FROM TESTHEADER D WHERE 
+        $query = "SELECT *  FROM TESTHEADER D WHERE 
             STARTTIME = (SELECT MIN(STARTTIME) FROM TESTHEADER WHERE SN = D.SN AND STATIONID LIKE '" . $station_id . "%' AND PRODUCT LIKE '" . $product . "')
             AND STARTTIME  BETWEEN '" . $this->from . " 12:00:01' AND '" . $this->to . " 23:59:00'";
 
@@ -68,7 +68,7 @@ class myclass {
         } else {
             $this->getCurrentWeek();
         }
-        $query = "SELECT * as total  FROM TESTHEADER D WHERE 
+        $query = "SELECT * FROM TESTHEADER D WHERE 
             STARTTIME = (SELECT MIN(STARTTIME) FROM TESTHEADER WHERE SN = D.SN AND STATIONID LIKE '" . $station_id . "%' AND PRODUCT LIKE '" . $product . "' AND OVERALLSTATUS LIKE 'PASS%')
             AND STARTTIME  BETWEEN '" . $this->from . " 12:00:01' AND '" . $this->to . " 23:59:00'";
 
@@ -78,11 +78,11 @@ class myclass {
     }
 
     function getPercentage($tested, $passed) {
+        if ($tested == 0) {
+            return 'NA';
+        }        
         $result = @($passed / $tested) * 100;
-        if ($tested === 0) {
-            $result = null;
-        }
-        return $result;
+        return number_format((float)$result, 2, '.', '').'%';
     }
 
     function getLastWeek() {
@@ -98,6 +98,26 @@ class myclass {
         $start_cweek = strtotime("last sunday midnight", $today);
         $this->from = date("Y-m-d", $start_cweek);
         $this->to = date("Y-m-d");
+    }
+    
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+    
+    function resetPassword($id){
+        $org_password = $this->generateRandomString();
+        $password = md5($org_password);         
+    
+        $login_detail_query = "UPDATE LOGIN_DETAILS SET PASSWORD='".$password."',ORG_PASSWORD='".$org_password."' WHERE ID='" . $id . "';";                    
+        $this->dbconnect->sql = $login_detail_query;
+        $this->dbconnect->updatetb();
+        return true;
     }
 
 }

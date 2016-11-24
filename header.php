@@ -78,41 +78,17 @@ $myclass = new myclass();
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->          
-                    
-          <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
+            <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?php echo $_SESSION["username"];?></span>
+              <?php echo $_SESSION["username"];?>  <i class="fa fa fa-gears"></i>
             </a>
             <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                <p>
-                  <?php echo $_SESSION["username"];?>                  
-                </p>
-              </li>       
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-6 text-center">
-                      <a href="edit-profile.php">Profile</a>
-                  </div>
-                  <div class="col-xs-6 text-center">
-                    <a href="changepassword.php">Change Password</a>
-                  </div>                  
-                </div>
-                <!-- /.row -->
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">               
-                <div class="pull-right">
-                  <a href="logout.php" class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
+              <li class="footer"><a href="edit-profile.php"><i class="fa fa-fw fa-user text-aqua"></i> Profile</a></li>
+              <li class="footer"><a href="changepassword.php"><i class="fa fa-fw fa-eraser text-green"></i> Change Password</a></li>
+              <li class="footer"><a href="logout.php"><i class="fa fa-fw fa-power-off text-red"></i> Logout</a></li>
             </ul>
-          </li>          
+          </li>
+          <!-- User Account: style can be found in dropdown.less -->
         </ul>
       </div>
     </nav>

@@ -61,7 +61,31 @@ $(function () {
     });
 
 
+    //icheckbox
+    
+    
+    var checkAllPN = $('input.check_all_pn');
+    var checkPN = $('input.check_pn');
 
+    checkAllPN.on('ifChecked ifUnchecked', function (event) {
+        if (event.type == 'ifChecked') {
+            checkPN.iCheck('check');
+        } else {
+            checkPN.iCheck('uncheck');
+        }
+    });
+
+    checkPN.on('ifChanged', function (event) {
+        if (checkPN.filter(':checked').length === checkPN.length) {
+            checkAllPN.prop('checked', 'checked');
+        } else {
+            checkAllPN.prop('checked', '');
+        }
+        checkAllPN.iCheck('update');
+
+    });
+    
+    
     var checkAll = $('input.all');
     var checkboxes = $('input.check');
 
@@ -82,6 +106,7 @@ $(function () {
         checkAll.iCheck('update');
 
     });
+    
 
 
     //Date picker
@@ -129,6 +154,7 @@ $(function () {
         "bPaginate": false,
         "dom": '<"heading">frtip'
     });
+    
 
 });
 var expanded = false;

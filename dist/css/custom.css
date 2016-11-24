@@ -64,3 +64,8 @@ label.error {
 .dashboard-view li:first-child{
     padding-right: 10px;
 }
+.login-user {
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+}

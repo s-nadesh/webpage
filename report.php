@@ -72,7 +72,7 @@ function isChecked($value) {
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
                 <form role="form" id="report_form" lpformnum="12" action="" method="post">
                     <div class="box  box-primary">
                         <div class="box-header with-border">
@@ -81,20 +81,15 @@ function isChecked($value) {
                         <!-- /.box-header -->
                         <!-- form start -->
                         <div class="box-body">
-                            <div class="row">
-                                <div class="col-xs-6">
+                            
+                                <div class="form-group">
                                     <label for="StartDate">Start Date</label>
                                     <input type="text" id="datepicker-start" class="form-control pull-right" name="start_date" value="<?php echo $form_start_date ?>">
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="form-group">
                                     <label for="EndDate">End Date</label>
                                     <input type="text" id="datepicker-end" class="form-control pull-right" name="end_date" value="<?php echo $form_end_date ?>">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-
-                            </div>                        
+                                </div>                                                        
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -103,13 +98,16 @@ function isChecked($value) {
                         <!-- form start -->
                         <div class="box-header with-border">
                             <h3 class="box-title">Select PN's</h3>
+                            <div class="box-tools pull-right">
+                                Select All <input type="checkbox" class="minimal check_all_pn" name="check_all_pn" value="check_all_pn" <?php echo isChecked('check_all_pn') ?>>
+                          </div>
                         </div>
                         <div class="box-body select_pns">
                             <?php if ($results) { ?>
                                 <?php while ($row = mysql_fetch_array($results)) { ?>
                                     <div class="form-group">
                                         <label>
-                                            <input type="checkbox" class="minimal" name="pn[]" value="<?php echo $row['PN']; ?>" <?php echo isChecked($row['PN']) ?>>
+                                            <input type="checkbox" class="minimal check_pn" name="pn[]" value="<?php echo $row['PN']; ?>" <?php echo isChecked($row['PN']) ?>>
                                             <?php echo $row['PN']; ?>
                                         </label>
                                     </div> 
@@ -152,10 +150,10 @@ function isChecked($value) {
                             </div>  
                             
                             <div class="col-xs-6">
-                                <button class="btn btn-block btn-success" type="submit" name="submit">Get Data</button>
+                                <button class="btn btn-block btn-success btn-sm" type="submit" name="submit">Get Data</button>
                             </div>
                             <div class="col-xs-6">
-                                <button class="btn btn-block btn-warning" type="button" onclick="window.location.href = window.location.href">Reset</button>
+                                <button class="btn btn-block btn-warning btn-sm" type="button" onclick="window.location.href = window.location.href">Reset</button>
                             </div>
                         </div>
                     </div>
@@ -164,7 +162,7 @@ function isChecked($value) {
             </div>
 
             <?php if (isset($table_results)) { ?>
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-10">
                     <div class="box box-primary">
                         <!-- /.box-header -->
                         <div class="box-body">
