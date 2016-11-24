@@ -29,7 +29,7 @@
 }
 
 #report_form .form-group {
-  margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .select_pns {
@@ -38,22 +38,22 @@
 }
 
 .box {
-  margin-bottom: 8px;
+    margin-bottom: 8px;
 }
 
 .box-header {
-  padding: 5px;
+    padding: 5px;
 }
 
 .form-control {
-  height: 25px;
-  padding: 3px 5px;
+    height: 25px;
+    padding: 3px 5px;
 }
 .select_pns label {
-  margin-bottom: 0 !important;
+    margin-bottom: 0 !important;
 }
 label.error {
-  color: red;
+    color: red;
 }
 .dashboard-view{
     list-style: nonel
@@ -65,7 +65,22 @@ label.error {
     padding-right: 10px;
 }
 .login-user {
-  color: #fff;
-  font-weight: 600;
-  text-align: center;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: center;
+}
+
+.buttons-excel {
+    margin-left: 10px !important;
+    padding: 0.1em 1em !important;
+    background: #5cb85c !important;
+    border-color: #4cae4c !important;
+    color: #ffffff !important;
+    font-weight: bold;
+}
+
+.buttons-excel:before {
+    font-family: 'FontAwesome';
+    content: "\f1c3";
+    margin-right: 4px; 
 }

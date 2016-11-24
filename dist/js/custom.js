@@ -147,7 +147,7 @@ $(function () {
         "scrollY": 360,
         "scrollX": true,
         "bPaginate": false,
-        "dom": '<"heading"> Bfrtip',
+        "dom": '<"heading">Bfrtip',
         buttons: [{
                 extend: 'excelHtml5',
                 exportOptions: {
