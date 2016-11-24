@@ -8,7 +8,7 @@ $(function () {
             CHILD_PN: "required",
             CHILD_DESC: "required",
             CREATED_ON: "required",
-        },        
+        },
         submitHandler: function (form) {
             form.submit();
         }
@@ -37,7 +37,7 @@ $(function () {
                 minlength: 5,
                 equalTo: "#password"
             },
-            old_password:"required",
+            old_password: "required",
         },
         // Specify the validation error messages
 //        messages: {
@@ -62,8 +62,8 @@ $(function () {
 
 
     //icheckbox
-    
-    
+
+
     var checkAllPN = $('input.check_all_pn');
     var checkPN = $('input.check_pn');
 
@@ -84,8 +84,8 @@ $(function () {
         checkAllPN.iCheck('update');
 
     });
-    
-    
+
+
     var checkAll = $('input.all');
     var checkboxes = $('input.check');
 
@@ -106,7 +106,7 @@ $(function () {
         checkAll.iCheck('update');
 
     });
-    
+
 
 
     //Date picker
@@ -130,6 +130,7 @@ $(function () {
     });
 
 
+    var hideFromExport = [0];
 
     //DataTable
     $("#example1").DataTable();
@@ -146,15 +147,25 @@ $(function () {
         "scrollY": 360,
         "scrollX": true,
         "bPaginate": false,
-        "dom": '<"heading">frtip'
+        "dom": '<"heading"> Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: function (idx, data, node) {
+                        var isNotForExport = $.inArray(idx, hideFromExport) !== -1;
+                        return !isNotForExport ? true : false;
+                    }
+                }
+            }
+        ]
     });
+    
     $("#conversion-minus").DataTable({
         "scrollY": 360,
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">frtip'
     });
-    
 
 });
 var expanded = false;
