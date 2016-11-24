@@ -27,7 +27,10 @@ class dbconnect {
         $this->l_id = $_SESSION['id'];
         
     }
-
+    function getTableColumn($table){
+        $this->sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='".$this->dbname."' AND TABLE_NAME='".$table."'";
+        $this->selecttb();                
+    }
     function selecttb() {
         $this->res = mysql_query($this->sql);
         $this->nrow = mysql_affected_rows();

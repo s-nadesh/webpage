@@ -84,3 +84,7 @@ label.error {
     content: "\f1c3";
     margin-right: 4px; 
 }
+div.dt-buttons {
+  float: right;
+  position: relative;
+}

@@ -150,6 +150,8 @@ $(function () {
         "dom": '<"heading">Bfrtip',
         buttons: [{
                 extend: 'excelHtml5',
+                title: 'data',
+                text: 'Xport',
                 exportOptions: {
                     columns: function (idx, data, node) {
                         var isNotForExport = $.inArray(idx, hideFromExport) !== -1;
@@ -164,7 +166,7 @@ $(function () {
         "scrollY": 360,
         "scrollX": true,
         "bPaginate": false,
-        "dom": '<"heading">frtip'
+        "dom": 'frtip'
     });
 
 });

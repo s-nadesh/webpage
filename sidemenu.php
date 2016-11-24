@@ -102,7 +102,7 @@
             ?>            
                 <?php if($_SESSION["role"]=='admin'){?>
                     <li class="treeview">
-                        <a href="<?php echo ($root_menu[1] == 'NO')? $root_menu[2].'.php' : '#'; ?>">
+                        <a href="<?php echo ($root_menu[1] == 'NO')? strtolower($root_menu[2]).'.php' : '#'; ?>">
                             <i class="fa fa-laptop"></i>
                             <span><?php echo $root_menu[0]; ?></span>
                             <?php if ($root_menu[1] != 'NO') { ?>
@@ -146,7 +146,7 @@
                     <?php } ?>
                 <?php }else{ ?>
                 <li class="treeview">
-                    <a href="<?php echo ($root_menu[1] == 'NO')? $root_menu[2].'.php' : '#'; ?>">
+                    <a href="<?php echo ($root_menu[1] == 'NO')? strtolower($root_menu[2]).'.php?type='.$root_menu[0] : '#'; ?>">
                         <i class="fa fa-laptop"></i>
                         <span><?php echo $root_menu[0]; ?></span>
                         <?php if ($root_menu[1] != 'NO') { ?>
