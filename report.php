@@ -26,6 +26,7 @@ $form_end_date = date('m/d/Y');
 $pn_array = [];
 $stations_array = [];
 $form_submit = false;
+$all_pns = '';
 
 if (isset($_POST['submit'])) {
     $form_submit = true;
@@ -53,13 +54,14 @@ if (isset($_POST['submit'])) {
 
     $form_start_date = date("m/d/Y", strtotime($_POST['start_date']));
     $form_end_date = date("m/d/Y", strtotime($_POST['end_date']));
+    $all_pns = $_POST['check_all_pn'];
 }
 
 function isChecked($value) {
     if (!$GLOBALS['form_submit']) {
         return "checked";
     } else {
-        if (in_array($value, $GLOBALS['stations_array']) || in_array($value, $GLOBALS['pn_array'])) {
+        if (in_array($value, $GLOBALS['stations_array']) || in_array($value, $GLOBALS['pn_array']) || $value == $GLOBALS['all_pns']) {
             return "checked";
         } else {
             return "";
