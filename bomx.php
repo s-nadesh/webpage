@@ -35,18 +35,18 @@ if (isset($_POST['submit-btn'])) {
     $end_date = date("Y-m-d h:m:s", strtotime($_POST['end_date']));
 
     //Filter
-    $query = "SELECT * FROM BOMX WHERE CREATED_ON >='" . $start_date . "' AND CREATED_ON <= '" . $end_date . "'";
-
+    $query = "SELECT * FROM BOMX WHERE CREATED_ON BETWEEN '" . $start_date . "' AND '" . $end_date . "'";
+    
     $dbconnect->sql = $query;
     $dbconnect->selecttb();
-    $results = ($dbconnect->res) ? $dbconnect->res : '0';
+    $results = ($dbconnect->nrow!='0') ? $dbconnect->res : '0';
 } else {
     //Get all
-    $query = "SELECT * FROM BOMX ORDER BY ID DESC LIMIT 0,5";
-//    $query = "SELECT * FROM BOMX ORDER BY ID DESC";
+//    $query = "SELECT * FROM BOMX ORDER BY ID DESC LIMIT 0,5";
+    $query = "SELECT * FROM BOMX ORDER BY ID DESC";
     $dbconnect->sql = $query;
     $dbconnect->selecttb();
-    $results = ($dbconnect->res) ? $dbconnect->res : '0';
+    $results = ($dbconnect->nrow!='0') ? $dbconnect->res : '0';
 }
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -57,7 +57,7 @@ if (isset($_POST['submit-btn'])) {
         <div class="row">   
             
             
-            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
                 <?php if($_SESSION["role"]=='admin'){ ?>    
                 <div class="form-group">
                     <a href="create-bomx.php"><button class="btn btn-block bg-maroon" type="button"> <i class="fa fa-fw fa-plus"></i> Add BOMX</button></a>
@@ -100,7 +100,7 @@ if (isset($_POST['submit-btn'])) {
 
 
             </div>            
-            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
                 <?php if ($final_status == '1') { ?>
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -115,7 +115,7 @@ if (isset($_POST['submit-btn'])) {
                 <div class="box box-primary">                                            
                     <div class="box-body">
                         <div class="heading"><b>BOMX</b></div>
-                        <table id="conversion-plus" class="table table-bordered table-striped">
+                        <table id="report_table" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <?php if($_SESSION["role"]=='admin'){ ?><th></th><?php } ?>
@@ -133,26 +133,28 @@ if (isset($_POST['submit-btn'])) {
                                 </tr>
                             </thead>
                             <tbody>
-<?php while ($row = mysql_fetch_array($results)) { ?>
-                                    <tr>
-                                        <?php if($_SESSION["role"]=='admin'){ ?>
-                                        <td><a href="edit-bomx.php?id=<?php echo $row['ID']; ?>"><i class="fa fa-fw fa-edit"></i></a>
-                                            <a href="bomx.php?id=<?php echo $row['ID']; ?>" onclick="return confirm('Are you sure ?')"><i class="fa fa-fw fa-close"></i></a>
-                                        </td>
-                                        <?php } ?>
-                                        <td><?php echo $row['PARENT_PN']; ?></td>
-                                        <td><?php echo $row['CHILD_PN']; ?></td>
-                                        <td><?php echo $row['LICENSE_UI_NAME']; ?></td>
-                                        <td><?php echo $row['LICENSE_TYPE']; ?></td>
-                                        <td><?php echo $row['TO_INSTALL']; ?></td>
-                                        <td><?php echo $row['CHILD_DESC']; ?></td>
-                                        <td><?php echo $row['CREATED_ON']; ?></td>
-                                        <td><?php echo $row['LAST_UPDATED_ON']; ?></td>
-                                        <td><?php echo $row['TYPE_UPGRADE']; ?></td>
-                                        <td><?php echo $row['COL_SEARCH']; ?></td>
-                                        <td><?php echo $row['PROD_MODEL']; ?></td>
-                                    </tr>
-<?php } ?>
+                                <?php if ($results !='0') { ?>
+                                    <?php while ($row = mysql_fetch_array($results)) { ?>
+                                        <tr>
+                                            <?php if($_SESSION["role"]=='admin'){ ?>
+                                            <td><a href="edit-bomx.php?id=<?php echo $row['ID']; ?>"><i class="fa fa-fw fa-edit"></i></a>
+                                                <a href="bomx.php?id=<?php echo $row['ID']; ?>" onclick="return confirm('Are you sure ?')"><i class="fa fa-fw fa-close"></i></a>
+                                            </td>
+                                            <?php } ?>
+                                            <td><?php echo $row['PARENT_PN']; ?></td>
+                                            <td><?php echo $row['CHILD_PN']; ?></td>
+                                            <td><?php echo $row['LICENSE_UI_NAME']; ?></td>
+                                            <td><?php echo $row['LICENSE_TYPE']; ?></td>
+                                            <td><?php echo $row['TO_INSTALL']; ?></td>
+                                            <td><?php echo $row['CHILD_DESC']; ?></td>
+                                            <td><?php echo $row['CREATED_ON']; ?></td>
+                                            <td><?php echo $row['LAST_UPDATED_ON']; ?></td>
+                                            <td><?php echo $row['TYPE_UPGRADE']; ?></td>
+                                            <td><?php echo $row['COL_SEARCH']; ?></td>
+                                            <td><?php echo $row['PROD_MODEL']; ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>

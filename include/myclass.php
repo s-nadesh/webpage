@@ -77,7 +77,7 @@ class myclass {
         $this->res = $this->dbconnect->res;
     }
 
-    function getPercentage($tested, $passed) {
+    function getPercentage($tested, $passed) {       
         if ($tested == 0) {
             return 'NA';
         }        

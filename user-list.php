@@ -39,7 +39,7 @@ if (isset($_GET['id'])) {
 $query = "SELECT * FROM LOGIN_DETAILS l, USER_DETAILS u WHERE l.ID = u.LOGIN_ID ORDER BY l.id ";
 $dbconnect->sql = $query;
 $dbconnect->selecttb();
-$results = ($dbconnect->res) ? $dbconnect->res : '0';
+$results = ($dbconnect->nrow!='0') ? $dbconnect->res : '0';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -62,7 +62,7 @@ $results = ($dbconnect->res) ? $dbconnect->res : '0';
                 <div class="box box-primary">                                            
                     <div class="box-body">
                         <div class="heading"><b>User List</b></div>                        
-                        <table id="conversion-plus" class="table table-bordered table-striped">
+                        <table id="report_table" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -77,20 +77,22 @@ $results = ($dbconnect->res) ? $dbconnect->res : '0';
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php while ($row = mysql_fetch_array($results)) { ?>
-                                    <tr>
-                                        <td><a href="edit-user.php?id=<?php echo $row['ID']; ?>"><i class="fa fa-fw fa-edit"></i></a>
-                                            <a href="user-list.php?id=<?php echo $row['ID']; ?>" onclick="return confirm('Are you sure ?')"><i class="fa fa-fw fa-close"></i></a>
-                                        </td>
-                                        <td><?php echo $row['FIRST_NAME']; ?></td>
-                                        <td><?php echo $row['LAST_NAME']; ?></td>
-                                        <td><?php echo $row['EMAIL']; ?></td>
-                                        <td><?php echo $row['PHONE_NO']; ?></td>
-                                        <td><?php echo ($row['ROLE'] == '1') ? 'Admin' : 'User'; ?></td>
-                                        <td><?php echo ($row['ACCESS'] == '1') ? 'Yes' : 'No'; ?></td>
-                                        <td><?php echo ($row['STATUS'] == '1') ? 'Enable' : 'Disable'; ?></td>
-                                        <td><?php echo $row['CREATED_ON']; ?></td>                                        
-                                    </tr>
+                                <?php if ($results !='0') { ?>
+                                    <?php while ($row = mysql_fetch_array($results)) { ?>
+                                        <tr>
+                                            <td><a href="edit-user.php?id=<?php echo $row['ID']; ?>"><i class="fa fa-fw fa-edit"></i></a>
+                                                <a href="user-list.php?id=<?php echo $row['ID']; ?>" onclick="return confirm('Are you sure ?')"><i class="fa fa-fw fa-close"></i></a>
+                                            </td>
+                                            <td><?php echo $row['FIRST_NAME']; ?></td>
+                                            <td><?php echo $row['LAST_NAME']; ?></td>
+                                            <td><?php echo $row['EMAIL']; ?></td>
+                                            <td><?php echo $row['PHONE_NO']; ?></td>
+                                            <td><?php echo ($row['ROLE'] == '1') ? 'Admin' : 'User'; ?></td>
+                                            <td><?php echo ($row['ACCESS'] == '1') ? 'Yes' : 'No'; ?></td>
+                                            <td><?php echo ($row['STATUS'] == '1') ? 'Enable' : 'Disable'; ?></td>
+                                            <td><?php echo $row['CREATED_ON']; ?></td>                                        
+                                        </tr>
+                                    <?php } ?>
                                 <?php } ?>
                             </tbody>
                         </table>

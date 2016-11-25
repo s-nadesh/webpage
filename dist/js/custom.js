@@ -136,11 +136,30 @@ $(function () {
     $("#example1").DataTable();
 
     //DataTable
+//    $("#report_table").DataTable({
+//        "scrollY": 380,
+//        "scrollX": true,
+//        "bPaginate": false,
+//        "dom": '<"heading">frtip'
+//    });
     $("#report_table").DataTable({
         "scrollY": 380,
         "scrollX": true,
         "bPaginate": false,
-        "dom": '<"heading">frtip'
+        "dom": '<"heading">Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                title: 'data',
+                text: 'Xport',
+                exportOptions: {
+//                    columns: ':visible'
+                    columns: function (idx, data, node) {
+                        var isNotForExport = $.inArray(idx, hideFromExport) !== -1;
+                        return !isNotForExport ? true : false;
+                    }
+                }
+            }
+        ]
     });
 
     $("#conversion-plus").DataTable({
@@ -153,10 +172,11 @@ $(function () {
                 title: 'data',
                 text: 'Xport',
                 exportOptions: {
-                    columns: function (idx, data, node) {
-                        var isNotForExport = $.inArray(idx, hideFromExport) !== -1;
-                        return !isNotForExport ? true : false;
-                    }
+                    columns: ':visible'
+//                    columns: function (idx, data, node) {
+//                        var isNotForExport = $.inArray(idx, hideFromExport) !== -1;
+//                        return !isNotForExport ? true : false;
+//                    }
                 }
             }
         ]
@@ -166,7 +186,20 @@ $(function () {
         "scrollY": 360,
         "scrollX": true,
         "bPaginate": false,
-        "dom": 'frtip'
+        "dom": '<"heading">Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                title: 'data',
+                text: 'Xport',
+                exportOptions: {
+                    columns: ':visible'
+//                    columns: function (idx, data, node) {
+//                        var isNotForExport = $.inArray(idx, hideFromExport) !== -1;
+//                        return !isNotForExport ? true : false;
+//                    }
+                }
+            }
+        ]
     });
 
 });

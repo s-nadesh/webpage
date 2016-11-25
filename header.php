@@ -83,7 +83,7 @@ $myclass = new myclass();
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <?php echo $_SESSION["username"];?>  <i class="fa fa fa-gears"></i>
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu top-menu">
               <li class="footer"><a href="edit-profile.php"><i class="fa fa-fw fa-user text-aqua"></i> Profile</a></li>
               <li class="footer"><a href="changepassword.php"><i class="fa fa-fw fa-eraser text-green"></i> Change Password</a></li>
               <li class="footer"><a href="logout.php"><i class="fa fa-fw fa-power-off text-red"></i> Logout</a></li>

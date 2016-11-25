@@ -88,3 +88,9 @@ div.dt-buttons {
   float: right;
   position: relative;
 }
+.top-menu{
+    width: 159px !important;
+}
+.top-menu li{
+    float: left !important;
+}

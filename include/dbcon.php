@@ -5,11 +5,14 @@ class dbconnect {
     //   $dbhost = 'localhost';
 //   $dbuser = 'rajencba_webpage';
 //   $dbpass = 'kkPc)bI[ab86';
-    public $host = 'localhost';
-    public $user = 'root';
-    public $pass = '';
+//    public $host = 'localhost';
+//    public $user = 'root';
+//    public $pass = '';
+    public $host;
+    public $user;
+    public $pass;
     public $dbcon;
-    public $dbname = 'webpage';
+    public $dbname;
     public $sql;
     public $res;
     public $nrow;
@@ -19,12 +22,26 @@ class dbconnect {
     public $l_id;
 
     function __construct() {
+        if($_SERVER['SERVER_NAME']=='localhost'){
+            $this->host = 'localhost';
+            $this->user = 'root';
+            $this->pass = '';
+            $this->dbname = 'webpage';
+        }else{
+            $this->host = 'localhost';
+            $this->user = 'rajencba_webpage';
+            $this->pass = 'kkPc)bI[ab86';
+            $this->dbname = 'rajencba_webpage';
+        }
+            
         $this->dbcon = mysql_connect($this->host, $this->user, $this->pass);
         $connected = mysql_select_db($this->dbname, $this->dbcon);
         if (!$this->dbcon) {
             throw new Exception("Unable to use the database " . $dbname . "!");
+        }        
+        if(isset($_SESSION['id'])){
+            $this->l_id = $_SESSION['id'];
         }
-        $this->l_id = $_SESSION['id'];
         
     }
     function getTableColumn($table){

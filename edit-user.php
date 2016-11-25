@@ -10,7 +10,7 @@ $message = '';
 
 
         
-if(isset($_GET['pwd'])){    
+if(isset($_GET['pwd']) && !isset($_POST['submit-form'])){    
    $res = $myclass->resetPassword($id);
    if($res){
        $message = 'Reset password successfully...';
@@ -31,8 +31,8 @@ if (isset($_POST['submit-form'])) {
     $STATUS = (isset($_POST['STATUS']))? '1' : '0';
     $phone_no = $_POST['phone_no'];
     $user_name = $_POST['user_name'];    
-    $password = md5($_POST['password']);
-    $org_password = $_POST['password'];
+//    $password = md5($_POST['password']);
+//    $org_password = $_POST['password'];
 
    
     //PHP validation
@@ -45,15 +45,15 @@ if (isset($_POST['submit-form'])) {
     if (!$user_name) {
         $flag = '1';
     }
-    if (!$password) {
-        $flag = '1';
-    }
+//    if (!$password) {
+//        $flag = '1';
+//    }
 
     
     if ($flag != '1') {
         
         //Login        
-        $login_detail_query = "UPDATE LOGIN_DETAILS SET USERNAME='" . $user_name . "',PASSWORD='".$password."',EMAIL='" . $email . "',ROLE='".$ROLE."',ACCESS='".$ACCESS."',STATUS='".$STATUS."',ORG_PASSWORD='".$org_password."' WHERE ID='" . $id . "';";                    
+        $login_detail_query = "UPDATE LOGIN_DETAILS SET USERNAME='" . $user_name . "',EMAIL='" . $email . "',ROLE='".$ROLE."',ACCESS='".$ACCESS."',STATUS='".$STATUS."' WHERE ID='" . $id . "';";                    
         $dbconnect->sql = $login_detail_query;
         $dbconnect->updatetb();
             
@@ -72,7 +72,7 @@ if (isset($_POST['submit-form'])) {
     $query = "SELECT * FROM LOGIN_DETAILS l, USER_DETAILS u WHERE l.ID = u.LOGIN_ID AND l.ID ='".$id."' ";    
     $dbconnect->sql = $query;
     $dbconnect->selecttb();
-    $results = ($dbconnect->res) ? $dbconnect->res : '0';
+    $results = ($dbconnect->nrow!='0') ? $dbconnect->res : '0';
     
     if($results){
         $row = mysql_fetch_array($results);
