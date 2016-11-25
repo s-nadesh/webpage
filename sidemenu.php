@@ -97,10 +97,14 @@
 //            echo '<br>';
 //        }
             ?>
-            <?php foreach ($all_menus as $root_menu) { 
-                    if($root_menu[0]=='ADMINISTRATION'){
+            <?php 
+            $menu = ['ADMINISTRATION','SET EMAIL ALERT'];
+            foreach ($all_menus as $root_menu) { 
+                        if (in_array($root_menu[0], $menu)){
             ?>            
-                <?php if($_SESSION["role"]=='admin'){?>
+                <?php if($_SESSION["role"]=='admin'){
+                     
+                    ?>
                     <li class="treeview">
                         <a href="<?php echo ($root_menu[1] == 'NO')? strtolower($root_menu[2]).'.php' : '#'; ?>">
                             <i class="fa fa-laptop"></i>

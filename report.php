@@ -101,7 +101,7 @@ function isChecked($value) {
                         <div class="box-header with-border">
                             <h3 class="box-title">Select PN's</h3>
                             <div class="box-tools pull-right">
-                                Select All <input type="checkbox" class="minimal check_all_pn" name="check_all_pn" value="check_all_pn" <?php echo isChecked('check_all_pn') ?>>
+                                All <input type="checkbox" class="minimal check_all_pn" name="check_all_pn" value="check_all_pn" <?php echo isChecked('check_all_pn') ?>>
                           </div>
                         </div>
                         <div class="box-body select_pns">
@@ -151,10 +151,10 @@ function isChecked($value) {
                                 </label>
                             </div>  
                             
-                            <div class="col-xs-6">
+                            <div class="col-xs-6 btn-space">
                                 <button class="btn btn-block btn-success btn-sm" type="submit" name="submit">Get Data</button>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-6 btn-space">
                                 <button class="btn btn-block btn-warning btn-sm" type="button" onclick="window.location.href = window.location.href">Reset</button>
                             </div>
                         </div>

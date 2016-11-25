@@ -25,10 +25,10 @@ $end_current_week = date("m/d/Y");
             Welcome
         </h1>      
     </section>
-    <section class="content">
+    <section class="content dashboard-tables">
 
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title"><b>SWDL</b> Yield Per Product</h3>
@@ -53,21 +53,21 @@ $end_current_week = date("m/d/Y");
                                 <td>805</td>
                                 <td><a href="tested.php?sid=SWDL&pdt=805&week=last"><?php $myclass->getTestedCount('SWDL', '805', $last);  echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=SWDL&pdt=805&week=last"><?php $myclass->getPassedCount('SWDL', '805', $last);  echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=SWDL&pdt=805&week=last"><?php $myclass->getFailedCount('SWDL', '805', $last);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>1405</td>
                                 <td><a href="tested.php?sid=SWDL&pdt=1405&week=last"><?php $myclass->getTestedCount('SWDL', '1405', $last);  echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=SWDL&pdt=1405&week=last"><?php $myclass->getPassedCount('SWDL', '1405', $last);  echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=SWDL&pdt=1405&week=last"><?php $myclass->getFailedCount('SWDL', '1405', $last);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>2205</td>
                                 <td><a href="tested.php?sid=SWDL&pdt=2205&week=last"><?php $myclass->getTestedCount('SWDL', '2205', $last);  echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=SWDL&pdt=2205&week=last"><?php $myclass->getPassedCount('SWDL', '2205', $last);  echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=SWDL&pdt=2205&week=last"><?php $myclass->getFailedCount('SWDL', '2205', $last);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>
                         </table>
@@ -76,7 +76,7 @@ $end_current_week = date("m/d/Y");
                 </div>
                 <!--.box--> 
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title"><b>SWDL</b> Yield Per Product</h3>
@@ -101,21 +101,21 @@ $end_current_week = date("m/d/Y");
                                 <td>805</td>
                                 <td><a href="tested.php?sid=SWDL&pdt=805&week=current"><?php $myclass->getTestedCount('SWDL', '805', $current);  echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=SWDL&pdt=805&week=current"><?php $myclass->getPassedCount('SWDL', '805', $current);  echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=SWDL&pdt=805&week=current"><?php $myclass->getFailedCount('SWDL', '805', $current);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>1405</td>
                                 <td><a href="tested.php?sid=SWDL&pdt=1405&week=current"><?php $myclass->getTestedCount('SWDL', '1405', $current);  echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=SWDL&pdt=1405&week=current"><?php $myclass->getPassedCount('SWDL', '1405', $current);  echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=SWDL&pdt=1405&week=current"><?php $myclass->getFailedCount('SWDL', '1405', $current);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>2205</td>
                                 <td><a href="tested.php?sid=SWDL&pdt=2205&week=current"><?php $myclass->getTestedCount('SWDL', '2205', $current);  echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=SWDL&pdt=2205&week=current"><?php $myclass->getPassedCount('SWDL', '2205', $current);  echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=SWDL&pdt=2205&week=current"><?php $myclass->getFailedCount('SWDL', '2205', $current);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>          
                         </table>
@@ -124,7 +124,7 @@ $end_current_week = date("m/d/Y");
                 </div>
                 <!--.box--> 
             </div>           
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title"><b>LICCONF</b> Yield Per Product</h3>
@@ -149,21 +149,21 @@ $end_current_week = date("m/d/Y");
                                 <td>805</td>
                                 <td><a href="tested.php?sid=LICCONF&pdt=805&week=last"><?php $myclass->getTestedCount('LICCONF', '805', $last);  echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=LICCONF&pdt=805&week=last"><?php $myclass->getPassedCount('LICCONF', '805', $last);  echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=LICCONF&pdt=805&week=last"><?php $myclass->getFailedCount('LICCONF', '805', $last);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>1405</td>
                                 <td><a href="tested.php?sid=LICCONF&pdt=1405&week=last"><?php $myclass->getTestedCount('LICCONF', '1405', $last);  echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=LICCONF&pdt=1405&week=last"><?php $myclass->getPassedCount('LICCONF', '1405', $last);  echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=LICCONF&pdt=1405&week=last"><?php $myclass->getFailedCount('LICCONF', '1405', $last);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>2205</td>
                                 <td><a href="tested.php?sid=LICCONF&pdt=2205&week=last"><?php $myclass->getTestedCount('LICCONF', '2205', $last);  echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=LICCONF&pdt=2205&week=last"><?php $myclass->getPassedCount('LICCONF', '2205', $last);  echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=LICCONF&pdt=2205&week=last"><?php $myclass->getFailedCount('LICCONF', '2205', $last);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>
                         </table>
@@ -172,7 +172,7 @@ $end_current_week = date("m/d/Y");
                 </div>
                 <!--.box--> 
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title"><b>LICCONF</b> Yield Per Product</h3>
@@ -197,21 +197,21 @@ $end_current_week = date("m/d/Y");
                                 <td>805</td>
                                 <td><a href="tested.php?sid=LICCONF&pdt=805&week=current"><?php $myclass->getTestedCount('LICCONF', '805', $current);  echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=LICCONF&pdt=805&week=current"><?php $myclass->getPassedCount('LICCONF', '805', $current);  echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=LICCONF&pdt=805&week=current"><?php $myclass->getFailedCount('LICCONF', '805', $current);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>1405</td>
                                 <td><a href="tested.php?sid=LICCONF&pdt=1405&week=current"><?php $myclass->getTestedCount('LICCONF', '1405', $current); echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=LICCONF&pdt=1405&week=current"><?php $myclass->getPassedCount('LICCONF', '1405', $current); echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=LICCONF&pdt=1405&week=current"><?php $myclass->getFailedCount('LICCONF', '1405', $current);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>2205</td>
                                 <td><a href="tested.php?sid=LICCONF&pdt=2205&week=current"><?php $myclass->getTestedCount('LICCONF', '2205', $current); echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=LICCONF&pdt=2205&week=current"><?php $myclass->getPassedCount('LICCONF', '2205', $current); echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=LICCONF&pdt=2205&week=current"><?php $myclass->getFailedCount('LICCONF', '2205', $current);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>          
                         </table>
@@ -220,7 +220,7 @@ $end_current_week = date("m/d/Y");
                 </div>
                 <!--.box--> 
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title"><b>CTO</b> Yield Per Product</h3>
@@ -245,21 +245,21 @@ $end_current_week = date("m/d/Y");
                                 <td>805</td>
                                 <td><a href="tested.php?sid=CTO&pdt=805&week=last"><?php $myclass->getTestedCount('CTO', '805', $last);  echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=CTO&pdt=805&week=last"><?php $myclass->getPassedCount('CTO', '805', $last);  echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=CTO&pdt=805&week=last"><?php $myclass->getFailedCount('CTO', '805', $last);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>1405</td>
                                 <td><a href="tested.php?sid=CTO&pdt=1405&week=last"><?php $myclass->getTestedCount('CTO', '1405', $last); echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=CTO&pdt=1405&week=last"><?php $myclass->getPassedCount('CTO', '1405', $last); echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=CTO&pdt=1405&week=last"><?php $myclass->getFailedCount('CTO', '1405', $last);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>2205</td>
                                 <td><a href="tested.php?sid=CTO&pdt=2205&week=last"><?php $myclass->getTestedCount('CTO', '2205', $last); echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=CTO&pdt=2205&week=last"><?php $myclass->getPassedCount('CTO', '2205', $last); echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=CTO&pdt=2205&week=last"><?php $myclass->getFailedCount('CTO', '2205', $last);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>
                         </table>
@@ -268,7 +268,7 @@ $end_current_week = date("m/d/Y");
                 </div>
                 <!--.box--> 
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title"><b>CTO</b> Yield Per Product</h3>
@@ -293,21 +293,21 @@ $end_current_week = date("m/d/Y");
                                 <td>805</td>
                                 <td><a href="tested.php?sid=CTO&pdt=805&week=current"><?php $myclass->getTestedCount('CTO', '805', $current); echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=CTO&pdt=805&week=current"><?php $myclass->getPassedCount('CTO', '805', $current); echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=CTO&pdt=805&week=current"><?php $myclass->getFailedCount('CTO', '805', $current);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>1405</td>
                                 <td><a href="tested.php?sid=CTO&pdt=1405&week=current"><?php $myclass->getTestedCount('CTO', '1405', $current); echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=CTO&pdt=1405&week=current"><?php $myclass->getPassedCount('CTO', '1405', $current); echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=CTO&pdt=1405&week=current"><?php $myclass->getFailedCount('CTO', '1405', $current);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>                            
                             <tr>
                                 <td>2205</td>
                                 <td><a href="tested.php?sid=CTO&pdt=2205&week=current"><?php $myclass->getTestedCount('CTO', '2205', $current); echo $tested = $myclass->count; ?></a></td>
                                 <td><a href="passed.php?sid=CTO&pdt=2205&week=current"><?php $myclass->getPassedCount('CTO', '2205', $current); echo $passed = $myclass->count; ?></a></td>
-                                <td><?php echo $failed = $tested - $passed; ?></td>
+                                <td><a href="failed.php?sid=CTO&pdt=2205&week=current"><?php $myclass->getFailedCount('CTO', '2205', $current);  echo $passed = $myclass->count; ?></a></td>
                                 <td><span class="badge bg-red"><?php echo $myclass->getPercentage($tested, $passed); ?></span></td>
                             </tr>          
                         </table>
@@ -320,6 +320,4 @@ $end_current_week = date("m/d/Y");
     </section>
 </div>
 <!-- Page script -->
-
-
 <?php include("footer.php"); ?>

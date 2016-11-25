@@ -22,7 +22,6 @@ if(isset($_GET['type'])){
    
     //Get all
     $query = "SELECT * FROM ".$table."";    
-//    $query = "SELECT * FROM BOMX ORDER BY ID DESC";
     $dbconnect->sql = $query;
     $dbconnect->selecttb();    
     $results = ($dbconnect->nrow!='0') ? $dbconnect->res : $dbconnect->nrow;

@@ -76,6 +76,37 @@ class myclass {
         $this->dbconnect->selecttb();
         $this->res = $this->dbconnect->res;
     }
+    
+    function getFailedCount($station_id, $product, $week) {
+        if ($week == 'last') {
+            $this->getLastWeek();
+        } else {
+            $this->getCurrentWeek();
+        }
+        $query = "SELECT COUNT(*) as total  FROM TESTHEADER D WHERE 
+            STARTTIME = (SELECT MIN(STARTTIME) FROM TESTHEADER WHERE SN = D.SN AND STATIONID LIKE '" . $station_id . "%' AND PRODUCT NOT LIKE '" . $product . "' AND OVERALLSTATUS LIKE 'PASS%')
+            AND STARTTIME  BETWEEN '" . $this->from . " 12:00:01' AND '" . $this->to . " 23:59:00'";
+
+        $this->dbconnect->sql = $query;
+        $this->dbconnect->selecttb();
+        $results = mysql_fetch_array($this->dbconnect->res);
+        $this->count = $results['total'];
+    }
+
+    function getFailed($station_id, $product, $week) {
+        if ($week == 'last') {
+            $this->getLastWeek();
+        } else {
+            $this->getCurrentWeek();
+        }
+        $query = "SELECT * FROM TESTHEADER D WHERE 
+            STARTTIME = (SELECT MIN(STARTTIME) FROM TESTHEADER WHERE SN = D.SN AND STATIONID LIKE '" . $station_id . "%' AND PRODUCT NOT LIKE '" . $product . "' AND OVERALLSTATUS LIKE 'PASS%')
+            AND STARTTIME  BETWEEN '" . $this->from . " 12:00:01' AND '" . $this->to . " 23:59:00'";
+
+        $this->dbconnect->sql = $query;
+        $this->dbconnect->selecttb();
+        $this->res = $this->dbconnect->res;
+    }
 
     function getPercentage($tested, $passed) {       
         if ($tested == 0) {
@@ -119,7 +150,7 @@ class myclass {
         $this->dbconnect->updatetb();
         return true;
     }
-
+    
 }
 
 ?>

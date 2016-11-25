@@ -56,7 +56,9 @@ label.error {
     color: red;
 }
 .dashboard-view{
-    list-style: nonel
+    list-style: nonel;
+    margin: 0;
+    padding: 0;
 }
 .dashboard-view li{
     display: inline;    
@@ -93,4 +95,54 @@ div.dt-buttons {
 }
 .top-menu li{
     float: left !important;
+}
+.btn-space{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+@media (max-width:767px) {
+    .dashboard-tables h3.box-title {
+    float: left !important;
+    width: auto !important;
+}
+
+.dashboard-tables div.box-tools {
+    float: left !important;
+    width: 100% !important;
+    position: relative !important;
+}
+
+}
+@media (min-width:768px) and (max-width:991px) {
+    .dashboard-tables h3.box-title {
+    float: left !important;
+    width: auto !important;
+}
+
+.dashboard-tables div.box-tools {
+    float: left !important;
+    width: 100% !important;
+    position: relative !important;
+}
+
+
+}
+@media (min-width:992px) and (max-width:1199px) {
+    .dashboard-tables h3.box-title {
+    float: left !important;
+    width: auto !important;
+}
+
+.dashboard-tables div.box-tools {
+    float: left !important;
+    width: 100% !important;
+    position: relative !important;
+}
+
+
+}
+@media (min-width:1200px) {
+
 }

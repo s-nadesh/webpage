@@ -1,5 +1,20 @@
 $(function () {
-
+    
+    //set-alert-per-product
+    $("#set_alert_per_product").validate({
+        // Specify the validation rules
+        rules: {
+            product: "required",
+            email: {
+                required: true,
+                email: true
+            },            
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
+    
     //Create Bomx Form
     $("#create_bomx_form").validate({
         // Specify the validation rules
@@ -197,6 +212,26 @@ $(function () {
 //                        var isNotForExport = $.inArray(idx, hideFromExport) !== -1;
 //                        return !isNotForExport ? true : false;
 //                    }
+                }
+            }
+        ]
+    });
+    
+    var hideFromExport1 = [2];
+    $("#alert_product_tables").DataTable({
+        "scrollY": 380,
+        "scrollX": true,
+        "bPaginate": false,
+        "dom": '<"heading">Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                title: 'data',
+                text: 'Xport',
+                exportOptions: {
+                    columns: function (idx, data, node) {
+                        var isNotForExport = $.inArray(idx, hideFromExport1) !== -1;
+                        return !isNotForExport ? true : false;
+                    }
                 }
             }
         ]

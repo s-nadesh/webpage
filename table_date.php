@@ -4,7 +4,6 @@ include("sidemenu.php");
 
 
 $table= '';
-$results = array();
 $final_status =2;
 $fields = array();
 
@@ -28,14 +27,14 @@ if (isset($_POST['submit-btn'])) {
     $dbconnect->sql = $query;
     $dbconnect->selecttb();
     $results = ($dbconnect->nrow!='0') ? $dbconnect->res : '0';
-} else {    
-    //Get all
-    $query = "SELECT * FROM ".$table."";    
-//    $query = "SELECT * FROM BOMX ORDER BY ID DESC";
-    $dbconnect->sql = $query;
-    $dbconnect->selecttb();    
-    $results = ($dbconnect->nrow!='0') ? $dbconnect->res : $dbconnect->nrow;
-}    
+} 
+//else {    
+//    
+//    $query = "SELECT * FROM ".$table."";    
+//    $dbconnect->sql = $query;
+//    $dbconnect->selecttb();    
+//    $results = ($dbconnect->nrow!='0') ? $dbconnect->res : $dbconnect->nrow;
+//}    
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -96,7 +95,7 @@ if (isset($_POST['submit-btn'])) {
 
 
             </div>     
-            
+            <?php if(isset($results)){?>
             <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">                
                 <div class="box box-primary">                                            
                     <div class="box-body">
@@ -131,6 +130,7 @@ if (isset($_POST['submit-btn'])) {
                 </div>
                 <!-- /.box -->
             </div>  
+            <?php } ?>
             <?php } ?>
             <!-- /.col -->
         </div>
