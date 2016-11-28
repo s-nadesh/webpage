@@ -149,6 +149,14 @@ $(function () {
 
     //DataTable
     $("#example1").DataTable();
+    
+    $("#table-permission").DataTable({
+        "scrollY": 280,
+        "scrollX": true,
+        "bPaginate": false,
+        "bFilter": false,
+//        "dom": '<"heading">frtip'
+    });
 
     //DataTable
 //    $("#report_table").DataTable({

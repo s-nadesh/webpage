@@ -16,7 +16,7 @@ if (isset($_POST['submit-form'])) {
     $last_name = $_POST['last_name'];    
     $email = $_POST['email'];
     $ROLE = (isset($_POST['ROLE']))? '1' : '2';
-    $ACCESS = (isset($_POST['ACCESS']))? '1' : '0';
+    $ACCESS = (isset($_POST['ACCESS']))? $_POST['ACCESS'] : '0';
     $STATUS = (isset($_POST['STATUS']))? '1' : '0';
     $phone_no = $_POST['phone_no'];
     $user_name = $_POST['user_name'];
@@ -25,6 +25,14 @@ if (isset($_POST['submit-form'])) {
     $confirm_password = $_POST['confirm_password'];
     $create_date = date('Y-m-d h:m:s');
 
+//    echo '<pre>';
+//    print_r($ACCESS);
+    $sql = '';
+    foreach ($ACCESS as $key=>$value){
+        $sql .= 'Table='.$key.'&'.  implode(',',$value ).'<br>';                     
+    }
+    echo $sql;
+    exit;
     //PHP validation
     if (!$first_name) {
         $flag = '1';
@@ -44,11 +52,13 @@ if (isset($_POST['submit-form'])) {
     if ($confirm_password != $org_password) {
         $flag = '1';
     }
+    
+    
 
     if ($flag != '1') {
         //Login
-        $login_detail_query = "INSERT  INTO LOGIN_DETAILS (USERNAME,PASSWORD,EMAIL,ROLE,ACCESS,STATUS,CREATED_ON,ORG_PASSWORD) "
-                    . "VALUES ('" . $user_name . "','" . $password . "','" . $email . "','".$ROLE."','".$ACCESS."','".$STATUS."','" . $create_date . "','" . $org_password . "')";
+        $login_detail_query = "INSERT  INTO LOGIN_DETAILS (USERNAME,PASSWORD,EMAIL,ROLE,STATUS,CREATED_ON,ORG_PASSWORD) "
+                    . "VALUES ('" . $user_name . "','" . $password . "','" . $email . "','".$ROLE."','".$STATUS."','" . $create_date . "','" . $org_password . "')";
         $dbconnect->sql = $login_detail_query;
         $dbconnect->inserttb();
         $insert = $dbconnect->ires; //Result status
@@ -61,12 +71,28 @@ if (isset($_POST['submit-form'])) {
                 . "VALUES ('" . $last_inserted_id . "','" . $first_name . "','" . $last_name . "','" . $phone_no . "','" . $create_date . "')";
             $dbconnect->sql = $user_detail_query;
             $dbconnect->inserttb();
+            
+            if($ACCESS != '0' ){
+                $user_detail_query = "INSERT  INTO USER_DETAILS (LOGIN_ID, FIRST_NAME,LAST_NAME,PHONE_NO,CREATED_ON) "
+                . "VALUES ('" . $last_inserted_id . "','" . $first_name . "','" . $last_name . "','" . $phone_no . "','" . $create_date . "')";
+                $dbconnect->sql = $user_detail_query;
+                $dbconnect->inserttb();
+            }
             $final_status = $dbconnect->ires;
         }
     } else {
         $final_status = 0;
     }
 }
+$table_query = 'SELECT * FROM information_schema.tables a, A_REPORT b WHERE a.TABLE_TYPE IN("BASE TABLE","VIEW")
+                AND a.TABLE_SCHEMA LIKE "webpage"
+                AND b.LAYOUT LIKE "TABLE%"
+                AND b.TYPE = a.TABLE_NAME;';
+
+$dbconnect->sql = $table_query;
+$dbconnect->selecttb();
+$table_access = $dbconnect->res;
+
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -74,8 +100,8 @@ if (isset($_POST['submit-form'])) {
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <form role="form" id="new_user_form" lpformnum="12" action="" method="post">
-                <div class="col-md-12">
+            <form role="form" id="new_user_form12" lpformnum="12" action="" method="post">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -95,14 +121,22 @@ if (isset($_POST['submit-form'])) {
                                     Please Check Your Details..
                                 </div>
 <?php } ?>
-                            <div class="col-md-6">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="First Name">First Name*:</label>
                                     <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name">
                                 </div>
                                 <div class="form-group">
+                                    <label for="Last Name">Last Name:</label>
+                                    <input type="text" class="form-control" id="lsst_name" name="last_name" placeholder="Enter Last Name">
+                                </div>                                                                
+                                <div class="form-group">
                                     <label for="Email address">Email Address*:</label>
                                     <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Email address">Phone Number:</label>
+                                    <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Enter Phone Number">
                                 </div>
                                 <div class="form-group">
                                     <label for="Username">User Name*:</label>
@@ -118,26 +152,17 @@ if (isset($_POST['submit-form'])) {
                                 </div>
                                 
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Last Name">Last Name:</label>
-                                    <input type="text" class="form-control" id="lsst_name" name="last_name" placeholder="Enter Last Name">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="Email address">Phone Number:</label>
-                                    <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Enter Phone Number">
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="col-md-4">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">                               
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<!--                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>
                                                 <input type="checkbox" class="minimal-red" name="ACCESS">
                                                 Can edit tables?
                                             </label>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
+                                    </div>-->
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                         <div class="form-group">
                                             <label>
                                                 <input type="checkbox" class="minimal-red" name="ROLE">
@@ -145,7 +170,7 @@ if (isset($_POST['submit-form'])) {
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                         <div class="form-group">
                                             <label>
                                                 <input type="checkbox" class="minimal-red" name="STATUS">
@@ -153,7 +178,32 @@ if (isset($_POST['submit-form'])) {
                                             </label>
                                         </div>
                                     </div>
-                                </div>    
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <table id="table-permission" class="table table-striped">
+                                        <thead>
+                                            <tr>                                                                                    
+                                                <th>TABLE_NAME</th>
+                                                <th class="hidden">CAN_CREATE</th>
+                                                <th>CAN_VIEW</th>
+                                                <th>CAN_EDIT</th>
+                                                <th>CAN_DELETE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <?php while($row = mysql_fetch_array($table_access)){?>                                    
+                                                    <tr>                                                           
+                                                        <td><?php echo $row['TABLE_NAME']?></td>
+                                                        <td class="hidden"><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME']?>][]" value="CREATE" ></td>
+                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME']?>][]" value="VIEW" ></td>
+                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME']?>][]" value="EDIT" ></td>
+                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME']?>][]" value="DELETE" ></td>
+                                                    </tr>  
+                                                <?php } ?>
+                                        </tbody>
+                                    </table>     
+                                </div>
+                                                                
                             </div>
 
                         </div>

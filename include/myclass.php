@@ -150,7 +150,7 @@ class myclass {
         $this->dbconnect->updatetb();
         return true;
     }
-    
+                    
 }
 
 ?>
