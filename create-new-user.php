@@ -25,13 +25,14 @@ if (isset($_POST['submit-form'])) {
     $confirm_password = $_POST['confirm_password'];
     $create_date = date('Y-m-d h:m:s');
 
-//    echo '<pre>';
-//    print_r($ACCESS);
-    $sql = '';
-    foreach ($ACCESS as $key=>$value){
-        $sql .= 'Table='.$key.'&'.  implode(',',$value ).'<br>';                     
-    }
-    echo $sql;
+    echo '<pre>';
+    print_r($ACCESS);
+//    $sql = '';
+//    foreach ($ACCESS as $key=>$value){
+//        echo count($value);
+//        $sql .= 'Table='.$key.'&'.  implode(',',$value ).'<br>';                     
+//    }
+//    echo $sql;
     exit;
     //PHP validation
     if (!$first_name) {
