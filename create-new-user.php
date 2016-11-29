@@ -1,6 +1,6 @@
 <?php
 include("header.php");
-if($_SESSION["role"]=='user'){    
+if($_SESSION["role"]=='user'){
     echo "<script type='text/javascript'>window.location.href = '".SITE_URL."';</script>";
 }
 include("sidemenu.php");
@@ -13,10 +13,11 @@ if (isset($_POST['submit-form'])) {
 
     $flag = '0';
     $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];    
+    $last_name = $_POST['last_name'];
     $email = $_POST['email'];
     $ROLE = (isset($_POST['ROLE']))? '1' : '2';
-    $ACCESS = (isset($_POST['ACCESS']))? $_POST['ACCESS'] : '0';
+    $ACCESS = $_POST['ACCESS'];
+//    $ACCESS = (isset($_POST['ACCESS']))? $_POST['ACCESS'] : '0';
     $STATUS = (isset($_POST['STATUS']))? '1' : '0';
     $phone_no = $_POST['phone_no'];
     $user_name = $_POST['user_name'];
@@ -25,19 +26,10 @@ if (isset($_POST['submit-form'])) {
     $confirm_password = $_POST['confirm_password'];
     $create_date = date('Y-m-d h:m:s');
 
-    echo '<pre>';
-    print_r($ACCESS);
-//    $sql = '';
-//    foreach ($ACCESS as $key=>$value){
-//        echo count($value);
-//        $sql .= 'Table='.$key.'&'.  implode(',',$value ).'<br>';                     
-//    }
-//    echo $sql;
-    exit;
     //PHP validation
     if (!$first_name) {
         $flag = '1';
-    }   
+    }
     if (!$email) {
         $flag = '1';
     }
@@ -53,8 +45,8 @@ if (isset($_POST['submit-form'])) {
     if ($confirm_password != $org_password) {
         $flag = '1';
     }
-    
-    
+
+
 
     if ($flag != '1') {
         //Login
@@ -64,20 +56,28 @@ if (isset($_POST['submit-form'])) {
         $dbconnect->inserttb();
         $insert = $dbconnect->ires; //Result status
         $last_inserted_id = $dbconnect->iid; //Get last insert id
-        
+
         if ($insert) {
-            
+
             //Create New user
             $user_detail_query = "INSERT  INTO USER_DETAILS (LOGIN_ID, FIRST_NAME,LAST_NAME,PHONE_NO,CREATED_ON) "
                 . "VALUES ('" . $last_inserted_id . "','" . $first_name . "','" . $last_name . "','" . $phone_no . "','" . $create_date . "')";
             $dbconnect->sql = $user_detail_query;
             $dbconnect->inserttb();
-            
-            if($ACCESS != '0' ){
-                $user_detail_query = "INSERT  INTO USER_DETAILS (LOGIN_ID, FIRST_NAME,LAST_NAME,PHONE_NO,CREATED_ON) "
-                . "VALUES ('" . $last_inserted_id . "','" . $first_name . "','" . $last_name . "','" . $phone_no . "','" . $create_date . "')";
-                $dbconnect->sql = $user_detail_query;
-                $dbconnect->inserttb();
+
+            if($ACCESS){
+            $ACCESS_DATA = array();
+            foreach( $ACCESS as $TBLNAME => $row) {
+                $CREATE = (@$row['CAN_CREATE'] == '1') ? 1 : 0;
+                $VIEW   = (@$row['CAN_VIEW'] == '1') ? 1 : 0;
+                $EDIT   = (@$row['CAN_EDIT'] == '1') ? 1 : 0;
+                $DELETE = (@$row['CAN_DELETE'] == '1') ? 1 : 0;
+                $ACCESS_DATA[] = "('{$last_inserted_id}','{$TBLNAME}','{$CREATE}','{$VIEW}','{$EDIT}','{$DELETE}')";
+            }
+            $ACCESS_INSERT_QRY = 'INSERT INTO TABLE_PERMISSIONS (LOGIN_ID, TABLE_NAME, CAN_CREATE, CAN_VIEW, CAN_EDIT, CAN_DELETE) VALUES '.implode(',', $ACCESS_DATA);
+
+            $dbconnect->sql = $ACCESS_INSERT_QRY;
+            $dbconnect->inserttb();
             }
             $final_status = $dbconnect->ires;
         }
@@ -109,7 +109,7 @@ $table_access = $dbconnect->res;
                             <h3 class="box-title">Create New User</h3>
                         </div>
                         <!-- /.box-header -->
-                        <!-- form start -->                        
+                        <!-- form start -->
                         <div class="box-body">
 <?php if ($final_status == '1') { ?>
                                 <div class="alert alert-success alert-dismissible">
@@ -130,7 +130,7 @@ $table_access = $dbconnect->res;
                                 <div class="form-group">
                                     <label for="Last Name">Last Name:</label>
                                     <input type="text" class="form-control" id="lsst_name" name="last_name" placeholder="Enter Last Name">
-                                </div>                                                                
+                                </div>
                                 <div class="form-group">
                                     <label for="Email address">Email Address*:</label>
                                     <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
@@ -151,18 +151,10 @@ $table_access = $dbconnect->res;
                                     <label for="Password">Confirm Password*:</label>
                                     <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Enter Confirm Password">
                                 </div>
-                                
+
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">                               
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-<!--                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>
-                                                <input type="checkbox" class="minimal-red" name="ACCESS">
-                                                Can edit tables?
-                                            </label>
-                                        </div>
-                                    </div>-->
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                         <div class="form-group">
                                             <label>
@@ -180,10 +172,11 @@ $table_access = $dbconnect->res;
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <table id="table-permission" class="table table-striped">
                                         <thead>
-                                            <tr>                                                                                    
+                                            <tr>
                                                 <th>TABLE_NAME</th>
                                                 <th class="hidden">CAN_CREATE</th>
                                                 <th>CAN_VIEW</th>
@@ -192,19 +185,19 @@ $table_access = $dbconnect->res;
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                <?php while($row = mysql_fetch_array($table_access)){?>                                    
-                                                    <tr>                                                           
+                                                <?php while($row = mysql_fetch_array($table_access)){?>
+                                                    <tr>
                                                         <td><?php echo $row['TABLE_NAME']?></td>
-                                                        <td class="hidden"><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME']?>][]" value="CREATE" ></td>
-                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME']?>][]" value="VIEW" ></td>
-                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME']?>][]" value="EDIT" ></td>
-                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME']?>][]" value="DELETE" ></td>
-                                                    </tr>  
+                                                        <td class="hidden"><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_CREATE]" value="1" /></td>
+                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_VIEW]" value="1" /></td>
+                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_EDIT]" value="1" /></td>
+                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_DELETE]" value="1" /></td>
+                                                    </tr>
                                                 <?php } ?>
                                         </tbody>
-                                    </table>     
+                                    </table>
                                 </div>
-                                                                
+                            </div>
                             </div>
 
                         </div>
@@ -228,10 +221,10 @@ $table_access = $dbconnect->res;
                 <!-- /.box -->
 
             </form>
-        </div>        
+        </div>
         <!-- /.row -->
     </section>
-    <!-- /.content -->       
+    <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 

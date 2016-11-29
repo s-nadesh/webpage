@@ -1,5 +1,5 @@
 $(function () {
-    
+
     //set-alert-per-product
     $("#set_alert_per_product").validate({
         // Specify the validation rules
@@ -8,13 +8,13 @@ $(function () {
             email: {
                 required: true,
                 email: true
-            },            
+            },
         },
         submitHandler: function (form) {
             form.submit();
         }
     });
-    
+
     //Create Bomx Form
     $("#create_bomx_form").validate({
         // Specify the validation rules
@@ -149,9 +149,10 @@ $(function () {
 
     //DataTable
     $("#example1").DataTable();
-    
+    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
     $("#table-permission").DataTable({
-        "scrollY": 280,
+        "scrollY": (h-250),
         "scrollX": true,
         "bPaginate": false,
         "bFilter": false,
@@ -166,7 +167,7 @@ $(function () {
 //        "dom": '<"heading">frtip'
 //    });
     $("#report_table").DataTable({
-        "scrollY": 380,
+        "scrollY": (h-215),
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">Bfrtip',
@@ -186,7 +187,7 @@ $(function () {
     });
 
     $("#conversion-plus").DataTable({
-        "scrollY": 360,
+        "scrollY": (h-380),
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">Bfrtip',
@@ -204,9 +205,9 @@ $(function () {
             }
         ]
     });
-    
+
     $("#conversion-minus").DataTable({
-        "scrollY": 360,
+        "scrollY": (h-380),
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">Bfrtip',
@@ -224,10 +225,26 @@ $(function () {
             }
         ]
     });
-    
+
+    $("#a-report-table").DataTable({
+        "scrollY": (h-220),
+        "scrollX": true,
+        "bPaginate": false,
+        "dom": '<"heading">Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                title: 'data',
+                text: 'Xport',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            }
+        ]
+    });
+
     var hideFromExport1 = [2];
     $("#alert_product_tables").DataTable({
-        "scrollY": 380,
+        "scrollY": (h-215),
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">Bfrtip',
