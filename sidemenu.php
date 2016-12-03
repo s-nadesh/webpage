@@ -4,11 +4,11 @@
     <section class="sidebar">
         <!-- Sidebar user panel -->
         <div class="user-panel">
-<!--            <div class="pull-left image">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-            </div>-->
+            <!--            <div class="pull-left image">
+                            <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        </div>-->
             <div class="login-user">
-                <p>Welcome <?php echo ucfirst($_SESSION["username"]);?> </p>          
+                <p>Welcome <?php echo ucfirst($_SESSION["username"]); ?> </p>          
             </div>
         </div>
 
@@ -21,9 +21,6 @@
             </li>
             <?php
             $all_menus = array();
-            ?>
-
-            <?php
             $dbconnect->sql = "SELECT DISTINCT(TYPE),ID,LAYOUT FROM A_REPORT WHERE DISABLE = 0 ORDER BY ID;";
             $dbconnect->selecttb();
             $fl_result = $dbconnect->res;
@@ -63,94 +60,33 @@
                                     $j++;
                                 }
 
-                                $branch[$i][1] = $sub_branch;                                
+                                $branch[$i][1] = $sub_branch;
                             }
                             $branch[$i][2] = $row2['LAYOUT'];
-                            $i++;                            
+                            $i++;
                         }
-                        $root_menus[1] = $branch;                        
+                        $root_menus[1] = $branch;
                     }
                     $root_menus[2] = $row1['LAYOUT'];
                     $all_menus[$row1['ID']] = $root_menus;
                 }
             }
             ?>
-            <?php            
-//        foreach($all_menus as $root_menu){
-//                echo $root_menu[0].'--- Layout---'.$root_menu[2].'<br>';        
-//            if($root_menu[1]!='NO'){
-//                foreach($root_menu[1] as $branch_menu){
-//                    echo '----'.$branch_menu[0].'<br>';
-//                    
-//                    if($branch_menu[1]!='NO'){
-//                        foreach($branch_menu[1] as $sub_branch){        
-//                            echo '--------'.$sub_branch.'<br>';
-//                        }
-//                    }  else {
-//                        echo '--------No<br>';
-//                    }
-//                    
-//                }
-//            }  else {
-//                echo '----No<br>';
-//            }
-//            echo '<br>';
-//        }
-            ?>
-            <?php 
-            $menu = ['ADMINISTRATION','SET EMAIL ALERT'];
-            foreach ($all_menus as $root_menu) { 
-                        if (in_array($root_menu[0], $menu)){
-            ?>            
-                <?php if($_SESSION["role"]=='admin'){
-                     
-                    ?>
-                    <li class="treeview">
-                        <a href="<?php echo ($root_menu[1] == 'NO')? strtolower($root_menu[2]).'.php' : '#'; ?>">
-                            <i class="fa fa-laptop"></i>
-                            <span><?php echo $root_menu[0]; ?></span>
-                            <?php if ($root_menu[1] != 'NO') { ?>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-right pull-right"></i>
-                                </span>
-                            <?php } ?>
-                        </a>
-                        <?php if ($root_menu[1] != 'NO') { ?>
-                            <ul class="treeview-menu">
-                                <?php foreach ($root_menu[1] as $branch_menu) { ?>
 
-                                    <li>
-                                        <?php if ($branch_menu[1] != 'NO') { ?>
-                                            <a href="#"><i class="fa fa-plus"></i> 
-                                                <span><?php echo $branch_menu[0]; ?> </span>                            
-                                                <span class="pull-right-container">
-                                                    <i class="fa fa-angle-right pull-right"></i>
-                                                </span></a>
-                                        <?php } else { ?>
-                                        <a href="<?php echo $branch_menu[2].'.php?'.'branch=' . $branch_menu[0]; ?>"><i class="fa fa-circle-o"></i> 
-                                                <span><?php echo $branch_menu[0]; ?> </span>                            
-                                            </a>
-                                        <?php } ?>
-
-                                        <?php if ($branch_menu[1] != 'NO') { ?>
-                                            <ul class="treeview-menu">
-                                                <?php foreach ($branch_menu[1] as $sub_branch) { ?>
-
-                                                    <li><a href="<?php echo $sub_branch[2].'.php?'.'branch=' . $branch_menu[0] . '&sub_branch=' . $sub_branch[0]; ?>"><i class="fa fa-circle-o"></i>  <?php echo $sub_branch[0]; ?></a></li>
-
-                                                <?php } ?>
-                                            </ul>
-                                        <?php } ?>
-                                    </li>                      
-
-                                <?php } ?>
-                            </ul>
-                        <?php } ?>
-                    </li>
-                    <?php } ?>
-                <?php }else{ ?>
-                <li class="treeview">
-                    <a href="<?php echo ($root_menu[1] == 'NO')? strtolower($root_menu[2]).'.php?type='.$root_menu[0] : '#'; ?>">
+            <?php
+            $menu = ['ADMINISTRATION', 'SET EMAIL ALERT'];
+            foreach ($all_menus as $root_menu) {
+                if (in_array($root_menu[0], $menu)) {
+                    if ($_SESSION["role"] != 'admin') {
+                        continue;
+                    }
+                }
+                $type_active = '';
+                if (isset($_GET['type']) && $_GET['type'] == $root_menu[0])
+                    $type_active = 'active';
+                ?>            
+                <li class="treeview <?php echo $type_active ?>">
+                    <a href="<?php echo ($root_menu[1] == 'NO') ? strtolower($root_menu[2]) . '.php?type=' . $root_menu[0] : '#'; ?>">
                         <i class="fa fa-laptop"></i>
                         <span><?php echo $root_menu[0]; ?></span>
                         <?php if ($root_menu[1] != 'NO') { ?>
@@ -162,16 +98,22 @@
                     <?php if ($root_menu[1] != 'NO') { ?>
                         <ul class="treeview-menu">
                             <?php foreach ($root_menu[1] as $branch_menu) { ?>
-
-                                <li>
+                                <?php
+                                $branch_active = '';
+                                if (isset($_GET['branch']) && trim($_GET['branch']) == trim($branch_menu[0]))
+                                    $branch_active = 'active';
+                                ?>
+                                <li class="<?php echo $branch_active ?>">
                                     <?php if ($branch_menu[1] != 'NO') { ?>
-                                        <a href="#"><i class="fa fa-plus"></i> 
+                                        <a href="#">
+                                            <i class="fa fa-plus"></i> 
                                             <span><?php echo $branch_menu[0]; ?> </span>                            
                                             <span class="pull-right-container">
                                                 <i class="fa fa-angle-right pull-right"></i>
                                             </span></a>
                                     <?php } else { ?>
-                                    <a href="<?php echo $branch_menu[2].'.php?'.'branch=' . $branch_menu[0]; ?>"><i class="fa fa-circle-o"></i> 
+                                        <a href="<?php echo $branch_menu[2] . '.php?type=' . $root_menu[0] . '&branch=' . $branch_menu[0]; ?>">
+                                            <i class="fa fa-circle-o"></i> 
                                             <span><?php echo $branch_menu[0]; ?> </span>                            
                                         </a>
                                     <?php } ?>
@@ -179,21 +121,26 @@
                                     <?php if ($branch_menu[1] != 'NO') { ?>
                                         <ul class="treeview-menu">
                                             <?php foreach ($branch_menu[1] as $sub_branch) { ?>
-
-                                                <li><a href="<?php echo $sub_branch[2].'.php?'.'branch=' . $branch_menu[0] . '&sub_branch=' . $sub_branch[0]; ?>"><i class="fa fa-circle-o"></i>  <?php echo $sub_branch[0]; ?></a></li>
-
+                                                <?php
+                                                $sub_branch_active = '';
+                                                if (isset($_GET['sub_branch']) && trim($_GET['sub_branch']) == trim($sub_branch[0]))
+                                                    $sub_branch_active = 'active';
+                                                ?>
+                                            <li class="<?php echo $sub_branch_active?>">
+                                                    <a href="<?php echo $sub_branch[2] . '.php?type=' . $root_menu[0] . '&branch=' . $branch_menu[0] . '&sub_branch=' . $sub_branch[0]; ?>">
+                                                        <i class="fa fa-circle-o"></i>  
+                                                        <?php echo $sub_branch[0]; ?>
+                                                    </a>
+                                                </li>
                                             <?php } ?>
                                         </ul>
                                     <?php } ?>
                                 </li>                      
-
                             <?php } ?>
                         </ul>
                     <?php } ?>
                 </li>
-                <?php } ?>
             <?php } ?>        
-
         </ul>
     </section>
     <!-- /.sidebar -->
