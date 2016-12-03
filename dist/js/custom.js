@@ -150,9 +150,12 @@ $(function () {
     //DataTable
     $("#example1").DataTable();
     var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    $("#xml_to_table").DataTable({
+        "bDestroy": true
+    });
 
     $("#table-permission").DataTable({
-        "scrollY": (h-250),
+        "scrollY": (h - 250),
         "scrollX": true,
         "bPaginate": false,
         "bFilter": false,
@@ -167,7 +170,7 @@ $(function () {
 //        "dom": '<"heading">frtip'
 //    });
     $("#report_table").DataTable({
-        "scrollY": (h-215),
+        "scrollY": (h - 215),
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">Bfrtip',
@@ -187,7 +190,7 @@ $(function () {
     });
 
     $("#conversion-plus").DataTable({
-        "scrollY": (h-380),
+        "scrollY": (h - 380),
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">Bfrtip',
@@ -207,7 +210,7 @@ $(function () {
     });
 
     $("#conversion-minus").DataTable({
-        "scrollY": (h-380),
+        "scrollY": (h - 380),
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">Bfrtip',
@@ -227,7 +230,7 @@ $(function () {
     });
 
     $("#a-report-table").DataTable({
-        "scrollY": (h-220),
+        "scrollY": (h - 220),
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">Bfrtip',
@@ -244,7 +247,7 @@ $(function () {
 
     var hideFromExport1 = [2];
     $("#alert_product_tables").DataTable({
-        "scrollY": (h-215),
+        "scrollY": (h - 215),
         "scrollX": true,
         "bPaginate": false,
         "dom": '<"heading">Bfrtip',

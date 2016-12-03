@@ -83,15 +83,15 @@ function isChecked($value) {
                         <!-- /.box-header -->
                         <!-- form start -->
                         <div class="box-body">
-                            
-                                <div class="form-group">
-                                    <label for="StartDate">Start Date</label>
-                                    <input type="text" id="datepicker-start" class="form-control pull-right" name="start_date" value="<?php echo $form_start_date ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label for="EndDate">End Date</label>
-                                    <input type="text" id="datepicker-end" class="form-control pull-right" name="end_date" value="<?php echo $form_end_date ?>">
-                                </div>                                                        
+
+                            <div class="form-group">
+                                <label for="StartDate">Start Date</label>
+                                <input type="text" id="datepicker-start" class="form-control pull-right" name="start_date" value="<?php echo $form_start_date ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="EndDate">End Date</label>
+                                <input type="text" id="datepicker-end" class="form-control pull-right" name="end_date" value="<?php echo $form_end_date ?>">
+                            </div>                                                        
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -102,7 +102,7 @@ function isChecked($value) {
                             <h3 class="box-title">Select PN's</h3>
                             <div class="box-tools pull-right">
                                 All <input type="checkbox" class="minimal check_all_pn" name="check_all_pn" value="check_all_pn" <?php echo isChecked('check_all_pn') ?>>
-                          </div>
+                            </div>
                         </div>
                         <div class="box-body select_pns">
                             <?php if ($results) { ?>
@@ -150,7 +150,7 @@ function isChecked($value) {
                                     CTO
                                 </label>
                             </div>  
-                            
+
                             <div class="col-xs-6 btn-space">
                                 <button class="btn btn-block btn-success btn-sm" type="submit" name="submit">Get Data</button>
                             </div>
@@ -190,7 +190,7 @@ function isChecked($value) {
                                         <th>TOTALTESTTIME</th>
                                         <th>REV</th>
                                         <th>OVERALLSTATUS</th>
-<!--                                        <th>TESTREPORT</th>
+    <!--                                        <th>TESTREPORT</th>
                                         <th>RUNNINGLOG</th>
                                         <th>TRACELOG</th>
                                         <th>TIMEZONE</th>-->
@@ -202,7 +202,11 @@ function isChecked($value) {
                                 <tbody>
                                     <?php while ($row = mysql_fetch_array($table_results)) { ?>
                                         <tr>
-                                            <td><?php echo $row['SN'] ?></td>
+                                            <td>
+                                                <a href="javascript:void(0)" data-sn="<?php echo $row['SN']; ?>" data-starttime="<?php echo $row['STARTTIME'] ?>" id="report-sn" data-toggle="modal" data-target="#myModal">
+                                                    <?php echo $row['SN'] ?>
+                                                </a>
+                                            </td>
                                             <td><?php echo $row['PN'] ?></td>
                                             <td><?php echo $row['HWS'] ?></td>
                                             <td><?php echo $row['SKU'] ?></td>
@@ -221,7 +225,7 @@ function isChecked($value) {
                                             <td><?php echo $row['TOTALTESTTIME'] ?></td>
                                             <td><?php echo $row['REV'] ?></td>
                                             <td><?php echo $row['OVERALLSTATUS'] ?></td>
-<!--                                            <td><?php echo $row['TESTREPORT'] ?></td>
+        <!--                                            <td><?php echo $row['TESTREPORT'] ?></td>
                                             <td><?php echo $row['RUNNINGLOG'] ?></td>
                                             <td><?php echo $row['TRACELOG'] ?></td>
                                             <td><?php echo $row['TIMEZONE'] ?></td>-->
@@ -244,13 +248,50 @@ function isChecked($value) {
     </section>
     <!-- /.content -->
 </div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <div id="xml_to_table_div">
+                    <!--                    Dynamic content from ajax-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- /.content-wrapper -->
 <?php include("footer.php"); ?>
 <?php if (isset($table_results)) { ?>
     <script>
         $(function () {
-            $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');           
+            $("#report-sn").click(function () {
+                var sn = $(this).data("sn");
+                var starttime = $(this).data("starttime");
+                xml_to_table(sn, starttime, "XML_TO_TESTHEADER");
+            });
+            $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');
         });
+
+        function xml_to_table(sn, starttime, table) {
+            $.ajax({
+                type: "POST",
+                url: "xml_to_tests.php",
+                data: {sn: sn, starttime: starttime, table: table},
+                success: function (response) {
+                    $("#xml_to_table_div").html(response);
+                    $("#xml_to_table").dataTable().fnDestroy();
+                    $("#xml_to_table").DataTable({
+                        "bDestroy": true,
+                    });
+                }
+            });
+        }
     </script>
 <?php } ?>
 
