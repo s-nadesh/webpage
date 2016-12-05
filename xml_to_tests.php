@@ -5,7 +5,7 @@ $dbconnect = new dbconnect();
 $myclass = new myclass();
 
 
-$dbconnect->sql = "SELECT * FROM " . $_POST['table'] . " where SERIAL_NUMBER like '" . $_POST['sn'] . "%' AND START_TIME ='" . $_POST['starttime'] . "' ";
+$dbconnect->sql = "SELECT * FROM " . $_POST['table'] . " where SERIAL_NUMBER like '" . $_POST['sn'] . "' AND START_TIME ='" . $_POST['starttime'] . "' ";
 $dbconnect->selecttb();
 $results = ($dbconnect->nrow != '0') ? $dbconnect->res : '0';
 ?>
@@ -65,71 +65,73 @@ $results = ($dbconnect->nrow != '0') ? $dbconnect->res : '0';
         </tr>
     </thead>    
     <tbody>        
-        
-            <?php 
-                if ($_POST['table'] == 'XML_TO_TESTHEADER' && $results != '0') { 
-                    while($row = mysql_fetch_array($results)){
-            ?>
-                <tr>
-                <td><?php echo $row['SERIAL_NUMBER'];?></td>
-                <td><?php echo $row['PART_NUMBER'];?></td>
-                <td><?php echo $row['COMPONENT'];?></td>
-                <td><?php echo $row['CHASSIS_SERIAL_NUMBER'];?></td>
-                <td><?php echo $row['HWS'];?></td>
-                <td><?php echo $row['SOFTWARE_SKU'];?></td>
-                <td><?php echo $row['PURCHASE_ORDER'];?></td>
-                <td><?php echo $row['SALES_ORDER'];?></td>
-                <td><?php echo $row['SALES_COUNTRY'];?></td>
-                <td><?php echo $row['STATION_ID'];?></td>
-                <td><?php echo $row['SITE_NAME'];?></td>
-                <td><?php echo $row['TEST_AUTOMATION_COMPUTER'];?></td>
-                <td><?php echo $row['CELL'];?></td>
-                <td><?php echo $row['TESTBLOX_VERSION'];?></td>
-                <td><?php echo $row['USER_ID'];?></td>
-                <td><?php echo $row['DEPLOYMENT'];?></td>
-                <td><?php echo date('m/d/Y h:i:s A',strtotime($row['START_TIME']));?></td>
-                <td><?php echo date('m/d/Y h:i:s A',strtotime($row['END_TIME']));?></td>
-                <td><?php echo $row['DURATION'];?></td>
-                <td><?php echo $row['TEST_STATUS'];?></td>
-                <td><?php echo $row['TIME_TO_FIRST_FAILURE'];?><td>
-                <td><?php echo $row['FILE_NAME']?><td>           
-                </tr>
-                <?php 
-                    }
-                    }else if ($_POST['table'] == 'XML_TO_TESTS' && $results != '0') { 
-                    while($row = mysql_fetch_array($results)){
+        <?php
+        if ($_POST['table'] == 'XML_TO_TESTHEADER' && $results != '0') {
+            while ($row = mysql_fetch_array($results)) {
                 ?>
                 <tr>
-                <td><?php echo $row['SERIAL_NUMBER'];?></td>
-                <td><?php echo date('m/d/Y h:i:s A',strtotime($row['START_TIME']));?></td>
-                <td><?php echo $row['TEST_NUM'];?></td>
-                <td><?php echo $row['TEST_CMD'];?></td>
-                <td><?php echo $row['TEST_CMD_PARTS'];?></td>
-                <td><?php echo date('m/d/Y h:i:s A',strtotime($row['TEST_CMD_START_TIME']));?></td>
-                <td><?php echo date('m/d/Y h:i:s A',strtotime($row['TEST_CMD_END_TIME']));?></td>
-                <td><?php echo $row['TEST_CMD_ELAPSED_TIME'];?></td>
-                <td><?php echo $row['TEST_CMD_DESCRIPTION'];?></td>
-                <td><?php echo $row['TEST_CMD_OUTPUT'];?></td>
-                <td><?php echo $row['TEST_CMD_FAILURE_CODE'];?></td>
-                <td><?php echo $row['TEST_CMD_STATUS'];?></td>
-                <td><?php echo $row['FILE_NAME'];?></td>
-                <td><?php echo date('m/d/Y h:i:s A',strtotime($row['CREATED_ON']));?></td>
+                    <td><?php echo $row['SERIAL_NUMBER']; ?></td>
+                    <td><?php echo $row['PART_NUMBER']; ?></td>
+                    <td><?php echo $row['COMPONENT']; ?></td>
+                    <td><?php echo $row['CHASSIS_SERIAL_NUMBER']; ?></td>
+                    <td><?php echo $row['HWS']; ?></td>
+                    <td><?php echo $row['SOFTWARE_SKU']; ?></td>
+                    <td><?php echo $row['PURCHASE_ORDER']; ?></td>
+                    <td><?php echo $row['SALES_ORDER']; ?></td>
+                    <td><?php echo $row['SALES_COUNTRY']; ?></td>
+                    <td><?php echo $row['STATION_ID']; ?></td>
+                    <td><?php echo $row['SITE_NAME']; ?></td>
+                    <td><?php echo $row['TEST_AUTOMATION_COMPUTER']; ?></td>
+                    <td><?php echo $row['CELL']; ?></td>
+                    <td><?php echo $row['TESTBLOX_VERSION']; ?></td>
+                    <td><?php echo $row['USER_ID']; ?></td>
+                    <td><?php echo $row['DEPLOYMENT']; ?></td>
+                    <td><?php echo date('m/d/Y h:i:s A', strtotime($row['START_TIME'])); ?></td>
+                    <td><?php echo date('m/d/Y h:i:s A', strtotime($row['END_TIME'])); ?></td>
+                    <td><?php echo $row['DURATION']; ?></td>
+                    <td><?php echo $row['TEST_STATUS']; ?></td>
+                    <td><?php echo $row['TIME_TO_FIRST_FAILURE']; ?><td>
+                    <td><?php echo $row['FILE_NAME'] ?><td>           
                 </tr>
-            <?php 
-                    }
-                }else if ($_POST['table'] == 'XML_TO_TESTVERSION' && $results != '0') { 
-                    while($row = mysql_fetch_array($results)){   ?>
+                <?php
+            }
+        } else if ($_POST['table'] == 'XML_TO_TESTS' && $results != '0') {
+            while ($row = mysql_fetch_array($results)) {
+                ?>
                 <tr>
-                <td><?php echo $row['SERIAL_NUMBER'];?></td>
-                <td><?php echo date('m/d/Y h:i:s A',strtotime($row['START_TIME']));?></td>
-                <td><?php echo $row['COMPONENT'];?></td>
-                <td><?php echo $row['TEST_POINT'];?></td>
-                <td><?php echo $row['SOFT_VERSION'];?></td>
-                <td><?php echo $row['TESTSTATUS'];?></td>
-                <td><?php echo $row['FILE_NAME'];?></td>
-                    <td><?php echo $row['CREATED_ON'];?></td>
-                    </tr>
-                <?php } 
-                } ?>        
+                    <td><?php echo $row['SERIAL_NUMBER']; ?></td>
+                    <td><?php echo date('m/d/Y h:i:s A', strtotime($row['START_TIME'])); ?></td>
+                    <td><?php echo $row['TEST_NUM']; ?></td>
+                    <td><?php echo $row['TEST_CMD']; ?></td>
+                    <td><?php echo $row['TEST_CMD_PARTS']; ?></td>
+                    <td><?php echo date('m/d/Y h:i:s A', strtotime($row['TEST_CMD_START_TIME'])); ?></td>
+                    <td><?php echo date('m/d/Y h:i:s A', strtotime($row['TEST_CMD_END_TIME'])); ?></td>
+                    <td><?php echo $row['TEST_CMD_ELAPSED_TIME']; ?></td>
+                    <td><?php echo $row['TEST_CMD_DESCRIPTION']; ?></td>
+                    <td><?php echo $row['TEST_CMD_OUTPUT']; ?></td>
+                    <td><?php echo $row['TEST_CMD_FAILURE_CODE']; ?></td>
+                    <td><?php echo $row['TEST_CMD_STATUS']; ?></td>
+                    <td><?php echo $row['FILE_NAME']; ?></td>
+                    <td><?php echo date('m/d/Y h:i:s A', strtotime($row['CREATED_ON'])); ?></td>
+                </tr>
+                <?php
+            }
+        } else if ($_POST['table'] == 'XML_TO_TESTVERSION' && $results != '0') {
+            while ($row = mysql_fetch_array($results)) {
+                ?>
+                <tr>
+                    <td><?php echo $row['SERIAL_NUMBER']; ?></td>
+                    <td><?php echo date('m/d/Y h:i:s A', strtotime($row['START_TIME'])); ?></td>
+                    <td><?php echo $row['COMPONENT']; ?></td>
+                    <td><?php echo $row['TEST_POINT']; ?></td>
+                    <td><?php echo $row['SOFT_VERSION']; ?></td>
+                    <td><?php echo $row['TESTSTATUS']; ?></td>
+                    <td><?php echo $row['FILE_NAME']; ?></td>
+                    <td><?php echo date('m/d/Y h:i:s A', strtotime($row['CREATED_ON'])); ?></td>
+                </tr>
+            <?php
+            }
+        }
+        ?>        
     </tbody>
 </table>

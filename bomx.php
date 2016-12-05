@@ -4,28 +4,27 @@ include("sidemenu.php");
 
 
 $results = array();
-$final_status =2;
+$final_status = 2;
 
 //Delete Function
-function runDeleteFunction($dbconnect,$id) {
-    
-    $select_query = "SELECT * FROM BOMX WHERE ID = '".$id."';";
+function runDeleteFunction($dbconnect, $id) {
+
+    $select_query = "SELECT * FROM BOMX WHERE ID = '" . $id . "';";
     $dbconnect->sql = $select_query;
     $dbconnect->countresult();
-    if($dbconnect->count > 0 ){
-        $delete_query = "DELETE FROM BOMX WHERE ID = '".$id."';";
+    if ($dbconnect->count > 0) {
+        $delete_query = "DELETE FROM BOMX WHERE ID = '" . $id . "';";
         $dbconnect->sql = $delete_query;
         $dbconnect->deletetb();
         return 1;
-    }else{
+    } else {
         return 0;
     }
-    
 }
 
 if (isset($_GET['id'])) {
-    if($_SESSION["role"]=='admin'){
-        $final_status = runDeleteFunction($dbconnect,$_GET['id']);
+    if ($_SESSION["role"] == 'admin') {
+        $final_status = runDeleteFunction($dbconnect, $_GET['id']);
     }
 }
 
@@ -36,50 +35,32 @@ if (isset($_POST['submit-btn'])) {
 
     //Filter
     $query = "SELECT * FROM BOMX WHERE CREATED_ON BETWEEN '" . $start_date . "' AND '" . $end_date . "'";
-    
+
     $dbconnect->sql = $query;
     $dbconnect->selecttb();
-    $results = ($dbconnect->nrow!='0') ? $dbconnect->res : '0';
+    $results = ($dbconnect->nrow != '0') ? $dbconnect->res : '0';
 } else {
     //Get all
 //    $query = "SELECT * FROM BOMX ORDER BY ID DESC LIMIT 0,5";
     $query = "SELECT * FROM BOMX ORDER BY ID DESC";
     $dbconnect->sql = $query;
     $dbconnect->selecttb();
-    $results = ($dbconnect->nrow!='0') ? $dbconnect->res : '0';
+    $results = ($dbconnect->nrow != '0') ? $dbconnect->res : '0';
 }
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-<!-- Content Header (Page header) -->
-    <section class="content-header">
-        <p></p>
-        <ol class="breadcrumb">
-            <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
-            <?php if (isset($_GET['branch'])) { ?>
-                <li><a href="#"><?php echo $_GET['type']; ?></a></li>
-            <?php } else if(isset($_GET['type'])){ ?>
-                <li class="active"><?php echo $_GET['type']; ?></li>
-            <?php } ?>
-            <?php if (isset($_GET['sub_branch'])) { ?>
-                <li><a href="#"><?php echo $_GET['branch']; ?></a></li>
-                <li class="active"><?php echo $_GET['sub_branch']; ?></li>
-            <?php } else if(isset($_GET['branch'])){ ?>
-                <li class="active"><?php echo $_GET['branch']; ?></li>
-            <?php } ?>
-
-        </ol>
-    </section>
+    <!-- Content Header (Page header) -->
+    <?php include_once("include/breadcrumb.php"); ?>
+    
     <!-- Main content -->
     <section class="content">
         <div class="row">   
-            
-            
             <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
-                <?php if($_SESSION["role"]=='admin'){ ?>    
-                <div class="form-group">
-                    <a href="create-bomx.php"><button class="btn btn-block bg-maroon" type="button"> <i class="fa fa-fw fa-plus"></i> Add BOMX</button></a>
-                </div>            
+                <?php if ($_SESSION["role"] == 'admin') { ?>    
+                    <div class="form-group">
+                        <a href="create-bomx.php"><button class="btn btn-block bg-maroon" type="button"> <i class="fa fa-fw fa-plus"></i> Add BOMX</button></a>
+                    </div>            
                 <?php } ?>
                 <div class="box  box-primary"> 
                     <div class="box-header with-border">
@@ -94,15 +75,19 @@ if (isset($_POST['submit-btn'])) {
                                 <form role="form" id="conversion_tool" lpformnum="12" action="" method="post">
                                     <div class="form-group">
                                         <label>Start Date:</label>
-                                        <input type="text" id="datepicker-start" class="form-control pull-right" name="start_date" value="<?php if (isset($_POST['submit-btn'])) {
-                echo $_POST['start_date'];
-            } ?>">
+                                        <input type="text" id="datepicker-start" class="form-control pull-right" name="start_date" value="<?php
+                if (isset($_POST['submit-btn'])) {
+                    echo $_POST['start_date'];
+                }
+                ?>">
                                     </div>                                    
                                     <div class="form-group">
                                         <label>End Date:</label>
-                                        <input type="text" id="datepicker-end" class="form-control pull-right" name="end_date" value="<?php if (isset($_POST['submit-btn'])) {
-                echo $_POST['end_date'];
-            } ?>">
+                                        <input type="text" id="datepicker-end" class="form-control pull-right" name="end_date" value="<?php
+                                               if (isset($_POST['submit-btn'])) {
+                                                   echo $_POST['end_date'];
+                                               }
+                                               ?>">
                                     </div>                                    
 
                                     <div class="form-group">
@@ -119,24 +104,24 @@ if (isset($_POST['submit-btn'])) {
 
             </div>            
             <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
-                <?php if ($final_status == '1') { ?>
-                <div class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    Deleted successfully...
-                </div>
-            <?php } elseif ($final_status == '0') { ?>
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    No record..
-                </div>
-            <?php } ?>
+<?php if ($final_status == '1') { ?>
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Deleted successfully...
+                    </div>
+<?php } elseif ($final_status == '0') { ?>
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        No record..
+                    </div>
+<?php } ?>
                 <div class="box box-primary">                                            
                     <div class="box-body">
                         <div class="heading"><b>BOMX</b></div>
                         <table id="report_table" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <?php if($_SESSION["role"]=='admin'){ ?><th></th><?php } ?>
+<?php if ($_SESSION["role"] == 'admin') { ?><th></th><?php } ?>
                                     <th>PARENT_PN</th>
                                     <th>CHILD_PN</th>
                                     <th>LICENSE_UI_NAME</th>
@@ -151,14 +136,14 @@ if (isset($_POST['submit-btn'])) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if ($results !='0') { ?>
-                                    <?php while ($row = mysql_fetch_array($results)) { ?>
+                                    <?php if ($results != '0') { ?>
+    <?php while ($row = mysql_fetch_array($results)) { ?>
                                         <tr>
-                                            <?php if($_SESSION["role"]=='admin'){ ?>
-                                            <td><a href="edit-bomx.php?id=<?php echo $row['ID']; ?>"><i class="fa fa-fw fa-edit"></i></a>
-                                                <a href="bomx.php?id=<?php echo $row['ID']; ?>" onclick="return confirm('Are you sure ?')"><i class="fa fa-fw fa-close"></i></a>
-                                            </td>
-                                            <?php } ?>
+                                            <?php if ($_SESSION["role"] == 'admin') { ?>
+                                                <td><a href="edit-bomx.php?id=<?php echo $row['ID']; ?>"><i class="fa fa-fw fa-edit"></i></a>
+                                                    <a href="bomx.php?id=<?php echo $row['ID']; ?>" onclick="return confirm('Are you sure ?')"><i class="fa fa-fw fa-close"></i></a>
+                                                </td>
+        <?php } ?>
                                             <td><?php echo $row['PARENT_PN']; ?></td>
                                             <td><?php echo $row['CHILD_PN']; ?></td>
                                             <td><?php echo $row['LICENSE_UI_NAME']; ?></td>
@@ -171,8 +156,8 @@ if (isset($_POST['submit-btn'])) {
                                             <td><?php echo $row['COL_SEARCH']; ?></td>
                                             <td><?php echo $row['PROD_MODEL']; ?></td>
                                         </tr>
-                                    <?php } ?>
-                                <?php } ?>
+    <?php } ?>
+<?php } ?>
                             </tbody>
                         </table>
                     </div>

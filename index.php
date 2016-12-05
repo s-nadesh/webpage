@@ -53,24 +53,7 @@ if (isset($_REQUEST['dash_show']) && isset($_REQUEST['dash_start_date']) && isse
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <p></p>
-        <ol class="breadcrumb">
-            <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
-            <?php if (isset($_GET['branch'])) { ?>
-                <li><a href="#"><?php echo $_GET['type']; ?></a></li>
-            <?php } else if(isset($_GET['type'])){ ?>
-                <li class="active"><?php echo $_GET['type']; ?></li>
-            <?php } ?>
-            <?php if (isset($_GET['sub_branch'])) { ?>
-                <li><a href="#"><?php echo $_GET['branch']; ?></a></li>
-                <li class="active"><?php echo $_GET['sub_branch']; ?></li>
-            <?php } else if(isset($_GET['branch'])){ ?>
-                <li class="active"><?php echo $_GET['branch']; ?></li>
-            <?php } ?>
-
-        </ol>
-    </section>
+    <?php // include_once("include/breadcrumb.php"); ?>
     <!-- Content Header (Page header) -->
     <section class="content-header clearfix">
         <h1 class="pull-left">

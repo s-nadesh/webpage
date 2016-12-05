@@ -72,24 +72,7 @@ function isChecked($value) {
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <p></p>
-        <ol class="breadcrumb">
-            <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
-            <?php if (isset($_GET['branch'])) { ?>
-                <li><a href="#"><?php echo $_GET['type']; ?></a></li>
-            <?php } else if(isset($_GET['type'])){ ?>
-                <li class="active"><?php echo $_GET['type']; ?></li>
-            <?php } ?>
-            <?php if (isset($_GET['sub_branch'])) { ?>
-                <li><a href="#"><?php echo $_GET['branch']; ?></a></li>
-                <li class="active"><?php echo $_GET['sub_branch']; ?></li>
-            <?php } else if(isset($_GET['branch'])){ ?>
-                <li class="active"><?php echo $_GET['branch']; ?></li>
-            <?php } ?>
-
-        </ol>
-    </section>
+    <?php include_once("include/breadcrumb.php"); ?>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -276,15 +259,17 @@ function isChecked($value) {
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
 
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <div class="form-group">
-                        <select name="xml-table" id="xml-table" class="form-control">
-                            <option value="XML_TO_TESTHEADER">XML_TO_TESTHEADER</option>
-                            <option value="XML_TO_TESTS">XML_TO_TESTS</option>
-                            <option value="XML_TO_TESTVERSION">XML_TO_TESTVERSION</option>                            
-                        </select>
-                        <i class="fa fa-refresh fa-spin" id="loading"></i>
-                        <input type="hidden" name="serial_number" id="serial_number">
-                        <input type="hidden" name="start_time" id="start_time">
+                    <div class="row">
+                        <div class="form-group">
+                            <select name="xml-table" id="xml-table" class="form-control">
+                                <option value="XML_TO_TESTHEADER">Show Test History</option>
+                                <option value="XML_TO_TESTS">Show test data</option>
+                                <option value="XML_TO_TESTVERSION">Show parent-child data</option>                            
+                            </select>
+                            <i class="fa fa-refresh fa-spin" id="loading"></i>
+                            <input type="hidden" name="serial_number" id="serial_number">
+                            <input type="hidden" name="start_time" id="start_time">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -305,22 +290,24 @@ function isChecked($value) {
             $(".report-sn").click(function () {
                 var sn = $(this).data("sn");
                 var starttime = $(this).data("starttime");
+                $('#xml-table').val("XML_TO_TESTHEADER");
                 $('#serial_number').val(sn);
                 $('#start_time').val(starttime);
-                xml_to_table(sn, starttime, "XML_TO_TESTHEADER");
+                xml_to_table(sn, starttime, "XML_TO_TESTHEADER", "Show Test History");
             });
 
             $('body').on('change', '#xml-table', function () {
                 var table = $('#xml-table').val();
+                var table_title = $('#xml-table option:selected').text();
                 var sn = $('#serial_number').val();
                 var starttime = $('#start_time').val();
-                xml_to_table(sn, starttime, table);
+                xml_to_table(sn, starttime, table, table_title);
             })
 
             $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');
         });
 
-        function xml_to_table(sn, starttime, table) {
+        function xml_to_table(sn, starttime, table, table_title) {
             $.ajax({
                 type: "POST",
                 url: "xml_to_tests.php",
@@ -340,7 +327,7 @@ function isChecked($value) {
                         "scrollY": 250,
                         "scrollX": true,
                         "bPaginate": false,
-                        "dom": '<"heading">Bfrtip',
+                        "dom": '<"modal_heading">Bfrtip',
                         buttons: [{
                                 extend: 'excelHtml5',
                                 title: 'data',
@@ -351,6 +338,8 @@ function isChecked($value) {
                             }
                         ]
                     });
+                    $("#xml_to_table").dataTable().fnDraw();
+                    $("div.modal_heading").html('<b>' + table_title + '</b>');
                 }
             });
         }
