@@ -255,7 +255,7 @@ function isChecked($value) {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                
+
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <select name="xml-table" id="xml-table" class="form-control">
@@ -263,6 +263,7 @@ function isChecked($value) {
                             <option value="XML_TO_TESTS">XML_TO_TESTS</option>
                             <option value="XML_TO_TESTVERSION">XML_TO_TESTVERSION</option>                            
                         </select>
+                        <i class="fa fa-refresh fa-spin" id="loading"></i>
                         <input type="hidden" name="serial_number" id="serial_number">
                         <input type="hidden" name="start_time" id="start_time">
                     </div>
@@ -281,6 +282,7 @@ function isChecked($value) {
 <?php if (isset($table_results)) { ?>
     <script>
         $(function () {
+            $("#loading").hide();
             $(".report-sn").click(function () {
                 var sn = $(this).data("sn");
                 var starttime = $(this).data("starttime");
@@ -288,7 +290,7 @@ function isChecked($value) {
                 $('#start_time').val(starttime);
                 xml_to_table(sn, starttime, "XML_TO_TESTHEADER");
             });
-            
+
             $('body').on('change', '#xml-table', function () {
                 var table = $('#xml-table').val();
                 var sn = $('#serial_number').val();
@@ -304,24 +306,31 @@ function isChecked($value) {
                 type: "POST",
                 url: "xml_to_tests.php",
                 data: {sn: sn, starttime: starttime, table: table},
+                beforeSend: function () {
+                    $("#xml_to_table_div").html("");
+                    $("#loading").show();
+                },
+                complete: function () {
+                    $("#loading").hide();
+                },
                 success: function (response) {
                     $("#xml_to_table_div").html(response);
                     $("#xml_to_table").dataTable().fnDestroy();
                     $("#xml_to_table").DataTable({
                         "bDestroy": true,
                         "scrollY": 250,
-        "scrollX": true,
-        "bPaginate": false,
-        "dom": '<"heading">Bfrtip',
-        buttons: [{
-                extend: 'excelHtml5',
-                title: 'data',
-                text: 'Xport',
-                exportOptions: {
-                    columns: ':visible'                    
-                }
-            }
-        ]
+                        "scrollX": true,
+                        "bPaginate": false,
+                        "dom": '<"heading">Bfrtip',
+                        buttons: [{
+                                extend: 'excelHtml5',
+                                title: 'data',
+                                text: 'Xport',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            }
+                        ]
                     });
                 }
             });
