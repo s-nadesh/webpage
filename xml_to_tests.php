@@ -9,7 +9,7 @@ $dbconnect->sql = "SELECT * FROM " . $_POST['table'] . " where SERIAL_NUMBER lik
 $dbconnect->selecttb();
 $results = ($dbconnect->nrow != '0') ? $dbconnect->res : '0';
 ?>
-<table id="xml_to_table" class="display" width="100%" cellspacing="0">
+<table id="xml_to_table" class="table table-bordered table-striped" width="100%" cellspacing="0">
     <thead>
         <tr>
             <?php if ($_POST['table'] == 'XML_TO_TESTHEADER') { ?>
