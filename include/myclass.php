@@ -1,6 +1,5 @@
 <?php
 
-//include_once("dbcon.php");
 class myclass {
 
     public $count;

@@ -264,6 +264,14 @@ $(function () {
             }
         ]
     });
+    $(".check_create, .check_edit, .check_delete").on("ifChecked", function (event) {
+        _class = $(this).data("chbx");
+        $(".check_view." + _class).iCheck("check");
+    });
+    $(".check_view").on("ifUnchecked", function (event) {
+        _class = $(this).data("chbx");
+        $("." + _class).iCheck("uncheck");
+    });
 
 });
 var expanded = false;

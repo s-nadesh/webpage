@@ -7,6 +7,7 @@ $table= '';
 $results = array();
 $final_status =2;
 $fields = array();
+$user->can('HEADER', 'view');
 
 if(isset($_GET['type'])){
     $table = $_GET['type'];
@@ -28,7 +29,25 @@ if(isset($_GET['type'])){
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+        <p></p>
+        <ol class="breadcrumb">
+            <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+            <?php if (isset($_GET['branch'])) { ?>
+                <li><a href="#"><?php echo $_GET['type']; ?></a></li>
+            <?php } else if(isset($_GET['type'])){ ?>
+                <li class="active"><?php echo $_GET['type']; ?></li>
+            <?php } ?>
+            <?php if (isset($_GET['sub_branch'])) { ?>
+                <li><a href="#"><?php echo $_GET['branch']; ?></a></li>
+                <li class="active"><?php echo $_GET['sub_branch']; ?></li>
+            <?php } else if(isset($_GET['branch'])){ ?>
+                <li class="active"><?php echo $_GET['branch']; ?></li>
+            <?php } ?>
 
+        </ol>
+    </section>
     <!-- Main content -->
     <section class="content">
         <div class="row">

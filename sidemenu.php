@@ -20,8 +20,10 @@
                 </a>          
             </li>
             <?php
+            $user->get_access_table();
+            $table = ($user->table != '') ? $user->table : '';
             $all_menus = array();
-            $dbconnect->sql = "SELECT DISTINCT(TYPE),ID,LAYOUT FROM A_REPORT WHERE DISABLE = 0 ORDER BY ID;";
+            $dbconnect->sql = "SELECT DISTINCT(TYPE),ID,LAYOUT FROM A_REPORT WHERE DISABLE = 0 ".$table." ORDER BY ID;";
             $dbconnect->selecttb();
             $fl_result = $dbconnect->res;
 

@@ -27,27 +27,28 @@ if (isset($_POST['submit-form'])) {
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
     $ROLE = (isset($_POST['ROLE'])) ? '1' : '2';
-    $ACCESS = $_POST['ACCESS'];
+    $ACCESS = (isset($_POST['ACCESS'])) ? $_POST['ACCESS'] : '';
     $STATUS = (isset($_POST['STATUS'])) ? '1' : '0';
     $phone_no = $_POST['phone_no'];
     $user_name = $_POST['user_name'];
-    $delete_query = "DELETE FROM TABLE_PERMISSIONS WHERE LOGIN_ID = '".$id."';";
+    $delete_query = "DELETE FROM TABLE_PERMISSIONS WHERE LOGIN_ID = '" . $id . "';";
     $dbconnect->sql = $delete_query;
     $dbconnect->deletetb();
 
     $ACCESS_DATA = array();
-    foreach( $ACCESS as $TBLNAME => $row) {
-        $CREATE = (@$row['CAN_CREATE'] == '1') ? 1 : 0;
-        $VIEW   = (@$row['CAN_VIEW'] == '1') ? 1 : 0;
-        $EDIT   = (@$row['CAN_EDIT'] == '1') ? 1 : 0;
-        $DELETE = (@$row['CAN_DELETE'] == '1') ? 1 : 0;
-        $ACCESS_DATA[] = "('{$id}','{$TBLNAME}','{$CREATE}','{$VIEW}','{$EDIT}','{$DELETE}')";
+    if ($ACCESS != '') {
+        foreach ($ACCESS as $TBLNAME => $row) {
+            $CREATE = (@$row['CAN_CREATE'] == '1') ? 1 : 0;
+            $VIEW = (@$row['CAN_VIEW'] == '1') ? 1 : 0;
+            $EDIT = (@$row['CAN_EDIT'] == '1') ? 1 : 0;
+            $DELETE = (@$row['CAN_DELETE'] == '1') ? 1 : 0;
+            $ACCESS_DATA[] = "('{$id}','{$TBLNAME}','{$CREATE}','{$VIEW}','{$EDIT}','{$DELETE}')";
+        }
+        $ACCESS_INSERT_QRY = 'INSERT INTO TABLE_PERMISSIONS (LOGIN_ID, TABLE_NAME, CAN_CREATE, CAN_VIEW, CAN_EDIT, CAN_DELETE) VALUES ' . implode(',', $ACCESS_DATA);
+
+        $dbconnect->sql = $ACCESS_INSERT_QRY;
+        $dbconnect->inserttb();
     }
-    $ACCESS_INSERT_QRY = 'INSERT INTO TABLE_PERMISSIONS (LOGIN_ID, TABLE_NAME, CAN_CREATE, CAN_VIEW, CAN_EDIT, CAN_DELETE) VALUES '.implode(',', $ACCESS_DATA);
-
-    $dbconnect->sql = $ACCESS_INSERT_QRY;
-    $dbconnect->inserttb();
-
 //    $password = md5($_POST['password']);
 //    $org_password = $_POST['password'];
     //PHP validation
@@ -95,9 +96,9 @@ if ($results) {
     $dbconnect->sql = $table_access_query;
     $dbconnect->selecttb();
     $table_access_results = array();
-    if($dbconnect->nrow > 0){
-        while($value = mysql_fetch_array($dbconnect->res)){
-            $table_access_results[$value['TABLE_NAME']] = array('CAN_CREATE' => $value['CAN_CREATE'],'CAN_VIEW' => $value['CAN_VIEW'],'CAN_EDIT' => $value['CAN_EDIT'],'CAN_DELETE' => $value['CAN_DELETE']);
+    if ($dbconnect->nrow > 0) {
+        while ($value = mysql_fetch_array($dbconnect->res)) {
+            $table_access_results[$value['TABLE_NAME']] = array('CAN_CREATE' => $value['CAN_CREATE'], 'CAN_VIEW' => $value['CAN_VIEW'], 'CAN_EDIT' => $value['CAN_EDIT'], 'CAN_DELETE' => $value['CAN_DELETE']);
         }
     }
 } else {
@@ -115,7 +116,25 @@ $table_access = $dbconnect->res;
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <p></p>
+        <ol class="breadcrumb">
+            <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+            <?php if (isset($_GET['branch'])) { ?>
+                <li><a href="#"><?php echo $_GET['type']; ?></a></li>
+            <?php } else if(isset($_GET['type'])){ ?>
+                <li class="active"><?php echo $_GET['type']; ?></li>
+            <?php } ?>
+            <?php if (isset($_GET['sub_branch'])) { ?>
+                <li><a href="#"><?php echo $_GET['branch']; ?></a></li>
+                <li class="active"><?php echo $_GET['sub_branch']; ?></li>
+            <?php } else if(isset($_GET['branch'])){ ?>
+                <li class="active"><?php echo $_GET['branch']; ?></li>
+            <?php } ?>
 
+        </ol>
+    </section>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -129,17 +148,17 @@ $table_access = $dbconnect->res;
                         <!-- /.box-header -->
                         <!-- form start -->
                         <div class="box-body">
-<?php if ($final_status == '1') { ?>
+                            <?php if ($final_status == '1') { ?>
                                 <div class="alert alert-success alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <?php echo $message; ?>
+                                    <?php echo $message; ?>
                                 </div>
-                                <?php } elseif ($final_status == '0') { ?>
+                            <?php } elseif ($final_status == '0') { ?>
                                 <div class="alert alert-danger alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                     Please Check Your Details..
                                 </div>
-<?php } ?>
+                            <?php } ?>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="First Name">First Name*:</label>
@@ -163,7 +182,7 @@ $table_access = $dbconnect->res;
                                 </div>
                                 <div class="form-group">
                                     <label for="Password">Password*: </label><br>
-<?php echo ($row['ORG_PASSWORD'] != '') ? $row['ORG_PASSWORD'] : ''; ?>
+                                    <?php echo ($row['ORG_PASSWORD'] != '') ? $row['ORG_PASSWORD'] : ''; ?>
                                     <a href="<?php echo "edit-user.php?id=" . $id . "&pwd=reset" ?>" onclick="return confirm('Are you sure ?')">
                                         <i class="fa fa-fw fa-repeat"></i> Reset password
                                     </a>
@@ -175,50 +194,50 @@ $table_access = $dbconnect->res;
 
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <div class="form-group">
-                                                <label>
-                                                    <input type="checkbox" class="minimal-red" name="ROLE" <?php echo ($row['ROLE'] == '1') ? 'checked' : ''; ?>>
-                                                    Is Admin?
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <div class="form-group">
-                                                <label>
-                                                    <input type="checkbox" class="minimal-red" name="STATUS" <?php echo ($row['STATUS'] == '1') ? 'checked' : ''; ?>>
-                                                    Is Enable?
-                                                </label>
-                                            </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label>
+                                                <input type="checkbox" class="minimal-red" name="ROLE" <?php echo ($row['ROLE'] == '1') ? 'checked' : ''; ?>>
+                                                Is Admin?
+                                            </label>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <table id="table-permission" class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>TABLE_NAME</th>
-                                                        <th class="hidden">CAN_CREATE</th>
-                                                        <th>CAN_VIEW</th>
-                                                        <th>CAN_EDIT</th>
-                                                        <th>CAN_DELETE</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label>
+                                                <input type="checkbox" class="minimal-red" name="STATUS" <?php echo ($row['STATUS'] == '1') ? 'checked' : ''; ?>>
+                                                Is Enable?
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <table id="table-permission" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>TABLE_NAME</th>
+                                                    <th class="hidden">CAN_CREATE</th>
+                                                    <th>CAN_VIEW</th>
+                                                    <th>CAN_EDIT</th>
+                                                    <th>CAN_DELETE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
                                                 <?php while ($row = mysql_fetch_array($table_access)) { ?>
                                                     <tr>
                                                         <td><?php echo $row['TABLE_NAME'] ?></td>
-                                                        <td class="hidden"><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_CREATE]" value="1" <?php echo (@$table_access_results[$row['TABLE_NAME']]['CAN_CREATE'] == 1) ? "checked" : ""  ?> /></td>
-                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_VIEW]" value="1"  <?php echo (@$table_access_results[$row['TABLE_NAME']]['CAN_VIEW'] == 1) ? "checked" : ""  ?> /></td>
-                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_EDIT]" value="1"  <?php echo (@$table_access_results[$row['TABLE_NAME']]['CAN_EDIT'] == 1) ? "checked" : ""  ?> /></td>
-                                                        <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_DELETE]" value="1"  <?php echo (@$table_access_results[$row['TABLE_NAME']]['CAN_DELETE'] == 1) ? "checked" : ""  ?> /></td>
+                                                        <td class="hidden"><input type="checkbox" class="minimal" data-chbx="<?php echo $row['TABLE_NAME'] ?>" check_create check_access <?php echo $row['TABLE_NAME'] ?>" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_CREATE]" value="1" <?php echo (@$table_access_results[$row['TABLE_NAME']]['CAN_CREATE'] == 1) ? "checked" : "" ?> /></td>
+                                                        <td><input type="checkbox" data-chbx="<?php echo $row['TABLE_NAME'] ?>" class="minimal check_view check_access <?php echo $row['TABLE_NAME'] ?>" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_VIEW]" value="1"  <?php echo (@$table_access_results[$row['TABLE_NAME']]['CAN_VIEW'] == 1) ? "checked" : "" ?> /></td>
+                                                        <td><input type="checkbox" data-chbx="<?php echo $row['TABLE_NAME'] ?>" class="minimal check_edit check_access <?php echo $row['TABLE_NAME'] ?>" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_EDIT]" value="1"  <?php echo (@$table_access_results[$row['TABLE_NAME']]['CAN_EDIT'] == 1) ? "checked" : "" ?> /></td>
+                                                        <td><input type="checkbox" data-chbx="<?php echo $row['TABLE_NAME'] ?>" class="minimal check_delete check_access <?php echo $row['TABLE_NAME'] ?>" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_DELETE]" value="1"  <?php echo (@$table_access_results[$row['TABLE_NAME']]['CAN_DELETE'] == 1) ? "checked" : "" ?> /></td>
                                                     </tr>
                                                 <?php } ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                            </tbody>
+                                        </table>
                                     </div>
+                                </div>
                             </div>
 
 

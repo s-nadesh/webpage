@@ -9,8 +9,10 @@ if(!isset($_SESSION["username"])){
 
 include_once("include/dbcon.php");
 include_once("include/myclass.php");
+include_once("include/user.php");
 $dbconnect = new dbconnect();
 $myclass = new myclass();
+$user = new user();
 ?>
 <!DOCTYPE html>
 <html>
