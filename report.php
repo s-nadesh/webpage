@@ -203,7 +203,7 @@ function isChecked($value) {
                                     <?php while ($row = mysql_fetch_array($table_results)) { ?>
                                         <tr>
                                             <td>
-                                                <a href="javascript:void(0)" data-sn="<?php echo $row['SN']; ?>" data-starttime="<?php echo $row['STARTTIME'] ?>" id="report-sn" data-toggle="modal" data-target="#myModal">
+                                                <a href="javascript:void(0)" data-sn="<?php echo $row['SN']; ?>" data-starttime="<?php echo $row['STARTTIME'] ?>" class="report-sn" data-toggle="modal" data-target="#myModal">
                                                     <?php echo $row['SN'] ?>
                                                 </a>
                                             </td>
@@ -255,7 +255,18 @@ function isChecked($value) {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <select name="xml-table" id="xml-table" class="form-control">
+                            <option value="XML_TO_TESTHEADER">XML_TO_TESTHEADER</option>
+                            <option value="XML_TO_TESTS">XML_TO_TESTS</option>
+                            <option value="XML_TO_TESTVERSION">XML_TO_TESTVERSION</option>                            
+                        </select>
+                        <input type="hidden" name="serial_number" id="serial_number">
+                        <input type="hidden" name="start_time" id="start_time">
+                    </div>
+                </div>
             </div>
             <div class="modal-body">
                 <div id="xml_to_table_div">
@@ -270,11 +281,21 @@ function isChecked($value) {
 <?php if (isset($table_results)) { ?>
     <script>
         $(function () {
-            $("#report-sn").click(function () {
+            $(".report-sn").click(function () {
                 var sn = $(this).data("sn");
                 var starttime = $(this).data("starttime");
+                $('#serial_number').val(sn);
+                $('#start_time').val(starttime);
                 xml_to_table(sn, starttime, "XML_TO_TESTHEADER");
             });
+            
+            $('body').on('change', '#xml-table', function () {
+                var table = $('#xml-table').val();
+                var sn = $('#serial_number').val();
+                var starttime = $('#start_time').val();
+                xml_to_table(sn, starttime, table);
+            })
+
             $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');
         });
 
@@ -288,6 +309,19 @@ function isChecked($value) {
                     $("#xml_to_table").dataTable().fnDestroy();
                     $("#xml_to_table").DataTable({
                         "bDestroy": true,
+                        "scrollY": 250,
+        "scrollX": true,
+        "bPaginate": false,
+        "dom": '<"heading">Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                title: 'data',
+                text: 'Xport',
+                exportOptions: {
+                    columns: ':visible'                    
+                }
+            }
+        ]
                     });
                 }
             });

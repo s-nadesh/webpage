@@ -240,10 +240,10 @@ class myclass {
             $DEPLOYMENT = mysql_real_escape_string($xmlArray['Deployment']);
 
         if (isset($xmlArray['StartTime']))
-            $START_TIME = mysql_real_escape_string($xmlArray['StartTime']);
+            $START_TIME = date('Y-m-d H:i:s',strtotime(mysql_real_escape_string($xmlArray['StartTime'])));
 
         if (isset($xmlArray['EndTime']))
-            $END_TIME = mysql_real_escape_string($xmlArray['EndTime']);
+            $END_TIME = date('Y-m-d H:i:s',strtotime(mysql_real_escape_string($xmlArray['EndTime'])));
 
         if (isset($xmlArray['TotalTestTime']))
             $DURATION = mysql_real_escape_string($xmlArray['TotalTestTime']);
@@ -270,7 +270,7 @@ class myclass {
             $SERIAL_NUMBER = mysql_real_escape_string($xmlArray['SerialNum']);
 
         if (isset($xmlArray['StartTime']))
-            $START_TIME = mysql_real_escape_string($xmlArray['StartTime']);
+            $START_TIME = date('Y-m-d H:i:s',strtotime(mysql_real_escape_string($xmlArray['StartTime'])));
 
         if (isset($file_name))
             $FILE_NAME = mysql_real_escape_string($file_name);
@@ -328,7 +328,7 @@ class myclass {
                 $SERIAL_NUMBER = mysql_real_escape_string($xmlArray['SerialNum']);
 
             if (isset($xmlArray['StartTime']))
-                $START_TIME = mysql_real_escape_string($xmlArray['StartTime']);
+                $START_TIME = date('Y-m-d H:i:s',strtotime(mysql_real_escape_string($xmlArray['StartTime'])));
 
             if (isset($file_name))
                 $FILE_NAME = mysql_real_escape_string($file_name);
