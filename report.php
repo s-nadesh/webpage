@@ -306,43 +306,7 @@ function isChecked($value) {
 
             $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');
         });
-
-        function xml_to_table(sn, starttime, table, table_title) {
-            $.ajax({
-                type: "POST",
-                url: "xml_to_tests.php",
-                data: {sn: sn, starttime: starttime, table: table},
-                beforeSend: function () {
-                    $("#xml_to_table_div").html("");
-                    $("#loading").show();
-                },
-                complete: function () {
-                    $("#loading").hide();
-                },
-                success: function (response) {
-                    $("#xml_to_table_div").html(response);
-                    $("#xml_to_table").dataTable().fnDestroy();
-                    $("#xml_to_table").DataTable({
-                        "bDestroy": true,
-                        "scrollY": 250,
-                        "scrollX": true,
-                        "bPaginate": false,
-                        "dom": '<"modal_heading">Bfrtip',
-                        buttons: [{
-                                extend: 'excelHtml5',
-                                title: 'data',
-                                text: 'Xport',
-                                exportOptions: {
-                                    columns: ':visible'
-                                }
-                            }
-                        ]
-                    });
-                    $("#xml_to_table").dataTable().fnDraw();
-                    $("div.modal_heading").html('<b>' + table_title + '</b>');
-                }
-            });
-        }
+        
     </script>
 <?php } ?>
 

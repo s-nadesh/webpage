@@ -118,7 +118,7 @@ if (isset($_POST['login-btn'])) {
         <!-- iCheck -->
         <script src="plugins/iCheck/icheck.min.js"></script>
         <!-- Custom JS -->
-        <script src="dist/js/custom.js"></script>
+        <!--<script src="dist/js/custom.js"></script>-->
         <script>
             $(function () {
                 $('input').iCheck({
@@ -126,6 +126,8 @@ if (isset($_POST['login-btn'])) {
                     radioClass: 'iradio_square-blue',
                     increaseArea: '20%' // optional
                 });
+                $(".alert-success").delay(3200).fadeOut(300);
+    $(".alert-danger").delay(3200).fadeOut(300);
             });
         </script>
     </body>

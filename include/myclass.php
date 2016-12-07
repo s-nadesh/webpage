@@ -359,6 +359,21 @@ class myclass {
             return true;
         }
     }
+    
+    function runDeleteFunction($table, $primary_key, $values) {
+
+        $select_query = "SELECT * FROM ".$table." WHERE ".$primary_key." = '" . $values . "';";
+        $this->dbconnect->sql = $select_query;
+        $this->dbconnect->countresult();
+        if ($this->dbconnect->count > 0) {
+            $delete_query = "DELETE FROM ".$table." WHERE ".$primary_key." = '" . $values . "';";
+            $this->dbconnect->sql = $delete_query;
+            $this->dbconnect->deletetb();
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 
 }
 

@@ -31,6 +31,19 @@ class User {
         }
         
     }
+    function getlayout($table){
+        $this->dbconnect->sql = 'SELECT LAYOUT FROM A_REPORT WHERE TYPE = "'.$table.'"';
+        $this->dbconnect->selecttb();       
+        $value = mysql_fetch_assoc($this->dbconnect->res);
+        
+        if(!empty($value)){
+            $layout = $value['LAYOUT'];
+        }else{
+            $layout = '';
+        }
+            
+        return $layout;
+    }
     function permissions(){
         if($this->l_id != ''){            
             $this->dbconnect->sql = 'SELECT * FROM TABLE_PERMISSIONS WHERE LOGIN_ID = '.$this->l_id;
@@ -45,12 +58,8 @@ class User {
         }
     }
     public function can($permission, $type) {
-        $this->permissions();
-        if(!empty($this->permissions)){
-            return $this->whatever($this->permissions, $permission, $type);
-        }  else {
-            return true;
-        }        
+        $this->permissions();        
+        return $this->whatever($this->permissions, $permission, $type);              
     }
 
     public function whatever($array, $key, $val) {
@@ -67,21 +76,23 @@ class User {
             $this->dbconnect->selecttb();
             $table_access_results = array();
             while($value = mysql_fetch_array($this->dbconnect->res)){
-                $table_access_results[] = $value['TABLE_NAME'];
+                $table_access_results[] = "'".$value['TABLE_NAME']."'";
             }
-            
-            $this->dbconnect->sql = 'SELECT * FROM information_schema.tables a, A_REPORT b WHERE a.TABLE_TYPE IN("BASE TABLE","VIEW")
-                AND a.TABLE_SCHEMA LIKE "webpage"
-                AND b.LAYOUT LIKE "TABLE%"
-                AND b.TYPE = a.TABLE_NAME
-                AND b.TYPE NOT IN ("' . implode($table_access_results,"," ).'");';
-            
-            $this->dbconnect->selecttb();            
-            $table = array();
-            while ($row = mysql_fetch_array($this->dbconnect->res)) { 
-                $table[] = $row['TABLE_NAME'];
+            if(!empty($table_access_results)){
+                $this->dbconnect->sql = 'SELECT * FROM information_schema.tables a, A_REPORT b WHERE a.TABLE_TYPE IN("BASE TABLE","VIEW")
+                    AND a.TABLE_SCHEMA LIKE "webpage"
+                    AND b.LAYOUT LIKE "TABLE%"
+                    AND b.TYPE = a.TABLE_NAME
+                    AND b.TYPE NOT IN (' . implode($table_access_results,"," ).');';
+                $this->dbconnect->selecttb();            
+                $table = array();
+                while ($row = mysql_fetch_array($this->dbconnect->res)) { 
+                    $table[] = $row['TABLE_NAME'];
+                }           
+                $this->table = "AND TYPE NOT IN ( '" . implode($table, "', '") . "' )";
+            }  else {
+                $this->table = '';
             }
-            $this->table = "AND TYPE NOT IN ( '" . implode($table, "', '") . "' )";
         }else{
             $this->table = '';
         }

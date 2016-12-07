@@ -2,15 +2,26 @@
 include("header.php");
 include("sidemenu.php");
 
-if(!isset($_GET["sid"]) || !isset($_GET["pdt"]) || !isset($_GET["week"])){    
+if(!isset($_GET["sid"]) || !isset($_GET["pdt"]) || !isset($_GET["week"]) || !isset($_GET["page"])){    
     header("Location: " . SITE_URL);
 }else {
+    $page = $_GET["page"];
     $stationid = $_GET["sid"];
     $product = $_GET["pdt"];
     $week = $_GET["week"];
 }
 
-$myclass->getTested($stationid,$product,$week);
+switch($page){
+    case 'tested':
+        $myclass->getTested($stationid,$product,$week);
+        break;
+    case 'passed':
+        $myclass->getPassed($stationid,$product,$week);
+        break;
+    case 'failed':
+        $myclass->getFailed($stationid,$product,$week);
+        break;
+}
 $results = $myclass->res;
 
 ?>
@@ -62,7 +73,11 @@ $results = $myclass->res;
                                     <?php if(!empty($results)){ ?>
                                     <?php while ($row = mysql_fetch_array($results)) { ?>
                                     <tr>                                        
-                                        <td><?php echo $row['SN']; ?></td>
+                                        <td>
+                                                <a href="javascript:void(0)" data-sn="<?php echo $row['SN']; ?>" data-starttime="<?php echo $row['STARTTIME'] ?>" class="report-sn" data-toggle="modal" data-target="#myModal">
+                                                    <?php echo $row['SN'] ?>
+                                                </a>
+                                            </td>
                                         <td><?php echo $row['PN']; ?></td>
                                         <td><?php echo $row['HWS']; ?></td>
                                         <td><?php echo $row['SKU']; ?></td>
@@ -108,5 +123,60 @@ $results = $myclass->res;
 </div>
 <!-- /.content-wrapper -->
 
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
 
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="row">
+                        <div class="form-group">
+                            <select name="xml-table" id="xml-table" class="form-control">
+                                <option value="XML_TO_TESTHEADER">Show Test History</option>
+                                <option value="XML_TO_TESTS">Show test data</option>
+                                <option value="XML_TO_TESTVERSION">Show parent-child data</option>                            
+                            </select>
+                            <i class="fa fa-refresh fa-spin" id="loading"></i>
+                            <input type="hidden" name="serial_number" id="serial_number">
+                            <input type="hidden" name="start_time" id="start_time">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="xml_to_table_div">
+                    <!--                    Dynamic content from ajax-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.content-wrapper -->
 <?php include("footer.php"); ?>
+<?php if (isset($results)) { ?>
+    <script>
+        $(function () {
+            $("#loading").hide();
+            $(".report-sn").click(function () {
+                var sn = $(this).data("sn");
+                var starttime = $(this).data("starttime");
+                $('#xml-table').val("XML_TO_TESTHEADER");
+                $('#serial_number').val(sn);
+                $('#start_time').val(starttime);
+                xml_to_table(sn, starttime, "XML_TO_TESTHEADER", "Show Test History");
+            });
+
+            $('body').on('change', '#xml-table', function () {
+                var table = $('#xml-table').val();
+                var table_title = $('#xml-table option:selected').text();
+                var sn = $('#serial_number').val();
+                var starttime = $('#start_time').val();
+                xml_to_table(sn, starttime, table, table_title);
+            })           
+        });
+        
+    </script>
+<?php } ?>

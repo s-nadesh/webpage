@@ -13,6 +13,26 @@ include_once("include/user.php");
 $dbconnect = new dbconnect();
 $myclass = new myclass();
 $user = new user();
+
+$access = '';
+if(isset($_GET['type'])){
+    $default_layout= ['TABLE_DATE', 'TABLE'];
+    $layout = $user->getlayout($_GET['type']);    
+    if(in_array($layout, $default_layout)){
+        if($_SESSION['role'] != 'admin'){
+            if(isset($_GET['action'])){
+                $access = $user->can($_GET['type'], $_GET['action']);  
+            }else{
+                $access = $user->can($_GET['type'], 'view');  
+            }
+        }
+    }
+}
+
+if($access === false){
+    header("Location: " . LOGIN_URL);
+}
+
 ?>
 <!DOCTYPE html>
 <html>

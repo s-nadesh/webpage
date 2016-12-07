@@ -155,7 +155,7 @@ $(function () {
     });
 
     $("#table-permission").DataTable({
-        "scrollY": (h - 250),
+        "scrollY": (h - 360),
         "scrollX": true,
         "bPaginate": false,
         "bFilter": false,
@@ -244,6 +244,41 @@ $(function () {
             }
         ]
     });
+    $("#table_date").DataTable({
+        "scrollY": (h - 270),
+        "scrollX": true,
+        "bPaginate": false,
+        "dom": '<"heading">Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                title: 'data',
+                text: 'Xport',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            }
+        ]
+    });
+    $("#table_nodate").DataTable({
+        "scrollY": (h - 270),
+        "scrollX": true,
+        "bPaginate": false,
+        "dom": '<"heading">Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                title: 'data',
+                text: 'Xport',
+                exportOptions: {
+                    columns: function (idx, data, node) {
+                        var isNotForExport = $.inArray(idx, hideFromExport) !== -1;
+                        return !isNotForExport ? true : false;
+                    }
+                }
+            }
+        ]
+    });
+    
+    
 
     var hideFromExport1 = [2];
     $("#alert_product_tables").DataTable({
@@ -273,6 +308,8 @@ $(function () {
         $("." + _class).iCheck("uncheck");
     });
 
+    $(".alert-success").delay(3200).fadeOut(300);
+    $(".alert-danger").delay(3200).fadeOut(300);
 });
 var expanded = false;
 function showCheckboxes() {
@@ -285,3 +322,40 @@ function showCheckboxes() {
         expanded = false;
     }
 }
+
+function xml_to_table(sn, starttime, table, table_title) {
+            $.ajax({
+                type: "POST",
+                url: "xml_to_tests.php",
+                data: {sn: sn, starttime: starttime, table: table},
+                beforeSend: function () {
+                    $("#xml_to_table_div").html("");
+                    $("#loading").show();
+                },
+                complete: function () {
+                    $("#loading").hide();
+                },
+                success: function (response) {
+                    $("#xml_to_table_div").html(response);
+                    $("#xml_to_table").dataTable().fnDestroy();
+                    $("#xml_to_table").DataTable({
+                        "bDestroy": true,
+                        "scrollY": 250,
+                        "scrollX": true,
+                        "bPaginate": false,
+                        "dom": '<"modal_heading">Bfrtip',
+                        buttons: [{
+                                extend: 'excelHtml5',
+                                title: 'data',
+                                text: 'Xport',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            }
+                        ]
+                    });
+                    $("#xml_to_table").dataTable().fnDraw();
+                    $("div.modal_heading").html('<b>' + table_title + '</b>');
+                }
+            });
+        }

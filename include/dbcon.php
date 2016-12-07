@@ -20,6 +20,7 @@ class dbconnect {
     public $iid;
     public $count;
     public $l_id;
+    public $primary_key;
 
     function __construct() {
         if($_SERVER['SERVER_NAME']=='localhost'){
@@ -45,8 +46,18 @@ class dbconnect {
         
     }
     function getTableColumn($table){
-        $this->sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='".$this->dbname."' AND TABLE_NAME='".$table."'";
+        $this->sql = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='".$this->dbname."' AND TABLE_NAME='".$table."'";
         $this->selecttb();                
+    }
+    function getPrimaryKey($table){
+        $this->sql = "SHOW KEYS FROM ".$table." WHERE Key_name = 'PRIMARY'";
+        $this->selecttb();
+        if($this->nrow != '0'){
+            $result = mysql_fetch_assoc($this->res);
+            $this->primary_key =  $result['Column_name'];
+        }  else {
+            $this->primary_key =  '';
+        }
     }
     function selecttb() {
         $this->res = mysql_query($this->sql);

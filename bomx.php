@@ -7,24 +7,25 @@ $results = array();
 $final_status = 2;
 
 //Delete Function
-function runDeleteFunction($dbconnect, $id) {
-
-    $select_query = "SELECT * FROM BOMX WHERE ID = '" . $id . "';";
-    $dbconnect->sql = $select_query;
-    $dbconnect->countresult();
-    if ($dbconnect->count > 0) {
-        $delete_query = "DELETE FROM BOMX WHERE ID = '" . $id . "';";
-        $dbconnect->sql = $delete_query;
-        $dbconnect->deletetb();
-        return 1;
-    } else {
-        return 0;
-    }
-}
+//function runDeleteFunction($dbconnect, $id) {
+//
+//    $select_query = "SELECT * FROM BOMX WHERE ID = '" . $id . "';";
+//    $dbconnect->sql = $select_query;
+//    $dbconnect->countresult();
+//    if ($dbconnect->count > 0) {
+//        $delete_query = "DELETE FROM BOMX WHERE ID = '" . $id . "';";
+//        $dbconnect->sql = $delete_query;
+//        $dbconnect->deletetb();
+//        return 1;
+//    } else {
+//        return 0;
+//    }
+//}
 
 if (isset($_GET['id'])) {
     if ($_SESSION["role"] == 'admin') {
-        $final_status = runDeleteFunction($dbconnect, $_GET['id']);
+        $final_status = $myclass->runDeleteFunction('BOMX', 'ID', $_GET['id']);
+//        $final_status = runDeleteFunction($dbconnect, $_GET['id']);
     }
 }
 
