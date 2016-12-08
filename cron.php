@@ -1,8 +1,13 @@
 <?php
 include("config.php");
 include_once("include/dbcon.php");
-$dbconnect = new dbconnect();
+include_once("include/myclass.php");
 
+
+$dbconnect = new dbconnect();
+$myclass = new myclass();
+
+$admin_email = $myclass->getSettingValue('ADMIN_EMAIL');
     $passed = array();
     $failed = array();
     
@@ -32,7 +37,7 @@ $dbconnect = new dbconnect();
         
         while ($row1 = mysql_fetch_array($dbconnect->res)){
             
-            $from="someone@example.com";
+            $from= $admin_email['OPTION_VALUE'];
             $to = $row1['EMAIL_DISTRIBUTION'];
             $subject = "[IMDB-ALERT]::".$row['SN'].'-'.$row['PN'].'-'.$row['STATIONID'].'-'.$row['OVERALLSTATUS'];                        
             $msg_header = file_get_contents(SITE_URL . EMAILTEMPLATE . 'header.html');
