@@ -33,10 +33,9 @@ $results = ($dbconnect->nrow != '0') ? $dbconnect->res : '0';
                 <th>END_TIME</th>
                 <th>DURATION</th>
                 <th>TEST_STATUS</th>
-                <th>TIME_TO_FIRST_FAILURE<th>
-                <th>FILE_NAME<th>           
-                <?php } ?>
-                <?php if ($_POST['table'] == 'XML_TO_TESTS') { ?>
+                <th>TIME_TO_FIRST_FAILURE</th>
+                <th>FILE_NAME</th>           
+                <?php }else if ($_POST['table'] == 'XML_TO_TESTS') { ?>
                 <th>SERIAL_NUMBER</th>
                 <th>START_TIME</th>
                 <th>TEST_NUM</th>
@@ -45,14 +44,13 @@ $results = ($dbconnect->nrow != '0') ? $dbconnect->res : '0';
                 <th>TEST_CMD_START_TIME</th>
                 <th>TEST_CMD_END_TIME</th>
                 <th>TEST_CMD_ELAPSED_TIME</th>
-                <th> TEST_CMD_DESCRIPTION</th>
-                <th> TEST_CMD_OUTPUT</th>
+                <th>TEST_CMD_DESCRIPTION</th>
+                <th>TEST_CMD_OUTPUT</th>
                 <th>TEST_CMD_FAILURE_CODE</th>
-                <th> TEST_CMD_STATUS</th>
+                <th>TEST_CMD_STATUS</th>
                 <th>FILE_NAME</th>
                 <th>CREATED_ON</th>
-            <?php } ?>
-            <?php if ($_POST['table'] == 'XML_TO_TESTVERSION') { ?>
+            <?php }else if ($_POST['table'] == 'XML_TO_TESTVERSION') { ?>
                 <th>SERIAL_NUMBER</th>
                 <th>START_TIME</th>
                 <th>COMPONENT</th>
@@ -90,8 +88,8 @@ $results = ($dbconnect->nrow != '0') ? $dbconnect->res : '0';
                     <td><?php echo date('m/d/Y h:i:s A', strtotime($row['END_TIME'])); ?></td>
                     <td><?php echo $row['DURATION']; ?></td>
                     <td><?php echo $row['TEST_STATUS']; ?></td>
-                    <td><?php echo $row['TIME_TO_FIRST_FAILURE']; ?><td>
-                    <td><?php echo $row['FILE_NAME'] ?><td>           
+                    <td><?php echo $row['TIME_TO_FIRST_FAILURE']; ?></td>
+                    <td><?php echo $row['FILE_NAME'] ?></td>           
                 </tr>
                 <?php
             }

@@ -19,4 +19,9 @@ if(isset($_POST['id'])){
         echo 'not_found';
     }   
 }
+if(isset($_POST['status'])){    
+    $dbconnect->sql = "UPDATE ADMIN_SETTINGS SET STATUS='".$_POST['status']."' WHERE OPTION_NAME='DASH_AUTO_REFRESH'";
+    $dbconnect->updatetb();
+    echo ($_POST['status']=='1')? 'Enable': 'Disable';
+}
 ?>

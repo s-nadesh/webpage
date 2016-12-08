@@ -49,6 +49,10 @@ if (isset($_REQUEST['dash_show']) && isset($_REQUEST['dash_start_date']) && isse
         $end_current_week = date("m/d/Y");
     }
 }
+$auto_refresh = '';
+$dash_auto_refresh = $myclass->getSettingValue('DASH_AUTO_REFRESH');
+$auto_refresh = $dash_auto_refresh['OPTION_VALUE'];
+
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -57,11 +61,17 @@ if (isset($_REQUEST['dash_show']) && isset($_REQUEST['dash_start_date']) && isse
     <!-- Content Header (Page header) -->
     <section class="content-header clearfix">
         <h1 class="pull-left">
-            Welcome
+            Welcome                         
         </h1>
         <?php if ($_SESSION["role"] == 'admin'): ?>
             <div class="pull-right">
                 <form class="form-inline">
+                    <div class="form-group">
+                        <label>
+                            Auto Refresh
+                            <input type="checkbox" class="minimal auto_refresh" name="auto_refresh" value="auto_refresh" <?php echo ($dash_auto_refresh['STATUS']) ? 'checked' : ''; ?>>
+                        </label>
+                    </div>
                     <div class="form-group">
                         <label>Start Date</label>
                         <input type="text" class="form-control" name="dash_start_date" id="datepicker-start" value="<?php echo @$st_date ?>" />
@@ -546,3 +556,48 @@ if (isset($_REQUEST['dash_show']) && isset($_REQUEST['dash_start_date']) && isse
 </div>
 <!-- Page script -->
 <?php include("footer.php"); ?>
+
+<script>
+    $(function () {
+
+        var checkautorefresh = $('input.auto_refresh');
+        checkautorefresh.on('ifChecked ifUnchecked', function (event) {
+            if (event.type == 'ifChecked') {
+                var dataVal = '1';
+                autorefresh();
+            } else {
+                var dataVal = '0';
+            }
+            $.ajax({
+                type: "POST",
+                data: {status: dataVal},
+                url: "ajaxaction.php",
+                success: function (data) {
+                    if(data == 'Enable'){
+                        autorefresh();
+                    }else{
+                        stopAutoRefresh();
+                    }
+                }
+            });
+        });
+
+        
+        if($('input.auto_refresh').is(':checked')){            
+            autorefresh();
+        }
+        
+        function stopAutoRefresh(){
+            setTimeout(function () {
+            }, 0);            
+        }
+        
+        function autorefresh(){
+            setTimeout(function () {
+                window.location.reload(1);
+            }, '<?php echo $auto_refresh; ?>');
+        }
+
+    });
+</script>
+

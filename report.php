@@ -252,7 +252,7 @@ function isChecked($value) {
 </div>
 
 <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-md">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">

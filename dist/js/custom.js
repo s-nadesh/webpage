@@ -340,7 +340,7 @@ function xml_to_table(sn, starttime, table, table_title) {
                     $("#xml_to_table").dataTable().fnDestroy();
                     $("#xml_to_table").DataTable({
                         "bDestroy": true,
-                        "scrollY": 250,
+                        "scrollY": 500,
                         "scrollX": true,
                         "bPaginate": false,
                         "dom": '<"modal_heading">Bfrtip',

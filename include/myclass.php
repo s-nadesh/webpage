@@ -116,18 +116,33 @@ class myclass {
     }
 
     function getLastWeek() {
-        $previous_week = strtotime("-1 week +1 day");
-        $start_lweek = strtotime("last sunday midnight", $previous_week);
-        $end_lweek = strtotime("next saturday", $start_lweek);
-        $this->from = date("Y-m-d", $start_lweek);
-        $this->to = date("Y-m-d", $end_lweek);
+        $dash_setting = $this->getSettingValue('DASH_VIEW_DATES');
+        if ($dash_setting['OPTION_VALUE']) {
+            $values = json_decode($dash_setting['OPTION_VALUE'], true);
+            $this->from = $st_date = $values['dash_start_date'];
+            $this->to = $ed_date = $values['dash_end_date'];
+        } else {
+            $previous_week = strtotime("-1 week +1 day");
+            $start_lweek = strtotime("last sunday midnight", $previous_week);
+            $end_lweek = strtotime("next saturday", $start_lweek);
+            $this->from = date("Y-m-d", $start_lweek);
+            $this->to = date("Y-m-d", $end_lweek);
+        }
+        
     }
 
     function getCurrentWeek() {
-        $today = strtotime("today");
-        $start_cweek = strtotime("last sunday midnight", $today);
-        $this->from = date("Y-m-d", $start_cweek);
-        $this->to = date("Y-m-d");
+         $dash_setting = $this->getSettingValue('DASH_VIEW_DATES');
+        if ($dash_setting['OPTION_VALUE']) {
+            $values = json_decode($dash_setting['OPTION_VALUE'], true);
+            $this->from = $st_date = $values['dash_start_date'];
+            $this->to = $ed_date = $values['dash_end_date'];
+        } else {
+            $today = strtotime("today");
+            $start_cweek = strtotime("last sunday midnight", $today);
+            $this->from = date("Y-m-d", $start_cweek);
+            $this->to = date("Y-m-d");
+        }
     }
 
     function generateRandomString($length = 10) {
