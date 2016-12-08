@@ -1,5 +1,4 @@
-<section class="content-header clearfix">
-    <p>&nbsp;</p>
+<section class="content-header clearfix">    
     <ol class="breadcrumb">
         <li>
             <a href="index.php">

@@ -85,10 +85,12 @@ if (isset($_POST['submit-form'])) {
         $final_status = 0;
     }
 }
-$table_query = 'SELECT * FROM information_schema.tables a, A_REPORT b WHERE a.TABLE_TYPE IN("BASE TABLE","VIEW")
-                AND a.TABLE_SCHEMA LIKE "webpage"
-                AND b.LAYOUT LIKE "TABLE%"
-                AND b.TYPE = a.TABLE_NAME;';
+//$table_query = 'SELECT * FROM information_schema.tables a, A_REPORT b WHERE a.TABLE_TYPE IN("BASE TABLE","VIEW")
+//                AND a.TABLE_SCHEMA LIKE "'.$dbconnect->dbname.'"
+//                AND b.LAYOUT LIKE "TABLE%"
+//                AND b.TYPE = a.TABLE_NAME;';
+
+$table_query = 'SELECT * FROM  A_REPORT WHERE   LAYOUT LIKE "TABLE%";';
 
 $dbconnect->sql = $table_query;
 $dbconnect->selecttb();
@@ -187,12 +189,26 @@ $table_access = $dbconnect->res;
                                         </thead>
                                         <tbody>
                                                 <?php while($row = mysql_fetch_array($table_access)){?>
-                                                    <tr>
+<!--                                                    <tr>
                                                         <td><?php echo $row['TABLE_NAME']?></td>
                                                         <td class="hidden"><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_CREATE]" value="1" /></td>
                                                         <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_VIEW]" value="1" /></td>
                                                         <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_EDIT]" value="1" /></td>
                                                         <td><input type="checkbox" class="minimal check_access" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_DELETE]" value="1" /></td>
+                                                    </tr>-->
+<!--                                            <tr>
+                                                        <td><?php echo $row['TABLE_NAME'] ?></td>
+                                                        <td class="hidden"><input type="checkbox" data-chbx="<?php echo $row['TABLE_NAME'] ?>"  class="minimal check_create check_access <?php echo $row['TABLE_NAME'] ?>" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_CREATE]" value="1" /></td>
+                                                        <td><input type="checkbox" data-chbx="<?php echo $row['TABLE_NAME'] ?>" class="minimal check_view check_access <?php echo $row['TABLE_NAME'] ?>" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_VIEW]" value="1"   /></td>
+                                                        <td><input type="checkbox" data-chbx="<?php echo $row['TABLE_NAME'] ?>" class="minimal check_edit check_access <?php echo $row['TABLE_NAME'] ?>" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_EDIT]" value="1"   /></td>
+                                                        <td><input type="checkbox" data-chbx="<?php echo $row['TABLE_NAME'] ?>" class="minimal check_delete check_access <?php echo $row['TABLE_NAME'] ?>" name="ACCESS[<?php echo $row['TABLE_NAME'] ?>][CAN_DELETE]" value="1"  /></td>
+                                                    </tr>-->
+                                            <tr>
+                                                        <td><?php echo $row['TYPE'] ?></td>
+                                                        <td class="hidden"><input type="checkbox" data-chbx="<?php echo $row['TYPE'] ?>"  class="minimal check_create check_access <?php echo $row['TYPE'] ?>" name="ACCESS[<?php echo $row['TYPE'] ?>][CAN_CREATE]" value="1" /></td>
+                                                        <td><input type="checkbox" data-chbx="<?php echo $row['TYPE'] ?>" class="minimal check_view check_access <?php echo $row['TYPE'] ?>" name="ACCESS[<?php echo $row['TYPE'] ?>][CAN_VIEW]" value="1"   /></td>
+                                                        <td><input type="checkbox" data-chbx="<?php echo $row['TYPE'] ?>" class="minimal check_edit check_access <?php echo $row['TYPE'] ?>" name="ACCESS[<?php echo $row['TYPE'] ?>][CAN_EDIT]" value="1"   /></td>
+                                                        <td><input type="checkbox" data-chbx="<?php echo $row['TYPE'] ?>" class="minimal check_delete check_access <?php echo $row['TYPE'] ?>" name="ACCESS[<?php echo $row['TYPE'] ?>][CAN_DELETE]" value="1"  /></td>
                                                     </tr>
                                                 <?php } ?>
                                         </tbody>

@@ -80,7 +80,7 @@ class User {
             }
             if(!empty($table_access_results)){
                 $this->dbconnect->sql = 'SELECT * FROM information_schema.tables a, A_REPORT b WHERE a.TABLE_TYPE IN("BASE TABLE","VIEW")
-                    AND a.TABLE_SCHEMA LIKE "webpage"
+                    AND a.TABLE_SCHEMA LIKE "'.$this->dbconnect->dbname.'"
                     AND b.LAYOUT LIKE "TABLE%"
                     AND b.TYPE = a.TABLE_NAME
                     AND b.TYPE NOT IN (' . implode($table_access_results,"," ).');';

@@ -81,7 +81,7 @@ $results = ($dbconnect->nrow!='0') ? $dbconnect->res : '0';
                                 <?php if ($results !='0') { ?>
                                     <?php while ($row = mysql_fetch_array($results)) { ?>
                                         <tr>
-                                            <td><a href="edit-user.php?id=<?php echo $row['ID']; ?>"><i class="fa fa-fw fa-edit"></i></a>
+                                            <td><a href="edit-user.php?type=ADMINISTRATION&branch=Edit user&id=<?php echo $row['ID']; ?>"><i class="fa fa-fw fa-edit"></i></a>
                                                 <a href="user-list.php?id=<?php echo $row['ID']; ?>" onclick="return confirm('Are you sure ?')"><i class="fa fa-fw fa-close"></i></a>
                                             </td>
                                             <td><?php echo $row['FIRST_NAME']; ?></td>

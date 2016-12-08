@@ -155,3 +155,16 @@ div.dt-buttons {
 div.modal_heading {
     float:left;
 }
+
+.content-header > .breadcrumb {
+  background: none repeat scroll 0 0 transparent;
+  border-radius: 2px;
+  float: left;
+  font-size: 12px;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 7px 5px;
+  position: relative;
+   right: 0px;
+  top: 0px;
+}
