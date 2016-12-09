@@ -52,12 +52,11 @@ if (isset($_REQUEST['dash_show']) && isset($_REQUEST['dash_start_date']) && isse
 $auto_refresh = '';
 $dash_auto_refresh = $myclass->getSettingValue('DASH_AUTO_REFRESH');
 $auto_refresh = $dash_auto_refresh['OPTION_VALUE'];
-
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <?php // include_once("include/breadcrumb.php"); ?>
+    <?php // include_once("include/breadcrumb.php");  ?>
     <!-- Content Header (Page header) -->
     <section class="content-header clearfix">
         <h1 class="pull-left">
@@ -65,13 +64,19 @@ $auto_refresh = $dash_auto_refresh['OPTION_VALUE'];
         </h1>
         <?php if ($_SESSION["role"] == 'admin'): ?>
             <div class="pull-right">
-                <form class="form-inline">
+                <form class="form-inline" action="tested.php" method="post" id="dash_form">    
+                    <div class="form-group">                        
+                        <input type="text" class="form-control" maxlength="18" name="sn" id="sn" placeholder="Enter SN"/>
+                    </div>
+                    <button type="submit" id="search_sn" name="search_sn" value="submit" class="btn btn-sm btn-primary">Search</button>
+
                     <div class="form-group">
                         <label>
                             Auto Refresh
                             <input type="checkbox" class="minimal auto_refresh" name="auto_refresh" value="auto_refresh" <?php echo ($dash_auto_refresh['STATUS']) ? 'checked' : ''; ?>>
                         </label>
                     </div>
+
                     <div class="form-group">
                         <label>Start Date</label>
                         <input type="text" class="form-control" name="dash_start_date" id="datepicker-start" value="<?php echo @$st_date ?>" />
@@ -80,9 +85,9 @@ $auto_refresh = $dash_auto_refresh['OPTION_VALUE'];
                         <label>End Date</label>
                         <input type="text" class="form-control" name="dash_end_date" id="datepicker-end" value="<?php echo @$ed_date ?>" />
                     </div>
-                    <button type="submit" name="dash_show" value="submit" class="btn btn-sm btn-primary">Submit</button>
-                    <button type="submit" name="dash_show" value="set_for_all" class="btn btn-sm btn-success">SET FOR ALL</button>
-                    <button type="submit" name="dash_show" value="reset" class="btn btn-sm btn-danger" onclick="$('#datepicker-start,#datepicker-end').val('');">Reset</button>
+                    <button type="submit" id="dash_show" name="dash_show" value="submit" class="btn btn-sm btn-primary">Submit</button>
+                    <button type="submit" id="set_all" name="dash_show" value="set_for_all" class="btn btn-sm btn-success">SET FOR ALL</button>
+                    <button type="submit" id="reset_all" name="dash_show" value="reset" class="btn btn-sm btn-danger" onclick="$('#datepicker-start,#datepicker-end').val('');">Reset</button>
                 </form>
             </div>
         <?php endif; ?>
@@ -559,7 +564,14 @@ $auto_refresh = $dash_auto_refresh['OPTION_VALUE'];
 
 <script>
     $(function () {
-
+                
+        $( "#dash_show, #set_all, #reset_all" ).click(function() {
+            $( "#dash_form" ).removeAttr("action");
+        });
+        
+                
+        
+        var auto_refresh;
         var checkautorefresh = $('input.auto_refresh');
         checkautorefresh.on('ifChecked ifUnchecked', function (event) {
             if (event.type == 'ifChecked') {
@@ -573,27 +585,26 @@ $auto_refresh = $dash_auto_refresh['OPTION_VALUE'];
                 data: {status: dataVal},
                 url: "ajaxaction.php",
                 success: function (data) {
-                    if(data == 'Enable'){
+                    if (data == 'Enable') {
                         autorefresh();
-                    }else{
+                    } else {
                         stopAutoRefresh();
                     }
                 }
             });
         });
 
-        
-        if($('input.auto_refresh').is(':checked')){            
+
+        if ($('input.auto_refresh').is(':checked')) {
             autorefresh();
         }
-        
-        function stopAutoRefresh(){
-            setTimeout(function () {
-            }, 0);            
+
+        function stopAutoRefresh() {
+            clearTimeout(auto_refresh);
         }
-        
-        function autorefresh(){
-            setTimeout(function () {
+
+        function autorefresh() {
+            auto_refresh = setTimeout(function () {
                 window.location.reload(1);
             }, '<?php echo $auto_refresh; ?>');
         }

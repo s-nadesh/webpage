@@ -2,13 +2,16 @@
 include("header.php");
 include("sidemenu.php");
 
-if(!isset($_GET["sid"]) || !isset($_GET["pdt"]) || !isset($_GET["week"]) || !isset($_GET["page"])){    
-    header("Location: " . SITE_URL);
-}else {
+if(isset($_GET["sid"]) || isset($_GET["pdt"]) || isset($_GET["week"]) || isset($_GET["page"])){       
     $page = $_GET["page"];
     $stationid = $_GET["sid"];
     $product = $_GET["pdt"];
     $week = $_GET["week"];
+}
+
+if(isset($_POST['search_sn'])){
+    $sn = $_POST['sn'];
+    $page = 'SN';
 }
 
 switch($page){
@@ -20,6 +23,9 @@ switch($page){
         break;
     case 'failed':
         $myclass->getFailed($stationid,$product,$week);
+        break;
+    case 'SN':
+        $myclass->getSN($sn);
         break;
 }
 $results = $myclass->res;

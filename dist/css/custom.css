@@ -104,9 +104,6 @@ div.dt-buttons {
 #myModal .modal-header {
   padding: 10px 10px 0;
 }
-#myModal .modal-lg {
-  width: 1100px;
-}
 @media (max-width:767px) {
     .dashboard-tables h3.box-title {
     float: left !important;

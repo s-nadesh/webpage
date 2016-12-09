@@ -170,9 +170,9 @@ function isChecked($value) {
                     <div class="box box-primary">
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="report_table" class="table table-bordered table-striped">
+                            <table id="report_table_sn" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>
+                                    <tr>                                                                                 
                                         <th>SN</th>
                                         <th>PN</th>
                                         <th>HWS</th>
@@ -199,11 +199,14 @@ function isChecked($value) {
                                         <th>TTF</th>
                                         <th>CREATED</th>
                                         <th>MODIFIED</th>
+                                        <th>RCA_BY</th>
+                                        <th>ROOT_CAUSE</th>
+                                        <th>EXPLAINATION</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php while ($row = mysql_fetch_array($table_results)) { ?>
-                                        <tr>
+                                        <tr>                                                                                      
                                             <td>
                                                 <a href="javascript:void(0)" data-sn="<?php echo $row['SN']; ?>" data-starttime="<?php echo $row['STARTTIME'] ?>" class="report-sn" data-toggle="modal" data-target="#myModal">
                                                     <?php echo $row['SN'] ?>
@@ -227,13 +230,27 @@ function isChecked($value) {
                                             <td><?php echo $row['TOTALTESTTIME'] ?></td>
                                             <td><?php echo $row['REV'] ?></td>
                                             <td><?php echo $row['OVERALLSTATUS'] ?></td>
-        <!--                                            <td><?php echo $row['TESTREPORT'] ?></td>
+        <!--                                <td><?php echo $row['TESTREPORT'] ?></td>
                                             <td><?php echo $row['RUNNINGLOG'] ?></td>
                                             <td><?php echo $row['TRACELOG'] ?></td>
                                             <td><?php echo $row['TIMEZONE'] ?></td>-->
                                             <td><?php echo $row['TTF'] ?></td>
                                             <td><?php echo $row['CREATED_ON'] ?></td>
                                             <td><?php echo $row['LAST_MODIFIED_ON'] ?></td>
+                                             <td class="rca_by" data-order="<?php echo $row['RCA_BY'];?>" data-testheader-id="<?php echo $row['ID'] ?>"  data-colname="RCA_BY">                                                  
+                                                <a href="#" class="rca_val" pk-data="ABC-123" data-type="select" data-value="<?php echo $row['RCA_BY'];?>"><?php echo $row['RCA_BY'];?></a>
+                                            </td>
+                                            <td data-order="<?php echo $row['ROOT_CAUSE'] ?>" data-testheader-id="<?php echo $row['ID'] ?>" data-colname="ROOT_CAUSE"> 
+                                                <a href="javascript:;" class="root_cause" data-type="text" data-mode="popup" data-title="ROOT_CAUSE:" >
+                                                    <?php echo $row['ROOT_CAUSE'] ?>
+                                                </a>
+                                            </td>
+                                            <td data-order="<?php echo $row['EXPLAINATION'] ?>" data-testheader-id="<?php echo $row['ID'] ?>"  data-colname="EXPLAINATION">  
+                                                <a href="javascript:;" class="explaination" data-type="text" data-mode="popup" data-title="EXPLAINATION:">
+                                                    <?php echo $row['EXPLAINATION'] ?>
+                                                </a>
+                                            </td>   
+                                            
                                         </tr>
                                     <?php } ?>
                                 </tbody>
@@ -252,7 +269,7 @@ function isChecked($value) {
 </div>
 
 <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -305,8 +322,8 @@ function isChecked($value) {
             })
 
             $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');
+                        
         });
-        
     </script>
 <?php } ?>
 

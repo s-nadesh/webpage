@@ -71,6 +71,7 @@ if($access === false){
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">
   
+  <link rel="stylesheet" href="bootstrap/css/bootstrap-editable.css">
   <link rel="stylesheet" href="dist/css/custom.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

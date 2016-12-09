@@ -11,7 +11,14 @@ class myclass {
     function __construct() {
         $this->dbconnect = new dbconnect;
     }
+    function getSN($sn) {        
 
+        $query = "SELECT *  FROM TESTHEADER WHERE SN=".$sn;            
+
+        $this->dbconnect->sql = $query;
+        $this->dbconnect->selecttb();
+        $this->res = $this->dbconnect->res;
+    }
     function getTestedCount($station_id, $product, $week) {
         if ($week == 'last') {
             $this->getLastWeek();

@@ -169,6 +169,86 @@ $(function () {
 //        "bPaginate": false,
 //        "dom": '<"heading">frtip'
 //    });
+var table = $("#report_table_sn").DataTable({
+        "scrollY": (h - 215),
+        "scrollX": true,
+        "bPaginate": false,
+        "dom": '<"heading">Bfrtip',
+//        "columnDefs": [
+//            { "width": "100%", "targets": 20 },
+//            { "width": "100%", "targets": 21 }
+//          ],         
+        buttons: [{
+                extend: 'excelHtml5',
+                title: 'data',
+                text: 'Xport',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            }
+        ],         
+       drawCallback: function(settings){
+          var api = this.api();           
+           
+          $('.root_cause, .explaination', api.table().body())
+             .editable()
+             .off('hidden')
+             .on('hidden', function(e, reason) {
+                if(reason === 'save') {
+                    var dataid = $(this).closest('td').data('testheader-id');
+                    var datacol = $(this).closest('td').data('colname');
+                    if($(this).text()!='Empty'){ 
+                        var datauserid = $(this).text();
+                    }else{
+                        var datauserid = '';
+                    }
+                    $.ajax({
+                            type: "POST",
+                            data: {testheaderid: dataid, colname: datacol ,dataval: datauserid},
+                            url: "ajaxaction.php",
+                            success: function (data) {
+//                                alert(data);
+                            }
+                        });
+                   $(this).closest('td').attr('data-order', $(this).text());
+                   table.row($(this).closest('tr')).invalidate().draw(false);
+                }
+             });               
+       },
+    });
+    $('#report_table_sn .rca_val').editable({
+                type: 'select',
+                name: 'Type',
+                title: 'Type',
+                source: [
+                  {value: '', text: ' Select '},
+                  {value: 'FAILURE1', text: 'FAILURE1'},
+                  {value: 'FAILURE2', text: 'FAILURE2'},
+                  {value: 'FAILURE3', text: 'FAILURE3'},
+                  {value: 'FAILURE4', text: 'FAILURE4'},
+                  {value: 'FAILURE5', text: 'FAILURE5'},
+                  {value: 'FAILURE6', text: 'FAILURE6'},
+                  {value: 'FAILURE7', text: 'FAILURE7'},
+                  {value: 'FAILURE8', text: 'FAILURE8'},
+                  {value: 'FAILURE9', text: 'FAILURE9'},
+                  {value: 'FAILURE10', text: 'FAILURE10'},
+                ]
+            });
+            $(document).on('click','.rca_by .editable-submit',function(){
+                var dataid = $(this).closest('td').data('testheader-id');
+                var datacol = $(this).closest('td').data('colname');
+                var dataval = $('.rca_by .input-sm').val();
+//                alert($('.rca_by .input-sm').val());
+                    $.ajax({
+                            type: "POST",
+                            data: {testheaderid: dataid, colname: datacol ,dataval: dataval},
+                            url: "ajaxaction.php",
+                            success: function (data) {
+//                                alert(data);
+                            }
+                        });
+                });
+                
     $("#report_table").DataTable({
         "scrollY": (h - 215),
         "scrollX": true,
@@ -200,10 +280,6 @@ $(function () {
                 text: 'Xport',
                 exportOptions: {
                     columns: ':visible'
-//                    columns: function (idx, data, node) {
-//                        var isNotForExport = $.inArray(idx, hideFromExport) !== -1;
-//                        return !isNotForExport ? true : false;
-//                    }
                 }
             }
         ]
