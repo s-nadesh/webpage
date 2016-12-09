@@ -165,3 +165,19 @@ div.modal_heading {
    right: 0px;
   top: 0px;
 }
+
+input::-webkit-input-placeholder {
+font-style: italic;
+}
+ 
+input:-moz-placeholder { /* Firefox 18- */
+font-style: italic;
+}
+ 
+input::-moz-placeholder {  /* Firefox 19+ */
+font-style: italic;
+}
+ 
+input:-ms-input-placeholder {  
+font-style: italic;
+}

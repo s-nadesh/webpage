@@ -237,13 +237,14 @@ function isChecked($value) {
                                             <td><?php echo $row['TTF'] ?></td>
                                             <td><?php echo $row['CREATED_ON'] ?></td>
                                             <td><?php echo $row['LAST_MODIFIED_ON'] ?></td>
-                                             <td class="rca_by" data-order="<?php echo $row['RCA_BY'];?>" data-testheader-id="<?php echo $row['ID'] ?>"  data-colname="RCA_BY">                                                  
-                                                <a href="#" class="rca_val" pk-data="ABC-123" data-type="select" data-value="<?php echo $row['RCA_BY'];?>"><?php echo $row['RCA_BY'];?></a>
-                                            </td>
-                                            <td data-order="<?php echo $row['ROOT_CAUSE'] ?>" data-testheader-id="<?php echo $row['ID'] ?>" data-colname="ROOT_CAUSE"> 
-                                                <a href="javascript:;" class="root_cause" data-type="text" data-mode="popup" data-title="ROOT_CAUSE:" >
-                                                    <?php echo $row['ROOT_CAUSE'] ?>
+                                             <td data-order="<?php echo $row['RCA_BY'];?>" data-testheader-id="<?php echo $row['ID'] ?>"  data-colname="RCA_BY">                                                  
+                                                
+                                                <a href="javascript:;" class="rca_val" data-type="text" data-mode="popup" data-title="RCA_BY:" >
+                                                    <?php echo $row['RCA_BY'] ?>
                                                 </a>
+                                            </td>
+                                            <td class="root_cause" data-order="<?php echo $row['ROOT_CAUSE'] ?>" data-testheader-id="<?php echo $row['ID'] ?>" data-colname="ROOT_CAUSE"> 
+                                                <a href="#" class="root_cause_by" pk-data="ABC-123" data-type="select" data-value="<?php echo $row['ROOT_CAUSE'];?>"><?php echo $row['ROOT_CAUSE'];?></a>                                                
                                             </td>
                                             <td data-order="<?php echo $row['EXPLAINATION'] ?>" data-testheader-id="<?php echo $row['ID'] ?>"  data-colname="EXPLAINATION">  
                                                 <a href="javascript:;" class="explaination" data-type="text" data-mode="popup" data-title="EXPLAINATION:">

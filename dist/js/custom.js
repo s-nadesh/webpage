@@ -190,7 +190,7 @@ var table = $("#report_table_sn").DataTable({
        drawCallback: function(settings){
           var api = this.api();           
            
-          $('.root_cause, .explaination', api.table().body())
+          $('.rca_val, .explaination', api.table().body())
              .editable()
              .off('hidden')
              .on('hidden', function(e, reason) {
@@ -216,7 +216,7 @@ var table = $("#report_table_sn").DataTable({
              });               
        },
     });
-    $('#report_table_sn .rca_val').editable({
+    $('#report_table_sn .root_cause_by').editable({
                 type: 'select',
                 name: 'Type',
                 title: 'Type',
@@ -234,10 +234,10 @@ var table = $("#report_table_sn").DataTable({
                   {value: 'FAILURE10', text: 'FAILURE10'},
                 ]
             });
-            $(document).on('click','.rca_by .editable-submit',function(){
+            $(document).on('click','.root_cause .editable-submit',function(){
                 var dataid = $(this).closest('td').data('testheader-id');
                 var datacol = $(this).closest('td').data('colname');
-                var dataval = $('.rca_by .input-sm').val();
+                var dataval = $('.root_cause .input-sm').val();
 //                alert($('.rca_by .input-sm').val());
                     $.ajax({
                             type: "POST",
