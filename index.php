@@ -79,11 +79,11 @@ $auto_refresh = $dash_auto_refresh['OPTION_VALUE'];
 
                     <div class="form-group">
                         <label>Start Date</label>
-                        <input type="text" class="form-control" name="dash_start_date" id="datepicker-start" value="<?php echo @$st_date ?>" />
+                        <input type="text" class="form-control input-sm" name="dash_start_date" id="datepicker-start" value="<?php echo @$st_date ?>" />
                     </div>
                     <div class="form-group">
                         <label>End Date</label>
-                        <input type="text" class="form-control" name="dash_end_date" id="datepicker-end" value="<?php echo @$ed_date ?>" />
+                        <input type="text" class="form-control input-sm" name="dash_end_date" id="datepicker-end" value="<?php echo @$ed_date ?>" />
                     </div>
                     <button type="submit" id="dash_show" name="dash_show" value="submit" class="btn btn-sm btn-primary">Submit</button>
                     <button type="submit" id="set_all" name="dash_show" value="set_for_all" class="btn btn-sm btn-success">SET FOR ALL</button>
