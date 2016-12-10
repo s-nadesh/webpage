@@ -14,7 +14,7 @@ if(isset($_POST['id'])){
         $status = ($results['STATUS']=='1')? '0': '1';
         $dbconnect->sql = "UPDATE ALERT_PER_PRODUCT SET STATUS='".$status."' WHERE ID=".$_POST['id'];
         $dbconnect->updatetb();
-        echo ($results['STATUS']=='1')? 'Enable': 'Disable';
+        echo ($results['STATUS']=='1')? 'Disable': 'Enable';
     }else{
         echo 'not_found';
     }   
