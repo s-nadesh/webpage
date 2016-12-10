@@ -7,11 +7,11 @@ if(isset($_GET["sid"]) || isset($_GET["pdt"]) || isset($_GET["week"]) || isset($
     $stationid = $_GET["sid"];
     $product = $_GET["pdt"];
     $week = $_GET["week"];
-}
-
-if(isset($_POST['search_sn'])){
+}else if(isset($_POST['search_sn'])){
     $sn = $_POST['sn'];
     $page = 'SN';
+}else{
+        echo "<script type='text/javascript'>window.location.href = '".SITE_URL."';</script>";
 }
 
 switch($page){
@@ -162,27 +162,3 @@ $results = $myclass->res;
 
 <!-- /.content-wrapper -->
 <?php include("footer.php"); ?>
-<?php if (isset($results)) { ?>
-    <script>
-        $(function () {
-            $("#loading").hide();
-            $(".report-sn").click(function () {
-                var sn = $(this).data("sn");
-                var starttime = $(this).data("starttime");
-                $('#xml-table').val("XML_TO_TESTHEADER");
-                $('#serial_number').val(sn);
-                $('#start_time').val(starttime);
-                xml_to_table(sn, starttime, "XML_TO_TESTHEADER", "Show Test History");
-            });
-
-            $('body').on('change', '#xml-table', function () {
-                var table = $('#xml-table').val();
-                var table_title = $('#xml-table option:selected').text();
-                var sn = $('#serial_number').val();
-                var starttime = $('#start_time').val();
-                xml_to_table(sn, starttime, table, table_title);
-            })           
-        });
-        
-    </script>
-<?php } ?>

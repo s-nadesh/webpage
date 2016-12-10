@@ -303,28 +303,28 @@ function isChecked($value) {
 <?php include("footer.php"); ?>
 <?php if (isset($table_results)) { ?>
     <script>
-        $(function () {
-            $("#loading").hide();
-            $(".report-sn").click(function () {
-                var sn = $(this).data("sn");
-                var starttime = $(this).data("starttime");
-                $('#xml-table').val("XML_TO_TESTHEADER");
-                $('#serial_number').val(sn);
-                $('#start_time').val(starttime);
-                xml_to_table(sn, starttime, "XML_TO_TESTHEADER", "Show Test History");
-            });
-
-            $('body').on('change', '#xml-table', function () {
-                var table = $('#xml-table').val();
-                var table_title = $('#xml-table option:selected').text();
-                var sn = $('#serial_number').val();
-                var starttime = $('#start_time').val();
-                xml_to_table(sn, starttime, table, table_title);
-            })
-
-            $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');
-                        
-        });
+//        $(function () {
+//            $("#loading").hide();
+//            $(".report-sn").click(function () {
+//                var sn = $(this).data("sn");
+//                var starttime = $(this).data("starttime");
+//                $('#xml-table').val("XML_TO_TESTHEADER");
+//                $('#serial_number').val(sn);
+//                $('#start_time').val(starttime);
+//                xml_to_table(sn, starttime, "XML_TO_TESTHEADER", "Show Test History");
+//            });
+//
+//            $('body').on('change', '#xml-table', function () {
+//                var table = $('#xml-table').val();
+//                var table_title = $('#xml-table option:selected').text();
+//                var sn = $('#serial_number').val();
+//                var starttime = $('#start_time').val();
+//                xml_to_table(sn, starttime, table, table_title);
+//            })
+//
+//            $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');
+//                        
+//        });
     </script>
 <?php } ?>
 

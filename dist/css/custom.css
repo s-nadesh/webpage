@@ -182,6 +182,9 @@ input:-ms-input-placeholder {
 font-style: italic;
 }
 
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th { 
+  padding: 3px;  
+}
 .table th, .table td {
     white-space: nowrap;
 }
