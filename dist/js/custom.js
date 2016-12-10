@@ -395,8 +395,8 @@ $(function () {
         $("." + _class).iCheck("uncheck");
     });
 
-    $(".alert-success").delay(3200).fadeOut(300);
-    $(".alert-danger").delay(3200).fadeOut(300);
+    $(".alert-success, .alert-danger").delay(3200).fadeOut(300);
+//    $(".alert-danger").delay(3200).fadeOut(300);
 });
 var expanded = false;
 function showCheckboxes() {

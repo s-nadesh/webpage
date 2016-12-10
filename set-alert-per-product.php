@@ -171,6 +171,7 @@ $results = ($dbconnect->nrow != '0') ? $dbconnect->res : '0';
 //alert-msg
 $("#alert-msg").html(message);
 $("#alert-msg").show();
+$("#alert-msg").delay(3200).fadeOut(300);
                 }
             });
         });
