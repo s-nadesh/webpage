@@ -181,3 +181,7 @@ font-style: italic;
 input:-ms-input-placeholder {  
 font-style: italic;
 }
+
+.table th, .table td {
+    white-space: nowrap;
+}
