@@ -22,14 +22,38 @@ if (is_dir($dir)) {
                     $xmlArray = (array) $xmlLoad;
 
                     $test_headers = $myclass->xml_to_test_header($xmlArray, $file);
-                    $test_version = $myclass->xml_to_test_version($xmlArray, $file);
-                    $tests = $myclass->xml_to_test($xmlArray, $file);
+                    $is_delete = false;
 
-                    if ($test_headers && $test_version && $tests) {
-                        rename($dir . $file, $archive_dir . $file);
+                    if ($test_headers) {
+                        $serial_number = $myclass->s_no;
+                        $start_time = $myclass->s_date;
+                        $test_version = $myclass->xml_to_test_version($xmlArray, $file);
+                        if ($test_version) {
+                            $tests = $myclass->xml_to_test($xmlArray, $file);
+                            if ($tests) {
+                                rename($dir . $file, $archive_dir . $file);
+                            } else {
+                                rename($dir . $file, $errored_dir . $file);
+                                $is_delete = true;
+                            }
+                        } else {
+                            rename($dir . $file, $errored_dir . $file);
+                            $is_delete = true;
+                        }
                     } else {
-                        //TODO - Need to Delete Inserted Records
-                        rename($dir . $file, $errored_dir . $file);
+                        if($myclass->exists){
+                            rename($dir . $file, $archive_dir . $file);
+                        }  else {
+                            rename($dir . $file, $errored_dir . $file);
+                        }
+                        
+                    }
+
+                    if ($is_delete) {
+                        $list_tables = ['XML_TO_TESTHEADER', 'XML_TO_TESTVERSION', 'XML_TO_TESTS'];
+                        foreach ($list_tables as $list_table) {
+                            $myclass->deleteRows($list_table, $serial_number, $start_time);
+                        }
                     }
                 }
             }

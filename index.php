@@ -605,7 +605,7 @@ $auto_refresh = $dash_auto_refresh['OPTION_VALUE'];
 
         function autorefresh() {
             auto_refresh = setTimeout(function () {
-                window.location.reload(1);
+                window.location = window.location.href;
             }, '<?php echo $auto_refresh; ?>');
         }
 

@@ -7,18 +7,23 @@ class myclass {
     public $from;
     public $to;
     private $dbconnect;
-
+    public $s_no;
+    public $s_date;    
+    public $exists;
+    
     function __construct() {
         $this->dbconnect = new dbconnect;
     }
-    function getSN($sn) {        
 
-        $query = "SELECT *  FROM TESTHEADER WHERE SN=".$sn;            
+    function getSN($sn) {
+
+        $query = "SELECT *  FROM TESTHEADER WHERE SN=" . $sn;
 
         $this->dbconnect->sql = $query;
         $this->dbconnect->selecttb();
         $this->res = $this->dbconnect->res;
     }
+
     function getTestedCount($station_id, $product, $week) {
         if ($week == 'last') {
             $this->getLastWeek();
@@ -135,11 +140,10 @@ class myclass {
             $this->from = date("Y-m-d", $start_lweek);
             $this->to = date("Y-m-d", $end_lweek);
         }
-        
     }
 
     function getCurrentWeek() {
-         $dash_setting = $this->getSettingValue('DASH_VIEW_DATES');
+        $dash_setting = $this->getSettingValue('DASH_VIEW_DATES');
         if ($dash_setting['OPTION_VALUE']) {
             $values = json_decode($dash_setting['OPTION_VALUE'], true);
             $this->from = $st_date = $values['dash_start_date'];
@@ -261,10 +265,10 @@ class myclass {
             $DEPLOYMENT = mysql_real_escape_string($xmlArray['Deployment']);
 
         if (isset($xmlArray['StartTime']))
-            $START_TIME = date('Y-m-d H:i:s',strtotime(mysql_real_escape_string($xmlArray['StartTime'])));
+            $START_TIME = date('Y-m-d H:i:s', strtotime(mysql_real_escape_string($xmlArray['StartTime'])));
 
         if (isset($xmlArray['EndTime']))
-            $END_TIME = date('Y-m-d H:i:s',strtotime(mysql_real_escape_string($xmlArray['EndTime'])));
+            $END_TIME = date('Y-m-d H:i:s', strtotime(mysql_real_escape_string($xmlArray['EndTime'])));
 
         if (isset($xmlArray['TotalTestTime']))
             $DURATION = mysql_real_escape_string($xmlArray['TotalTestTime']);
@@ -277,12 +281,25 @@ class myclass {
 
         if (isset($file_name))
             $FILE_NAME = mysql_real_escape_string($file_name);
-
-        $query = "INSERT INTO XML_TO_TESTHEADER (SERIAL_NUMBER, PART_NUMBER, COMPONENT, CHASSIS_SERIAL_NUMBER, HWS, SOFTWARE_SKU, PURCHASE_ORDER, SALES_ORDER, SALES_COUNTRY, STATION_ID, SITE_NAME, TEST_AUTOMATION_COMPUTER, CELL, TESTBLOX_VERSION, USER_ID, DEPLOYMENT, START_TIME, END_TIME, DURATION, TEST_STATUS, TIME_TO_FIRST_FAILURE, FILE_NAME) VALUES ('{$SERIAL_NUMBER}', '{$PART_NUMBER}', '{$COMPONENT}', '{$CHASSIS_SERIAL_NUMBER}', '{$HWS}', '{$SOFTWARE_SKU}', '{$PURCHASE_ORDER}', '{$SALES_ORDER}', '{$SALES_COUNTRY}', '{$STATION_ID}', '{$SITE_NAME}', '{$TEST_AUTOMATION_COMPUTER}', '{$CELL}', '{$TESTBLOX_VERSION}', '{$USER_ID}', '{$DEPLOYMENT}', '{$START_TIME}', '{$END_TIME}', '{$DURATION}', '{$TEST_STATUS}', '{$TIME_TO_FIRST_FAILURE}', '{$FILE_NAME}');";
+        
+        $query = "SELECT * FROM XML_TO_TESTHEADER WHERE SERIAL_NUMBER = ".$SERIAL_NUMBER." AND START_TIME = '".$START_TIME."'";
         $this->dbconnect->sql = $query;
-        $this->dbconnect->inserttb();
+        $this->dbconnect->countresult();    
+        if($this->dbconnect->count != '0' ){
+            $this->exists = true;
+            return false;            
+        }else{
+            $query = "INSERT INTO XML_TO_TESTHEADER (SERIAL_NUMBER, PART_NUMBER, COMPONENT, CHASSIS_SERIAL_NUMBER, HWS, SOFTWARE_SKU, PURCHASE_ORDER, SALES_ORDER, SALES_COUNTRY, STATION_ID, SITE_NAME, TEST_AUTOMATION_COMPUTER, CELL, TESTBLOX_VERSION, USER_ID, DEPLOYMENT, START_TIME, END_TIME, DURATION, TEST_STATUS, TIME_TO_FIRST_FAILURE, FILE_NAME) VALUES ('{$SERIAL_NUMBER}', '{$PART_NUMBER}', '{$COMPONENT}', '{$CHASSIS_SERIAL_NUMBER}', '{$HWS}', '{$SOFTWARE_SKU}', '{$PURCHASE_ORDER}', '{$SALES_ORDER}', '{$SALES_COUNTRY}', '{$STATION_ID}', '{$SITE_NAME}', '{$TEST_AUTOMATION_COMPUTER}', '{$CELL}', '{$TESTBLOX_VERSION}', '{$USER_ID}', '{$DEPLOYMENT}', '{$START_TIME}', '{$END_TIME}', '{$DURATION}', '{$TEST_STATUS}', '{$TIME_TO_FIRST_FAILURE}', '{$FILE_NAME}');";
+            $this->dbconnect->sql = $query;
+            $this->dbconnect->inserttb();        
+            $this->s_no = $SERIAL_NUMBER;
+            $this->s_date = $START_TIME;
+            $this->exists = false;
+            return $this->dbconnect->ires;
+        }
 
-        return true;
+        
+//        return true;
     }
 
     function xml_to_test_version($xmlArray, $file_name) {
@@ -291,7 +308,7 @@ class myclass {
             $SERIAL_NUMBER = mysql_real_escape_string($xmlArray['SerialNum']);
 
         if (isset($xmlArray['StartTime']))
-            $START_TIME = date('Y-m-d H:i:s',strtotime(mysql_real_escape_string($xmlArray['StartTime'])));
+            $START_TIME = date('Y-m-d H:i:s', strtotime(mysql_real_escape_string($xmlArray['StartTime'])));
 
         if (isset($file_name))
             $FILE_NAME = mysql_real_escape_string($file_name);
@@ -300,21 +317,26 @@ class myclass {
 
         if (isset($xmlArray['SoftwareVersion'])) {
             $software_versions = (array) $xmlArray['SoftwareVersion'];
-            foreach ($software_versions['LocSoftware'] as $key => $value) {
-                $COMPONENT = $TEST_POINT = $SOFT_VERSION = '';
+            if (isset($software_versions['LocSoftware'])) {
+                foreach ($software_versions['LocSoftware'] as $key => $value) {
+                    $COMPONENT = $TEST_POINT = $SOFT_VERSION = '';
 
-                if (isset($value->Location))
-                    $COMPONENT = mysql_real_escape_string($value->Location);
+                    if (isset($value->Location))
+                        $COMPONENT = mysql_real_escape_string($value->Location);
 
-                if (isset($value->Software))
-                    $TEST_POINT = mysql_real_escape_string($value->Software);
+                    if (isset($value->Software))
+                        $TEST_POINT = mysql_real_escape_string($value->Software);
 
-                if (isset($value->Version))
-                    $SOFT_VERSION = mysql_real_escape_string($value->Version);
+                    if (isset($value->Version))
+                        $SOFT_VERSION = mysql_real_escape_string($value->Version);
 
-                $query = "INSERT INTO XML_TO_TESTVERSION (SERIAL_NUMBER, START_TIME, COMPONENT, TEST_POINT, SOFT_VERSION, TESTSTATUS, FILE_NAME) VALUES ('{$SERIAL_NUMBER}', '{$START_TIME}', '{$COMPONENT}', '{$TEST_POINT}', '{$SOFT_VERSION}', '{$TESTSTATUS}', '{$FILE_NAME}');";
-                $this->dbconnect->sql = $query;
-                $this->dbconnect->inserttb();
+                    $query = "INSERT INTO XML_TO_TESTVERSION (SERIAL_NUMBER, START_TIME, COMPONENT, TEST_POINT, SOFT_VERSION, TESTSTATUS, FILE_NAME) VALUES ('{$SERIAL_NUMBER}', '{$START_TIME}', '{$COMPONENT}', '{$TEST_POINT}', '{$SOFT_VERSION}', '{$TESTSTATUS}', '{$FILE_NAME}');";
+                    $this->dbconnect->sql = $query;
+                    $this->dbconnect->inserttb();
+                    if ($this->dbconnect->ires == '0') {
+                        return false;
+                    }
+                }
             }
         }
 
@@ -335,6 +357,9 @@ class myclass {
                 $query = "INSERT INTO XML_TO_TESTVERSION (SERIAL_NUMBER, START_TIME, COMPONENT, TEST_POINT, SOFT_VERSION, TESTSTATUS, FILE_NAME) VALUES ('{$SERIAL_NUMBER}', '{$START_TIME}', '{$COMPONENT}', '{$TEST_POINT}', '{$SOFT_VERSION}', '{$TESTSTATUS}', '{$FILE_NAME}');";
                 $this->dbconnect->sql = $query;
                 $this->dbconnect->inserttb();
+                if ($this->dbconnect->ires == '0') {
+                    return false;
+                }
             }
         }
 
@@ -349,7 +374,7 @@ class myclass {
                 $SERIAL_NUMBER = mysql_real_escape_string($xmlArray['SerialNum']);
 
             if (isset($xmlArray['StartTime']))
-                $START_TIME = date('Y-m-d H:i:s',strtotime(mysql_real_escape_string($xmlArray['StartTime'])));
+                $START_TIME = date('Y-m-d H:i:s', strtotime(mysql_real_escape_string($xmlArray['StartTime'])));
 
             if (isset($file_name))
                 $FILE_NAME = mysql_real_escape_string($file_name);
@@ -366,29 +391,38 @@ class myclass {
                 if (count($display[1]) == 9 && count($display_new[1]) == 9) {
                     $insert_data = $display_new[1];
                     $insert_datas = [];
-                    foreach($insert_data as $insert_data_key => $insert_data_value) {
+                    foreach ($insert_data as $insert_data_key => $insert_data_value) {
                         $insert_datas[$insert_data_key] = mysql_real_escape_string($insert_data_value);
                     }
-                    
+
                     $query = "INSERT INTO XML_TO_TESTS VALUES ('{$SERIAL_NUMBER}', '{$START_TIME}', '{$TEST_NUM}', '{$insert_datas[0]}', '{$insert_datas[1]}', '{$insert_datas[2]}', '{$insert_datas[3]}', '{$insert_datas[4]}', '{$insert_datas[5]}', '{$insert_datas[6]}', '{$insert_datas[7]}', '{$insert_datas[8]}', '{$FILE_NAME}', NOW());";
-                    
+
 //                    $result[$TEST_NUM] = [$query];
                     $this->dbconnect->sql = $query;
                     $this->dbconnect->inserttb();
+                    if ($this->dbconnect->ires == '0') {
+                        return false;
+                    }
                 }
             }
 //            return $result;
             return true;
         }
     }
-    
+
+    //TODO - Need to Delete Inserted Records
+    function deleteRows($table, $serial_no, $start_time) {
+        $this->dbconnect->sql = "DELETE FROM " . $table . " WHERE SERIAL_NUMBER='" . $serial_no . "' AND START_TIME='" . $start_time . "'";
+        $this->dbconnect->deletetb();
+    }
+
     function runDeleteFunction($table, $primary_key, $values) {
 
-        $select_query = "SELECT * FROM ".$table." WHERE ".$primary_key." = '" . $values . "';";
+        $select_query = "SELECT * FROM " . $table . " WHERE " . $primary_key . " = '" . $values . "';";
         $this->dbconnect->sql = $select_query;
         $this->dbconnect->countresult();
         if ($this->dbconnect->count > 0) {
-            $delete_query = "DELETE FROM ".$table." WHERE ".$primary_key." = '" . $values . "';";
+            $delete_query = "DELETE FROM " . $table . " WHERE " . $primary_key . " = '" . $values . "';";
             $this->dbconnect->sql = $delete_query;
             $this->dbconnect->deletetb();
             return 1;
