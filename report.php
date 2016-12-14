@@ -397,7 +397,7 @@ $version = $dbconnect->res;
 <?php include("footer.php"); ?>
 <?php if (isset($table_results)) { ?>
     <script>
-    //        $(function () {
+            $(function () {
     //            $("#loading").hide();
     //            $(".report-sn").click(function () {
     //                var sn = $(this).data("sn");
@@ -416,9 +416,9 @@ $version = $dbconnect->res;
     //                xml_to_table(sn, starttime, table, table_title);
     //            })
     //
-    //            $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');
+                $("div.heading").html('<b><?php echo $branch . ' - ' . $sub_branch; ?></b>');
     //                        
-    //        });
+            });
     </script>
 <?php } ?>
 

@@ -103,14 +103,22 @@ div.dt-buttons {
 
 .form-control1 {
   float: right !important;
-  width: 70%  !important;
+  width: 65%  !important;
   margin-bottom: 10px;
 }
 
 .station {
   float: left;
-  margin-right: 8px;
-  width: 45%;
+  margin-right: 6px;
+  width: 46%;
+}
+.box-header > .box-tools {
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+.select_pns label {
+  font-size: 14px;
 }
 .location{
     width: 50%;
