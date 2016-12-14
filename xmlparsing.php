@@ -1,6 +1,6 @@
 <?php
 
-include("config.php");
+include("config.php"); 
 include_once("include/dbcon.php");
 include_once("include/myclass.php");
 $dbconnect = new dbconnect();
