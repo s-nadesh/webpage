@@ -78,7 +78,7 @@ $(function () {
 
     //icheckbox
 
-
+    //Check all PN
     var checkAllPN = $('input.check_all_pn');
     var checkPN = $('input.check_pn');
 
@@ -99,26 +99,70 @@ $(function () {
         checkAllPN.iCheck('update');
 
     });
+    
+    //Check all Version
+    var checkAllVersion = $('input.check_all_version');
+    var checkVersion = $('input.check_version');
 
-
-    var checkAll = $('input.all');
-    var checkboxes = $('input.check');
-
-    checkAll.on('ifChecked ifUnchecked', function (event) {
+    checkAllVersion.on('ifChecked ifUnchecked', function (event) {
         if (event.type == 'ifChecked') {
-            checkboxes.iCheck('check');
+            checkVersion.iCheck('check');
         } else {
-            checkboxes.iCheck('uncheck');
+            checkVersion.iCheck('uncheck');
         }
     });
 
-    checkboxes.on('ifChanged', function (event) {
-        if (checkboxes.filter(':checked').length === checkboxes.length) {
-            checkAll.prop('checked', 'checked');
+    checkVersion.on('ifChanged', function (event) {
+        if (checkVersion.filter(':checked').length === checkVersion.length) {
+            checkAllVersion.prop('checked', 'checked');
         } else {
-            checkAll.prop('checked', '');
+            checkAllVersion.prop('checked', '');
         }
-        checkAll.iCheck('update');
+        checkAllVersion.iCheck('update');
+
+    });
+
+    //Station
+    var checkStationAll = $('input.station-all');
+    var checkStationboxes = $('input.station-check');
+
+    checkStationAll.on('ifChecked ifUnchecked', function (event) {
+        if (event.type == 'ifChecked') {
+            checkStationboxes.iCheck('check');
+        } else {
+            checkStationboxes.iCheck('uncheck');
+        }
+    });
+
+    checkStationboxes.on('ifChanged', function (event) {
+        if (checkStationboxes.filter(':checked').length === checkStationboxes.length) {
+            checkStationAll.prop('checked', 'checked');
+        } else {
+            checkStationAll.prop('checked', '');
+        }
+        checkStationAll.iCheck('update');
+
+    });
+    
+    //Location
+    var checkLocationAll = $('input.location-all');
+    var checkLocationboxes = $('input.location-check');
+
+    checkLocationAll.on('ifChecked ifUnchecked', function (event) {
+        if (event.type == 'ifChecked') {
+            checkLocationboxes.iCheck('check');
+        } else {
+            checkLocationboxes.iCheck('uncheck');
+        }
+    });
+
+    checkLocationboxes.on('ifChanged', function (event) {
+        if (checkLocationboxes.filter(':checked').length === checkLocationboxes.length) {
+            checkLocationAll.prop('checked', 'checked');
+        } else {
+            checkLocationAll.prop('checked', '');
+        }
+        checkLocationAll.iCheck('update');
 
     });
 

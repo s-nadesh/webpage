@@ -42,7 +42,7 @@
 }
 
 .box-header {
-    padding: 5px;
+    padding: 1px;
 }
 
 .form-control {
@@ -187,4 +187,21 @@ font-style: italic;
 }
 .table th, .table td {
     white-space: nowrap;
+}
+
+label {  
+  font-size: 11px;
+}
+
+.content-breadcrumbs {
+  padding: 0px;
+  position: relative;
+}
+
+.content {  
+  padding: 5px;
+}
+
+.box-body {  
+  padding: 3px;
 }
