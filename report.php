@@ -105,11 +105,12 @@ $version = $dbconnect->res;
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="StartDate">Start Date</label>
-                                <input type="text" id="datepicker-start" class="form-control pull-right" name="start_date" value="<?php echo $form_start_date ?>">
+                                <input type="text" id="datepicker-start" class="form-control form-control1" name="start_date" value="<?php echo $form_start_date ?>">
                             </div>
+                            <div class="clearfix"></div>
                             <div class="form-group">
                                 <label for="EndDate">End Date</label>
-                                <input type="text" id="datepicker-end" class="form-control pull-right" name="end_date" value="<?php echo $form_end_date ?>">
+                                <input type="text" id="datepicker-end" class="form-control form-control1" name="end_date" value="<?php echo $form_end_date ?>">
                             </div>                                                        
                         </div>
                     </div>
@@ -137,7 +138,7 @@ $version = $dbconnect->res;
                         </div>
                     </div>
                     <!-- /.box-body -->                    
-                    <div class="box box-primary">
+                    <div class="box box-primary station">
 
                         <div class="box-header with-border">
                             <h3 class="box-title">Station's</h3>
@@ -171,7 +172,7 @@ $version = $dbconnect->res;
                             </div>  
                         </div>
                     </div>
-                    <div class="box box-primary">
+                    <div class="box box-primary location">
 
                         <div class="box-header with-border">
                             <h3 class="box-title">Location</h3>
@@ -205,6 +206,7 @@ $version = $dbconnect->res;
                             </div>  
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                     <div class="box box-primary">
 
                         <!-- /.box-header -->
@@ -215,8 +217,8 @@ $version = $dbconnect->res;
                                     <input type="radio" class="minimal"  name="basetable" value="TESTHEADER_FP" <?php echo isChecked('TESTHEADER_FP') ?>>
                                     First Pass
                                 </label>
-                            </div>  
-                            <div class="form-group">
+<!--                            </div>  
+                            <div class="form-group">-->
                                 <label>
                                     <input type="radio" class="minimal" name="basetable" value="TESTHEADER" <?php echo isChecked('TESTHEADER') ?>>
                                     General

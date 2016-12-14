@@ -101,6 +101,21 @@ div.dt-buttons {
     padding-right: 5px;
 }
 
+.form-control1 {
+  float: right !important;
+  width: 70%  !important;
+  margin-bottom: 10px;
+}
+
+.station {
+  float: left;
+  margin-right: 8px;
+  width: 45%;
+}
+.location{
+    width: 50%;
+    float: left;
+}
 #myModal .modal-header {
   padding: 10px 10px 0;
 }
